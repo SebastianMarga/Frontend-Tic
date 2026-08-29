@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - name: Descargar artefactos generados
-        # Requiere acción como actions/download-artifact@v4
+        run: echo "Aquí irá el comando para descargar la carpeta dist"
 
       - name: Desplegar a Producción
-        # Depende de tu proveedor de hosting
+        run: echo "Aquí irán los comandos de tu proveedor de hosting"
