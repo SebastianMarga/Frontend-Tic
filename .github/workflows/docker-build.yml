@@ -22,9 +22,8 @@ jobs:
       - name: Construir y subir la imagen a Docker Hub
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./Front-TICS
+          file: ./Front-TICS/Dockerfile
           push: true
-          # IMPORTANTE: Cambia "tu_usuario_de_docker" por tu usuario REAL en Docker Hub en minúsculas
-          # IMPORTANTE: Cambia "tu_usuario_de_docker" por tu usuario REAL en Docker Hub en minúsculas
           # IMPORTANTE: Cambia "tu_usuario_de_docker" por tu usuario REAL en Docker Hub en minúsculas
           tags: lincolmvf/frontend-tic-s:latest
