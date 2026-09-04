@@ -24,7 +24,7 @@ jobs:
       - name: Construir y subir la imagen a Docker Hub
         uses: docker/build-push-action@v4
         with:
-          context: ./Front-TICS
+          context: .
           push: true
           tags: lincolmvf/frontend-tic-s:latest
           cache-from: type=gha
