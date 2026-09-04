@@ -24,3 +24,5 @@ jobs:
           context: ./Front-TICS
           push: true
           tags: lincolmvf/frontend-tic-s:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
