@@ -164,6 +164,80 @@ export default function Chatbot({ currentUser }) {
                   </div>
                   <div className="chat-message-bubble-wrap">
                     <div className="chat-message-bubble">{msg.text}</div>
+
+                    {msg.productos && msg.productos.length > 0 && (
+                      <div className="chat-products-container" style={{ display: 'flex', gap: '12px', overflowX: 'auto', marginTop: '12px', paddingBottom: '8px' }}>
+                        {msg.productos.map((prod, index) => (
+                          <div key={index} className="chat-product-card" style={{
+                            width: '240px',
+                            minWidth: '240px',
+                            flexShrink: 0,
+                            background: '#fff',
+                            borderRadius: '8px',
+                            padding: '12px',
+                            border: '1px solid #eee',
+                            fontSize: '13px',
+                            display: 'flex',
+                            flexDirection: 'column'
+                          }}>
+                            {prod.urlImage && (
+                              <img
+                                src={prod.urlImage}
+                                alt={prod.suggestedName}
+                                style={{
+                                  width: '100%',
+                                  height: '160px',
+                                  objectFit: 'contain',
+                                  borderRadius: '4px',
+                                  marginBottom: '10px'
+                                }}
+                              />
+                            )}
+
+                            <div
+                              style={{
+                                fontWeight: 'bold',
+                                color: '#333',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                lineHeight: '1.4',
+                                marginBottom: 'auto'
+                              }}
+                              title={prod.suggestedName}
+                            >
+                              {prod.suggestedName}
+                            </div>
+
+                            <div style={{ color: '#007bff', fontWeight: 'bold', fontSize: '15px', margin: '8px 0' }}>
+                              S/ {prod.suggestedPrice}
+                            </div>
+
+                            {prod.urlProduct && (
+                              <a
+                                href={prod.urlProduct}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  display: 'block',
+                                  textAlign: 'center',
+                                  background: '#f0f0f0',
+                                  padding: '8px',
+                                  borderRadius: '4px',
+                                  textDecoration: 'none',
+                                  color: '#333',
+                                  fontWeight: '500'
+                                }}
+                              >
+                                Ver producto
+                              </a>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     <span className="chat-message-time">
                       {formatTime(msg.timestamp)}
                     </span>
