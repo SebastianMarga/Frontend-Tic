@@ -1,13 +1,12 @@
 name: Actualizar Docker Automáticamente
 
-# Esto le dice a GitHub que se ejecute cada vez que hagas push a la rama principal (main o master)
 on:
   push:
     branches: [ "main", "master" ]
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest # GitHub usará un servidor Linux para hacer el trabajo
+    runs-on: ubuntu-latest
 
     steps:
       - name: Descargar el código del repo
@@ -23,7 +22,5 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ./Front-TICS
-          file: ./Front-TICS/Dockerfile
           push: true
-          # IMPORTANTE: Cambia "tu_usuario_de_docker" por tu usuario REAL en Docker Hub en minúsculas
           tags: lincolmvf/frontend-tic-s:latest
