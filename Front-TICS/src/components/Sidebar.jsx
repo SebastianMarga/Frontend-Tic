@@ -11,7 +11,8 @@ import {
   Settings,
   HelpCircle,
   Plus,
-  Boxes
+  Boxes,
+  MessageCircle
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -34,6 +35,7 @@ export default function Sidebar({
     },
     { id: 'rpa', label: 'Órdenes RPA', icon: Bot },
     { id: 'tendencias', label: 'Sugerencias IA', icon: Sparkles },
+    { id: 'chatbot', label: 'Asistente Virtual', icon: MessageCircle },
     { id: 'datosMaestros', label: 'Datos Maestros', icon: Database },
     {
       id: 'usuarios',

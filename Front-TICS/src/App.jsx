@@ -9,6 +9,7 @@ import RPAOrdenes from './components/RPAOrdenes.jsx';
 import Movimientos from './components/Movimientos.jsx';
 import Alertas from './components/Alertas.jsx';
 import Usuarios from './components/Usuarios.jsx';
+import Chatbot from './components/Chatbot.jsx';
 import Login from './components/Login.jsx';
 
 // Modales Reutilizables
@@ -218,6 +219,10 @@ export default function App() {
                 setModalUsuarioOpen(true);
               }}
             />
+          )}
+
+          {activeView === 'chatbot' && (
+            <Chatbot currentUser={currentUser} />
           )}
 
         </main>
