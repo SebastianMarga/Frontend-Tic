@@ -1,0 +1,68 @@
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #0b1c30;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar-circle.operator-avatar {
+  background-color: #059669;
+}
+
+.user-name-text {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.role-pill.admin {
+  background-color: #0b1c30;
+  color: #ffffff;
+}
+
+.role-pill.operator {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-dot-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #059669;
+}
+
+.status-dot.inactive {
+  background-color: #94a3b8;
+}

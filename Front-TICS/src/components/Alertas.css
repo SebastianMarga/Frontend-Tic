@@ -1,0 +1,32 @@
+.alertas-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.alerta-days-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.alerta-days-pill.critical {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.alerta-days-pill.warning {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.alerta-days-pill.moderate {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}

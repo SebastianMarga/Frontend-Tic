@@ -1,0 +1,64 @@
+.stock-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.stock-value-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.stock-status-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.stock-status-pill.danger {
+  color: #b91c1c;
+  background-color: #fee2e2;
+}
+
+.stock-status-pill.warning {
+  color: #b45309;
+  background-color: #fef3c7;
+}
+
+.stock-status-pill.success {
+  color: #047857;
+  background-color: #d1fae5;
+}
+
+.table-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.row-action-icon-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: #475569;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+
+.row-action-icon-btn:hover {
+  background-color: #f1f5f9;
+  color: var(--text-primary);
+  border-color: #94a3b8;
+}

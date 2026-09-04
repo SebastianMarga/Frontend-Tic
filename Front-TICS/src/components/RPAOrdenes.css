@@ -1,0 +1,60 @@
+.rpa-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rpa-status-badge.sent {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.rpa-status-badge.processing {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  animation: pulseLight 1.8s infinite ease-in-out;
+}
+
+.rpa-status-badge.failed {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.rpa-status-badge.completed {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+@keyframes pulseLight {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.action-btn-review-error {
+  color: #dc2626;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-btn-review-error:hover {
+  color: #991b1b;
+}
