@@ -93,6 +93,20 @@ export const userService = {
 
   async updateUserRole(id, userData) {
     if (USE_MOCK) {
+      const storedAuth = localStorage.getItem("inventario_auth_user");
+      let activeUser = null;
+      if (storedAuth) {
+        try {
+          activeUser = JSON.parse(storedAuth);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      if (userData.role === "ADMIN" && activeUser?.role !== "ADMIN") {
+        throw new Error("Permiso denegado: Únicamente un usuario Administrador (ADMIN) puede otorgar o editar el rol ADMIN.");
+      }
+
       const current = getLocalUsers();
       const index = current.findIndex((u) => u.id === id);
       if (index === -1) throw new Error("Usuario no encontrado");

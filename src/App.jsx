@@ -1,36 +1,35 @@
-import React, { useState, useEffect } from "react";
-import Sidebar from "./components/Sidebar.jsx";
-import Header from "./components/Header.jsx";
-import Dashboard from "./components/Dashboard.jsx";
-import Catalogo from "./components/Catalogo.jsx";
-import DatosMaestros from "./components/DatosMaestros.jsx";
-import TendenciaIA from "./components/TendenciaIA.jsx";
-import RPAOrdenes from "./components/RPAOrdenes.jsx";
-import Movimientos from "./components/Movimientos.jsx";
-import Alertas from "./components/Alertas.jsx";
-import Usuarios from "./components/Usuarios.jsx";
-import Chatbot from "./components/Chatbot.jsx";
-import Login from "./components/Login.jsx";
+import React, { useState, useEffect } from 'react';
+import Sidebar from './components/Sidebar.jsx';
+import Header from './components/Header.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import Catalogo from './components/Catalogo.jsx';
+import DatosMaestros from './components/DatosMaestros.jsx';
+import TendenciaIA from './components/TendenciaIA.jsx';
+import RPAOrdenes from './components/RPAOrdenes.jsx';
+import Movimientos from './components/Movimientos.jsx';
+import Alertas from './components/Alertas.jsx';
+import Usuarios from './components/Usuarios.jsx';
+import Login from './components/Login.jsx';
+import Registro from './components/Registro.jsx';
 
 // Modales Reutilizables
-import ModalProducto from "./components/modals/ModalProducto.jsx";
-import ModalDetalleProducto from "./components/modals/ModalDetalleProducto.jsx";
-import ModalProveedor from "./components/modals/ModalProveedor.jsx";
-import ModalCategoria from "./components/modals/ModalCategoria.jsx";
-import ModalMovimiento from "./components/modals/ModalMovimiento.jsx";
-import ModalAjusteConteo from "./components/modals/ModalAjusteConteo.jsx";
-import ModalIncidenteRPA from "./components/modals/ModalIncidenteRPA.jsx";
-import ModalNuevaOrdenRPA from "./components/modals/ModalNuevaOrdenRPA.jsx";
-import ModalUsuario from "./components/modals/ModalUsuario.jsx";
+import ModalProducto from './components/modals/ModalProducto.jsx';
+import ModalDetalleProducto from './components/modals/ModalDetalleProducto.jsx';
+import ModalProveedor from './components/modals/ModalProveedor.jsx';
+import ModalCategoria from './components/modals/ModalCategoria.jsx';
+import ModalMovimiento from './components/modals/ModalMovimiento.jsx';
+import ModalAjusteConteo from './components/modals/ModalAjusteConteo.jsx';
+import ModalIncidenteRPA from './components/modals/ModalIncidenteRPA.jsx';
+import ModalNuevaOrdenRPA from './components/modals/ModalNuevaOrdenRPA.jsx';
+import ModalUsuario from './components/modals/ModalUsuario.jsx';
 
-import { authService } from "./services/authService.js";
+import { authService } from './services/authService.js';
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(() =>
-    authService.getCurrentUser(),
-  );
-  const [activeView, setActiveView] = useState("dashboard");
-  const [globalSearch, setGlobalSearch] = useState("");
+  const [currentUser, setCurrentUser] = useState(() => authService.getCurrentUser());
+  const [authMode, setAuthMode] = useState('login'); // 'login' | 'register'
+  const [activeView, setActiveView] = useState('dashboard');
+  const [globalSearch, setGlobalSearch] = useState('');
 
   // Modales
   const [modalProductoOpen, setModalProductoOpen] = useState(false);
@@ -46,7 +45,7 @@ export default function App() {
   const [categoryToEdit, setCategoryToEdit] = useState(null);
 
   const [modalMovimientoOpen, setModalMovimientoOpen] = useState(false);
-  const [movimientoType, setMovimientoType] = useState("entrada");
+  const [movimientoType, setMovimientoType] = useState('entrada');
   const [movimientoProduct, setMovimientoProduct] = useState(null);
 
   const [modalAjusteOpen, setModalAjusteOpen] = useState(false);
@@ -65,7 +64,7 @@ export default function App() {
   const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   const handleToggleRole = () => {
-    const newRole = currentUser?.role === "ADMIN" ? "OPERATOR" : "ADMIN";
+    const newRole = currentUser?.role === 'ADMIN' ? 'OPERATOR' : 'ADMIN';
     const updated = authService.setCurrentUserRole(newRole);
     setCurrentUser(updated);
   };
@@ -73,11 +72,31 @@ export default function App() {
   const handleLogout = () => {
     authService.logout();
     setCurrentUser(null);
+    setAuthMode('login');
   };
 
-  // Si no está logueado, mostrar pantalla de Login
+  // Si no está logueado, mostrar pantalla de Login o Registro con alternancia
   if (!currentUser) {
-    return <Login onLoginSuccess={(user) => setCurrentUser(user)} />;
+    if (authMode === 'register') {
+      return (
+        <Registro
+          onRegisterSuccess={(user) => {
+            setCurrentUser(user);
+            setAuthMode('login');
+          }}
+          onSwitchToLogin={() => setAuthMode('login')}
+        />
+      );
+    }
+    return (
+      <Login
+        onLoginSuccess={(user) => {
+          setCurrentUser(user);
+          setAuthMode('login');
+        }}
+        onSwitchToRegister={() => setAuthMode('register')}
+      />
+    );
   }
 
   return (
@@ -106,7 +125,7 @@ export default function App() {
         />
 
         <main key={refreshKey}>
-          {activeView === "dashboard" && (
+          {activeView === 'dashboard' && (
             <Dashboard
               onNavigate={setActiveView}
               onOpenModalMovimiento={(type, prod) => {
@@ -125,7 +144,7 @@ export default function App() {
             />
           )}
 
-          {activeView === "catalogo" && (
+          {activeView === 'catalogo' && (
             <Catalogo
               userRole={currentUser.role}
               onOpenCreateProduct={() => {
@@ -143,7 +162,7 @@ export default function App() {
             />
           )}
 
-          {activeView === "movimientos" && (
+          {activeView === 'movimientos' && (
             <Movimientos
               userRole={currentUser.role}
               onOpenModalMovimiento={(type, prod) => {
@@ -155,7 +174,7 @@ export default function App() {
             />
           )}
 
-          {activeView === "alertas" && (
+          {activeView === 'alertas' && (
             <Alertas
               userRole={currentUser.role}
               onOpenModalMovimiento={(type, prod) => {
@@ -166,7 +185,7 @@ export default function App() {
             />
           )}
 
-          {activeView === "rpa" && (
+          {activeView === 'rpa' && (
             <RPAOrdenes
               userRole={currentUser.role}
               onOpenNewOrderModal={() => {
@@ -180,14 +199,14 @@ export default function App() {
             />
           )}
 
-          {activeView === "tendencias" && (
+          {activeView === 'tendencias' && (
             <TendenciaIA
               userRole={currentUser.role}
               onNavigate={setActiveView}
             />
           )}
 
-          {activeView === "datosMaestros" && (
+          {activeView === 'datosMaestros' && (
             <DatosMaestros
               userRole={currentUser.role}
               onOpenCreateSupplier={() => {
@@ -209,7 +228,7 @@ export default function App() {
             />
           )}
 
-          {activeView === "usuarios" && (
+          {activeView === 'usuarios' && (
             <Usuarios
               userRole={currentUser.role}
               onOpenCreateUser={() => {
@@ -222,8 +241,6 @@ export default function App() {
               }}
             />
           )}
-
-          {activeView === "chatbot" && <Chatbot currentUser={currentUser} />}
         </main>
       </div>
 

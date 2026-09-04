@@ -1,11 +1,13 @@
 import { USE_MOCK, mockDelay, request } from "./api.js";
 import { mockUsers } from "../mocks/mockData.js";
+import { userService } from "./userService.js";
 
 const AUTH_USER_KEY = "inventario_auth_user";
 const AUTH_TOKEN_KEY = "auth_token";
 
 export const authService = {
   async login(email, password) {
+    // PROVISIONAL SOLO PARA MOCK
     if (USE_MOCK) {
       await mockDelay(null, 300);
       const normalizedEmail = email?.trim().toLowerCase();
@@ -48,10 +50,69 @@ export const authService = {
       throw new Error("Credenciales inválidas. Por favor, inténtelo de nuevo.");
     }
 
-    // Backend real
+    // BACKEND REAL
     const data = await request("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
+    });
+
+    if (data.token) {
+      localStorage.setItem(AUTH_TOKEN_KEY, data.token);
+      localStorage.setItem(AUTH_USER_KEY, JSON.stringify(data.user));
+    }
+    return data;
+  },
+
+  async register({ name, email, password }) {
+    const assignedRole = "OPERATOR";
+
+    if (USE_MOCK) {
+      await mockDelay(null, 400);
+      const normalizedEmail = email?.trim().toLowerCase();
+
+      if (!name || name.trim().length < 2) {
+        throw new Error("El nombre completo es requerido.");
+      }
+
+      if (!normalizedEmail || !normalizedEmail.includes("@")) {
+        throw new Error("Ingrese un correo electrónico válido.");
+      }
+
+      if (!password || password.length < 6) {
+        throw new Error("La contraseña debe tener al menos 6 caracteres.");
+      }
+
+      // Validar si ya existe el correo
+      const allUsers = (await userService.getUsers()) || mockUsers;
+      const exists = allUsers.some(
+        (u) => u.email?.toLowerCase() === normalizedEmail
+      );
+      if (exists) {
+        throw new Error("Ya existe una cuenta registrada con este correo electrónico.");
+      }
+
+      // Crear usuario en base de datos local con rol OPERATOR
+      const newUser = await userService.createUser({
+        name: name.trim(),
+        email: normalizedEmail,
+        role: assignedRole,
+        status: "Activo"
+      });
+
+      const token = `mock_jwt_token_${newUser.id}_${Date.now()}`;
+      const sessionData = {
+        user: newUser,
+        token
+      };
+      localStorage.setItem(AUTH_USER_KEY, JSON.stringify(newUser));
+      localStorage.setItem(AUTH_TOKEN_KEY, token);
+      return sessionData;
+    }
+
+    // BACKEND REAL
+    const data = await request("/auth/register", {
+      method: "POST",
+      body: JSON.stringify({ name, email, password, role: assignedRole }),
     });
 
     if (data.token) {
