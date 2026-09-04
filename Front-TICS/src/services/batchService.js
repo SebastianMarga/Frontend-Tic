@@ -19,8 +19,12 @@ export const batchService = {
   async getBatchesByProduct(productId) {
     if (USE_MOCK) {
       const storedProducts = localStorage.getItem("inventario_products_data");
-      const products = storedProducts ? JSON.parse(storedProducts) : mockProducts;
-      const product = products.find((p) => p.id === productId || p.sku === productId);
+      const products = storedProducts
+        ? JSON.parse(storedProducts)
+        : mockProducts;
+      const product = products.find(
+        (p) => p.id === productId || p.sku === productId,
+      );
       return mockDelay(product?.batches ? [...product.batches] : []);
     }
     return request(`/products/${productId}/batches`);
@@ -35,5 +39,5 @@ export const batchService = {
       return mockDelay([...data]);
     }
     return request(`/batches/expiring?days=${days}`);
-  }
+  },
 };

@@ -24,11 +24,23 @@ export const productService = {
     if (USE_MOCK) {
       let data = getLocalProducts();
 
-      if (filters.category && filters.category !== "Todas las Categorías" && filters.category !== "Todas") {
-        data = data.filter((p) => p.category.toLowerCase() === filters.category.toLowerCase());
+      if (
+        filters.category &&
+        filters.category !== "Todas las Categorías" &&
+        filters.category !== "Todas"
+      ) {
+        data = data.filter(
+          (p) => p.category.toLowerCase() === filters.category.toLowerCase(),
+        );
       }
-      if (filters.supplier && filters.supplier !== "Todos los Proveedores" && filters.supplier !== "Todos") {
-        data = data.filter((p) => p.supplier.toLowerCase() === filters.supplier.toLowerCase());
+      if (
+        filters.supplier &&
+        filters.supplier !== "Todos los Proveedores" &&
+        filters.supplier !== "Todos"
+      ) {
+        data = data.filter(
+          (p) => p.supplier.toLowerCase() === filters.supplier.toLowerCase(),
+        );
       }
       if (filters.search) {
         const query = filters.search.toLowerCase().trim();
@@ -36,7 +48,7 @@ export const productService = {
           (p) =>
             p.name.toLowerCase().includes(query) ||
             p.sku.toLowerCase().includes(query) ||
-            p.category.toLowerCase().includes(query)
+            p.category.toLowerCase().includes(query),
         );
       }
       if (filters.lowStockOnly) {
@@ -65,7 +77,8 @@ export const productService = {
       const current = getLocalProducts();
       const newProduct = {
         id: `prod-${Date.now()}`,
-        sku: productData.sku || `SKU-${Math.floor(1000 + Math.random() * 9000)}`,
+        sku:
+          productData.sku || `SKU-${Math.floor(1000 + Math.random() * 9000)}`,
         name: productData.name,
         category: productData.category,
         supplier: productData.supplier,
@@ -77,9 +90,21 @@ export const productService = {
         leadTimeDays: Number(productData.leadTimeDays) || 5,
         description: productData.description || "",
         unit: productData.unit || "uds",
-        status: (Number(productData.currentStock) || 0) <= (Number(productData.dynamicThreshold) || 100) ? "STOCK_BAJO" : "SALUDABLE",
-        statusLabel: (Number(productData.currentStock) || 0) <= (Number(productData.dynamicThreshold) || 100) ? "STOCK BAJO" : "SALUDABLE",
-        statusType: (Number(productData.currentStock) || 0) <= (Number(productData.dynamicThreshold) || 100) ? "warning" : "success",
+        status:
+          (Number(productData.currentStock) || 0) <=
+          (Number(productData.dynamicThreshold) || 100)
+            ? "STOCK_BAJO"
+            : "SALUDABLE",
+        statusLabel:
+          (Number(productData.currentStock) || 0) <=
+          (Number(productData.dynamicThreshold) || 100)
+            ? "STOCK BAJO"
+            : "SALUDABLE",
+        statusType:
+          (Number(productData.currentStock) || 0) <=
+          (Number(productData.dynamicThreshold) || 100)
+            ? "warning"
+            : "success",
         recommendedAction: "Supervisión activa",
         batches: [],
         movements: [
@@ -89,9 +114,9 @@ export const productService = {
             quantity: Number(productData.currentStock) || 0,
             date: "Hoy, Registro Inicial",
             note: "Alta inicial de catálogo",
-            operator: "ADMIN"
-          }
-        ]
+            operator: "ADMIN",
+          },
+        ],
       };
       const updated = [newProduct, ...current];
       saveLocalProducts(updated);
@@ -110,9 +135,15 @@ export const productService = {
       const index = current.findIndex((p) => p.id === id || p.sku === id);
       if (index === -1) throw new Error("Producto no encontrado");
 
-      const threshold = Number(productData.dynamicThreshold) !== undefined ? Number(productData.dynamicThreshold) : current[index].dynamicThreshold;
-      const stock = Number(productData.currentStock) !== undefined ? Number(productData.currentStock) : current[index].currentStock;
-      
+      const threshold =
+        Number(productData.dynamicThreshold) !== undefined
+          ? Number(productData.dynamicThreshold)
+          : current[index].dynamicThreshold;
+      const stock =
+        Number(productData.currentStock) !== undefined
+          ? Number(productData.currentStock)
+          : current[index].currentStock;
+
       let status = "SALUDABLE";
       let statusLabel = "SALUDABLE";
       let statusType = "success";
@@ -133,7 +164,7 @@ export const productService = {
         currentStock: stock,
         status,
         statusLabel,
-        statusType
+        statusType,
       };
 
       saveLocalProducts(current);
@@ -154,8 +185,10 @@ export const productService = {
 
       current[index] = {
         ...current[index],
-        dynamicThreshold: params.dynamicThreshold ?? current[index].dynamicThreshold,
-        optimalOrderQty: params.optimalOrderQty ?? current[index].optimalOrderQty,
+        dynamicThreshold:
+          params.dynamicThreshold ?? current[index].dynamicThreshold,
+        optimalOrderQty:
+          params.optimalOrderQty ?? current[index].optimalOrderQty,
         leadTimeDays: params.leadTimeDays ?? current[index].leadTimeDays,
       };
       saveLocalProducts(current);
@@ -166,5 +199,5 @@ export const productService = {
       method: "PATCH",
       body: JSON.stringify(params),
     });
-  }
+  },
 };

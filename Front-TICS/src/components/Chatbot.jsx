@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, Bot, User, Trash2, Sparkles } from 'lucide-react';
-import { chatbotService } from '../services/chatbotService.js';
-import './Chatbot.css';
+import React, { useState, useEffect, useRef } from "react";
+import { Send, Bot, User, Trash2, Sparkles } from "lucide-react";
+import { chatbotService } from "../services/chatbotService.js";
+import "./Chatbot.css";
 
 const SUGGESTIONS = [
-  '¿Qué productos están por vencer?',
-  '¿Cuál es el stock de un producto?',
-  '¿Cómo está el estado de las órdenes RPA?',
+  "¿Qué productos están por vencer?",
+  "¿Cuál es el stock de un producto?",
+  "¿Cómo está el estado de las órdenes RPA?",
 ];
 
 function formatTime(isoString) {
   try {
-    return new Date(isoString).toLocaleTimeString('es-PE', {
-      hour: '2-digit',
-      minute: '2-digit',
+    return new Date(isoString).toLocaleTimeString("es-PE", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   } catch {
-    return '';
+    return "";
   }
 }
 
 export default function Chatbot({ currentUser }) {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [loadingHistory, setLoadingHistory] = useState(true);
   const [isTyping, setIsTyping] = useState(false);
   const [error, setError] = useState(null);
@@ -37,8 +37,8 @@ export default function Chatbot({ currentUser }) {
         const history = await chatbotService.getHistory();
         if (mounted) setMessages(history);
       } catch (err) {
-        console.error('Error cargando historial del chatbot:', err);
-        if (mounted) setError('No se pudo cargar la conversación anterior.');
+        console.error("Error cargando historial del chatbot:", err);
+        if (mounted) setError("No se pudo cargar la conversación anterior.");
       } finally {
         if (mounted) setLoadingHistory(false);
       }
@@ -64,7 +64,7 @@ export default function Chatbot({ currentUser }) {
 
     const userMessage = {
       id: `msg-${Date.now()}`,
-      role: 'user',
+      role: "user",
       text: textToSend,
       timestamp: new Date().toISOString(),
     };
@@ -72,7 +72,7 @@ export default function Chatbot({ currentUser }) {
     const updated = [...messages, userMessage];
     setMessages(updated);
     persist(updated);
-    setInput('');
+    setInput("");
     setError(null);
     setIsTyping(true);
 
@@ -82,8 +82,10 @@ export default function Chatbot({ currentUser }) {
       setMessages(withReply);
       persist(withReply);
     } catch (err) {
-      console.error('Error al enviar mensaje al chatbot:', err);
-      setError('No se pudo obtener respuesta del asistente. Intenta nuevamente.');
+      console.error("Error al enviar mensaje al chatbot:", err);
+      setError(
+        "No se pudo obtener respuesta del asistente. Intenta nuevamente.",
+      );
     } finally {
       setIsTyping(false);
       inputRef.current?.focus();
@@ -91,7 +93,7 @@ export default function Chatbot({ currentUser }) {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -109,7 +111,8 @@ export default function Chatbot({ currentUser }) {
         <div className="page-header-titles">
           <h1 className="page-title">Asistente Virtual</h1>
           <p className="page-subtitle">
-            Chatea con el asistente IA para consultar información del inventario.
+            Chatea con el asistente IA para consultar información del
+            inventario.
           </p>
         </div>
 
@@ -142,20 +145,28 @@ export default function Chatbot({ currentUser }) {
 
         <div className="chatbot-messages" ref={scrollRef}>
           {loadingHistory ? (
-            <div className="chatbot-loading-state">Cargando conversación...</div>
+            <div className="chatbot-loading-state">
+              Cargando conversación...
+            </div>
           ) : (
             <>
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`chat-message-row ${msg.role === 'user' ? 'from-user' : 'from-bot'}`}
+                  className={`chat-message-row ${msg.role === "user" ? "from-user" : "from-bot"}`}
                 >
                   <div className="chat-message-avatar">
-                    {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
+                    {msg.role === "user" ? (
+                      <User size={14} />
+                    ) : (
+                      <Bot size={14} />
+                    )}
                   </div>
                   <div className="chat-message-bubble-wrap">
                     <div className="chat-message-bubble">{msg.text}</div>
-                    <span className="chat-message-time">{formatTime(msg.timestamp)}</span>
+                    <span className="chat-message-time">
+                      {formatTime(msg.timestamp)}
+                    </span>
                   </div>
                 </div>
               ))}

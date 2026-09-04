@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Boxes, Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react';
-import { authService } from '../services/authService.js';
-import './Login.css';
+import React, { useState } from "react";
+import { Boxes, Lock, Mail, ArrowRight, AlertCircle } from "lucide-react";
+import { authService } from "../services/authService.js";
+import "./Login.css";
 
 export default function Login({ onLoginSuccess }) {
-  const [email, setEmail] = useState('admin@inventario.ia');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState("admin@inventario.ia");
+  const [password, setPassword] = useState("admin123");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,7 +20,7 @@ export default function Login({ onLoginSuccess }) {
         onLoginSuccess(session.user);
       }
     } catch (err) {
-      setError(err.message || 'Error de autenticación');
+      setError(err.message || "Error de autenticación");
     } finally {
       setLoading(false);
     }
@@ -89,14 +89,22 @@ export default function Login({ onLoginSuccess }) {
 
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              margin: '12px 0 16px',
-              fontSize: '12px'
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              margin: "12px 0 16px",
+              fontSize: "12px",
             }}
           >
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#64748b' }}>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                cursor: "pointer",
+                color: "#64748b",
+              }}
+            >
               <input type="checkbox" defaultChecked />
               <span>Recordar este dispositivo</span>
             </label>
@@ -104,9 +112,11 @@ export default function Login({ onLoginSuccess }) {
               href="#recuperar"
               onClick={(e) => {
                 e.preventDefault();
-                alert('Contacte al administrador del sistema para restablecer su contraseña.');
+                alert(
+                  "Contacte al administrador del sistema para restablecer su contraseña.",
+                );
               }}
-              style={{ color: '#0b1c30', fontWeight: 600 }}
+              style={{ color: "#0b1c30", fontWeight: 600 }}
             >
               ¿Olvidó su contraseña?
             </a>
@@ -118,7 +128,7 @@ export default function Login({ onLoginSuccess }) {
             disabled={loading}
             id="btn-login-submit"
           >
-            <span>{loading ? 'Accediendo...' : 'Acceder al Sistema'}</span>
+            <span>{loading ? "Accediendo..." : "Acceder al Sistema"}</span>
             {!loading && <ArrowRight size={16} />}
           </button>
         </form>
@@ -130,7 +140,7 @@ export default function Login({ onLoginSuccess }) {
             <button
               type="button"
               className="login-demo-pill"
-              onClick={() => handleQuickDemo('admin@inventario.ia', 'admin123')}
+              onClick={() => handleQuickDemo("admin@inventario.ia", "admin123")}
               id="btn-demo-admin"
             >
               Rol ADMIN
@@ -138,7 +148,9 @@ export default function Login({ onLoginSuccess }) {
             <button
               type="button"
               className="login-demo-pill"
-              onClick={() => handleQuickDemo('miguel.gomez@inventarioia.com', 'operator123')}
+              onClick={() =>
+                handleQuickDemo("miguel.gomez@inventarioia.com", "operator123")
+              }
               id="btn-demo-operator"
             >
               Rol OPERATOR

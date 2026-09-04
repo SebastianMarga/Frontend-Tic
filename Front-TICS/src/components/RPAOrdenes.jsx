@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Search,
   Bot,
@@ -9,20 +9,20 @@ import {
   XCircle,
   CheckCircle,
   ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
-import { rpaService } from '../services/rpaService.js';
-import './RPAOrdenes.css';
+  ChevronRight,
+} from "lucide-react";
+import { rpaService } from "../services/rpaService.js";
+import "./RPAOrdenes.css";
 
 export default function RPAOrdenes({
   userRole,
   onOpenNewOrderModal,
   onOpenIncidentModal,
-  onOpenOrderDetails
+  onOpenOrderDetails,
 }) {
   const [orders, setOrders] = useState([]);
-  const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -32,7 +32,7 @@ export default function RPAOrdenes({
       const data = await rpaService.getPurchaseOrders(statusFilter);
       setOrders(data);
     } catch (err) {
-      console.error('Error cargando órdenes RPA:', err);
+      console.error("Error cargando órdenes RPA:", err);
     } finally {
       setLoading(false);
     }
@@ -53,10 +53,14 @@ export default function RPAOrdenes({
   const handleCancelOrder = async (orderId) => {
     if (window.confirm(`¿Está seguro de cancelar la orden RPA ${orderId}?`)) {
       try {
-        await rpaService.updateOrderStatus(orderId, 'CANCELLED', 'Cancelada por el operador');
+        await rpaService.updateOrderStatus(
+          orderId,
+          "CANCELLED",
+          "Cancelada por el operador",
+        );
         loadOrders();
       } catch (e) {
-        alert('Error al cancelar: ' + e.message);
+        alert("Error al cancelar: " + e.message);
       }
     }
   };
@@ -130,19 +134,29 @@ export default function RPAOrdenes({
                 <th className="text-right">CANTIDAD</th>
                 <th className="text-right">VALOR TOTAL</th>
                 <th>ESTADO</th>
-                <th style={{ textAlign: 'right' }}>ACCIÓN</th>
+                <th style={{ textAlign: "right" }}>ACCIÓN</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px' }}>
+                  <td
+                    colSpan="7"
+                    style={{ textAlign: "center", padding: "32px" }}
+                  >
                     Cargando órdenes del bot RPA...
                   </td>
                 </tr>
               ) : filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px', color: '#64748b' }}>
+                  <td
+                    colSpan="7"
+                    style={{
+                      textAlign: "center",
+                      padding: "32px",
+                      color: "#64748b",
+                    }}
+                  >
                     No se encontraron órdenes con los criterios especificados.
                   </td>
                 </tr>
@@ -153,30 +167,39 @@ export default function RPAOrdenes({
                       {order.orderId}
                     </td>
                     <td style={{ fontWeight: 500 }}>{order.supplier}</td>
-                    <td style={{ color: '#64748b', fontSize: '12px' }}>{order.dateTime}</td>
-                    <td className="text-right mono">{order.quantity?.toLocaleString()} uds</td>
+                    <td style={{ color: "#64748b", fontSize: "12px" }}>
+                      {order.dateTime}
+                    </td>
+                    <td className="text-right mono">
+                      {order.quantity?.toLocaleString()} uds
+                    </td>
                     <td className="text-right mono" style={{ fontWeight: 600 }}>
-                      {order.formattedTotal || `$${order.totalValue?.toLocaleString()}`}
+                      {order.formattedTotal ||
+                        `$${order.totalValue?.toLocaleString()}`}
                     </td>
                     <td>
-                      {order.status === 'SENT' && (
+                      {order.status === "SENT" && (
                         <span className="rpa-status-badge sent">SENT</span>
                       )}
-                      {order.status === 'PROCESSING' && (
-                        <span className="rpa-status-badge processing">PROCESSING</span>
+                      {order.status === "PROCESSING" && (
+                        <span className="rpa-status-badge processing">
+                          PROCESSING
+                        </span>
                       )}
-                      {order.status === 'FAILED' && (
+                      {order.status === "FAILED" && (
                         <span className="rpa-status-badge failed">FAILED</span>
                       )}
-                      {order.status === 'COMPLETED' && (
-                        <span className="rpa-status-badge completed">COMPLETED</span>
+                      {order.status === "COMPLETED" && (
+                        <span className="rpa-status-badge completed">
+                          COMPLETED
+                        </span>
                       )}
-                      {order.status === 'CANCELLED' && (
+                      {order.status === "CANCELLED" && (
                         <span className="badge badge-gray">CANCELLED</span>
                       )}
                     </td>
-                    <td style={{ textAlign: 'right' }}>
-                      {order.status === 'FAILED' ? (
+                    <td style={{ textAlign: "right" }}>
+                      {order.status === "FAILED" ? (
                         <button
                           className="action-btn-review-error"
                           onClick={() => onOpenIncidentModal(order)}
@@ -185,7 +208,7 @@ export default function RPAOrdenes({
                           <AlertTriangle size={14} />
                           <span>Revisar Error</span>
                         </button>
-                      ) : order.status === 'PROCESSING' ? (
+                      ) : order.status === "PROCESSING" ? (
                         <button
                           className="action-link-btn action-btn-urgent"
                           onClick={() => handleCancelOrder(order.id)}
@@ -198,7 +221,7 @@ export default function RPAOrdenes({
                           className="action-link-btn"
                           onClick={() => {
                             alert(
-                              `Detalle Orden ${order.orderId}\nProveedor: ${order.supplier}\nTotal: ${order.formattedTotal}\nItems: ${order.items?.length || 1} producto(s)`
+                              `Detalle Orden ${order.orderId}\nProveedor: ${order.supplier}\nTotal: ${order.formattedTotal}\nItems: ${order.items?.length || 1} producto(s)`,
                             );
                           }}
                           id={`btn-detalles-orden-${order.orderId}`}

@@ -11,7 +11,7 @@ export const mockUsers = [
     email: "admin@inventario.ia",
     role: "ADMIN",
     status: "Activo",
-    createdAt: "2026-01-15"
+    createdAt: "2026-01-15",
   },
   {
     id: "USR-002",
@@ -20,7 +20,7 @@ export const mockUsers = [
     email: "miguel.gomez@inventarioia.com",
     role: "OPERATOR",
     status: "Activo",
-    createdAt: "2026-02-10"
+    createdAt: "2026-02-10",
   },
   {
     id: "USR-003",
@@ -29,7 +29,7 @@ export const mockUsers = [
     email: "laura.sanchez@inventarioia.com",
     role: "OPERATOR",
     status: "Inactivo",
-    createdAt: "2026-03-01"
+    createdAt: "2026-03-01",
   },
   {
     id: "USR-004",
@@ -38,7 +38,7 @@ export const mockUsers = [
     email: "carlos.mendoza@inventarioia.com",
     role: "ADMIN",
     status: "Activo",
-    createdAt: "2026-01-20"
+    createdAt: "2026-01-20",
   },
   {
     id: "USR-005",
@@ -47,8 +47,8 @@ export const mockUsers = [
     email: "ana.lidia@empresa.com",
     role: "OPERATOR",
     status: "Activo",
-    createdAt: "2026-04-12"
-  }
+    createdAt: "2026-04-12",
+  },
 ];
 
 export const mockSuppliers = [
@@ -58,7 +58,7 @@ export const mockSuppliers = [
     email: "auto_orders@logglobal.com",
     phone: "+34 912 345 678",
     associatedProducts: 1240,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-042",
@@ -66,7 +66,7 @@ export const mockSuppliers = [
     email: "rpa.inbound@techcorp.io",
     phone: "+1 555 019 8372",
     associatedProducts: 453,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-118",
@@ -74,7 +74,7 @@ export const mockSuppliers = [
     email: "ventas@delta.es",
     phone: "+34 900 111 222",
     associatedProducts: 89,
-    hasRpaError: true
+    hasRpaError: true,
   },
   {
     id: "PRV-205",
@@ -82,7 +82,7 @@ export const mockSuppliers = [
     email: "b2b@compind.com",
     phone: "+34 934 567 890",
     associatedProducts: 2105,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-312",
@@ -90,7 +90,7 @@ export const mockSuppliers = [
     email: "pedidos.auto@ecobox.net",
     phone: "+34 961 234 567",
     associatedProducts: 15,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-401",
@@ -98,7 +98,7 @@ export const mockSuppliers = [
     email: "orders@globalparts.net",
     phone: "+1 800 555 0199",
     associatedProducts: 520,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-502",
@@ -106,7 +106,7 @@ export const mockSuppliers = [
     email: "b2b@techsupplies.com",
     phone: "+1 888 444 3210",
     associatedProducts: 310,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-603",
@@ -114,7 +114,7 @@ export const mockSuppliers = [
     email: "dispatch@nexusparts.co.uk",
     phone: "+44 20 7946 0912",
     associatedProducts: 780,
-    hasRpaError: false
+    hasRpaError: false,
   },
   {
     id: "PRV-704",
@@ -122,8 +122,8 @@ export const mockSuppliers = [
     email: "supply@biogensolutions.com",
     phone: "+41 22 765 4321",
     associatedProducts: 640,
-    hasRpaError: false
-  }
+    hasRpaError: false,
+  },
 ];
 
 export const mockCategories = [
@@ -132,43 +132,43 @@ export const mockCategories = [
     name: "Electrónica",
     description: "Componentes, microcontroladores y placas de circuitos",
     totalProducts: 85,
-    status: "Activo"
+    status: "Activo",
   },
   {
     id: "CAT-02",
     name: "Sensores",
     description: "Sensores de proximidad, ultrasónicos, temperatura e IoT",
     totalProducts: 42,
-    status: "Activo"
+    status: "Activo",
   },
   {
     id: "CAT-03",
     name: "Automatización",
     description: "Módulos de relé, contactores y controladores lógicos",
     totalProducts: 64,
-    status: "Activo"
+    status: "Activo",
   },
   {
     id: "CAT-04",
     name: "Reactivos",
     description: "Reactivos químicos y soluciones buffer para laboratorio",
     totalProducts: 112,
-    status: "Activo"
+    status: "Activo",
   },
   {
     id: "CAT-05",
     name: "Mecánica",
     description: "Rodamientos cerámicos, ejes, engranajes y fijaciones",
     totalProducts: 98,
-    status: "Activo"
+    status: "Activo",
   },
   {
     id: "CAT-06",
     name: "Biotecnología",
     description: "Medios de cultivo celular, enzimas y kits ADN",
     totalProducts: 35,
-    status: "Activo"
-  }
+    status: "Activo",
+  },
 ];
 
 export const mockProducts = [
@@ -184,19 +184,40 @@ export const mockProducts = [
     reorderPoint: 150,
     optimalOrderQty: 500,
     leadTimeDays: 4,
-    description: "Microcontrolador de 32 bits de alto rendimiento para procesamiento de señales embebidas.",
+    description:
+      "Microcontrolador de 32 bits de alto rendimiento para procesamiento de señales embebidas.",
     unit: "uds",
     status: "STOCK_BAJO",
     statusLabel: "STOCK BAJO",
     statusType: "danger",
     recommendedAction: "Ejecutar RPA Reorden",
     batches: [
-      { id: "LT-2023-01A", batchNumber: "L-2023-8902-A", quantity: 45, expDate: "2026-11-20", daysRemaining: 80 }
+      {
+        id: "LT-2023-01A",
+        batchNumber: "L-2023-8902-A",
+        quantity: 45,
+        expDate: "2026-11-20",
+        daysRemaining: 80,
+      },
     ],
     movements: [
-      { id: "mov-1", type: "Salida", quantity: -55, date: "24/10 09:30", note: "Despacho para línea de ensamblaje 1", operator: "J. Perez" },
-      { id: "mov-2", type: "Entrada", quantity: 100, date: "18/10 14:00", note: "Recepción PO-771", operator: "RPA-Sys01" }
-    ]
+      {
+        id: "mov-1",
+        type: "Salida",
+        quantity: -55,
+        date: "24/10 09:30",
+        note: "Despacho para línea de ensamblaje 1",
+        operator: "J. Perez",
+      },
+      {
+        id: "mov-2",
+        type: "Entrada",
+        quantity: 100,
+        date: "18/10 14:00",
+        note: "Recepción PO-771",
+        operator: "RPA-Sys01",
+      },
+    ],
   },
   {
     id: "prod-2",
@@ -210,7 +231,8 @@ export const mockProducts = [
     reorderPoint: 50,
     optimalOrderQty: 100,
     leadTimeDays: 2,
-    description: "Sensor ultrasónico de alta precisión con salida analógica 4-20mA resistente a polvo IP67.",
+    description:
+      "Sensor ultrasónico de alta precisión con salida analógica 4-20mA resistente a polvo IP67.",
     unit: "uds",
     status: "AGOTADO",
     statusLabel: "AGOTADO",
@@ -218,8 +240,15 @@ export const mockProducts = [
     recommendedAction: "Solicitar Urgente",
     batches: [],
     movements: [
-      { id: "mov-3", type: "Salida", quantity: -20, date: "23/10 18:20", note: "Consumo total por orden de trabajo #441", operator: "M. Gomez" }
-    ]
+      {
+        id: "mov-3",
+        type: "Salida",
+        quantity: -20,
+        date: "23/10 18:20",
+        note: "Consumo total por orden de trabajo #441",
+        operator: "M. Gomez",
+      },
+    ],
   },
   {
     id: "prod-3",
@@ -233,18 +262,32 @@ export const mockProducts = [
     reorderPoint: 200,
     optimalOrderQty: 300,
     leadTimeDays: 5,
-    description: "Módulo de conmutación 4 canales optoacoplado compatible con voltajes de control 5V/12V/24V.",
+    description:
+      "Módulo de conmutación 4 canales optoacoplado compatible con voltajes de control 5V/12V/24V.",
     unit: "uds",
     status: "REORDEN_PROXIMO",
     statusLabel: "REORDEN PRÓX.",
     statusType: "warning",
     recommendedAction: "Programar Lote",
     batches: [
-      { id: "LT-2023-1123", batchNumber: "L-2023-1123", quantity: 120, expDate: "2027-01-10", daysRemaining: 130 }
+      {
+        id: "LT-2023-1123",
+        batchNumber: "L-2023-1123",
+        quantity: 120,
+        expDate: "2027-01-10",
+        daysRemaining: 130,
+      },
     ],
     movements: [
-      { id: "mov-4", type: "Salida", quantity: -30, date: "22/10 11:15", note: "Despacho a taller de integración", operator: "RPA-Sys01" }
-    ]
+      {
+        id: "mov-4",
+        type: "Salida",
+        quantity: -30,
+        date: "22/10 11:15",
+        note: "Despacho a taller de integración",
+        operator: "RPA-Sys01",
+      },
+    ],
   },
   {
     id: "prod-4",
@@ -258,18 +301,32 @@ export const mockProducts = [
     reorderPoint: 1200,
     optimalOrderQty: 2000,
     leadTimeDays: 3,
-    description: "Kit de purificación y extracción rápida de ADN genómico para diagnóstico molecular.",
+    description:
+      "Kit de purificación y extracción rápida de ADN genómico para diagnóstico molecular.",
     unit: "uds",
     status: "SALUDABLE",
     statusLabel: "SALUDABLE",
     statusType: "success",
     recommendedAction: "Sin acción requerida",
     batches: [
-      { id: "LT-2024-D2", batchNumber: "L-2024-D2", quantity: 5400, expDate: "15 Días", daysRemaining: 15 }
+      {
+        id: "LT-2024-D2",
+        batchNumber: "L-2024-D2",
+        quantity: 5400,
+        expDate: "15 Días",
+        daysRemaining: 15,
+      },
     ],
     movements: [
-      { id: "mov-5", type: "Entrada", quantity: 5400, date: "20/10 16:30", note: "Lote de importación rápida", operator: "RPA-Sys02" }
-    ]
+      {
+        id: "mov-5",
+        type: "Entrada",
+        quantity: 5400,
+        date: "20/10 16:30",
+        note: "Lote de importación rápida",
+        operator: "RPA-Sys02",
+      },
+    ],
   },
   {
     id: "prod-5",
@@ -284,20 +341,47 @@ export const mockProducts = [
     optimalOrderQty: 200,
     leadTimeDays: 6,
     thresholdNote: "Ajustado +20% ayer",
-    description: "Rodamiento de alta precisión fabricado en material cerámico para aplicaciones industriales de alta velocidad y temperatura.",
+    description:
+      "Rodamiento de alta precisión fabricado en material cerámico para aplicaciones industriales de alta velocidad y temperatura.",
     unit: "uds",
     status: "STOCK_BAJO",
     statusLabel: "STOCK BAJO",
     statusType: "warning",
     recommendedAction: "Generar PO (+200 uds)",
     batches: [
-      { id: "LT-2023-09A", batchNumber: "LT-2023-09A", quantity: 24, expDate: "15 Oct 2026", daysRemaining: 45 },
-      { id: "LT-2023-11C", batchNumber: "LT-2023-11C", quantity: 100, expDate: "02 Dic 2026", daysRemaining: 90 }
+      {
+        id: "LT-2023-09A",
+        batchNumber: "LT-2023-09A",
+        quantity: 24,
+        expDate: "15 Oct 2026",
+        daysRemaining: 45,
+      },
+      {
+        id: "LT-2023-11C",
+        batchNumber: "LT-2023-11C",
+        quantity: 100,
+        expDate: "02 Dic 2026",
+        daysRemaining: 90,
+      },
     ],
     movements: [
-      { id: "mov-6", type: "Salida", quantity: -45, date: "Hoy, 09:15 AM", note: "Despacho WO-9921: Salida de -45 uds para Línea de Ensamblaje B.", operator: "M. Gomez" },
-      { id: "mov-7", type: "Entrada", quantity: 100, date: "Ayer, 14:30 PM", note: "Recepción PO-884: Ingreso de +100 uds (Lote LT-2023-11C).", operator: "RPA-Sys01" }
-    ]
+      {
+        id: "mov-6",
+        type: "Salida",
+        quantity: -45,
+        date: "Hoy, 09:15 AM",
+        note: "Despacho WO-9921: Salida de -45 uds para Línea de Ensamblaje B.",
+        operator: "M. Gomez",
+      },
+      {
+        id: "mov-7",
+        type: "Entrada",
+        quantity: 100,
+        date: "Ayer, 14:30 PM",
+        note: "Recepción PO-884: Ingreso de +100 uds (Lote LT-2023-11C).",
+        operator: "RPA-Sys01",
+      },
+    ],
   },
   {
     id: "prod-6",
@@ -318,9 +402,16 @@ export const mockProducts = [
     statusType: "success",
     recommendedAction: "Vigilar FEFO",
     batches: [
-      { id: "L-2023-X9", batchNumber: "L-2023-X9", quantity: 1250, expDate: "Mañana", daysRemaining: 1, urgency: "0-3 DÍAS" }
+      {
+        id: "L-2023-X9",
+        batchNumber: "L-2023-X9",
+        quantity: 1250,
+        expDate: "Mañana",
+        daysRemaining: 1,
+        urgency: "0-3 DÍAS",
+      },
     ],
-    movements: []
+    movements: [],
   },
   {
     id: "prod-7",
@@ -341,9 +432,16 @@ export const mockProducts = [
     statusType: "success",
     recommendedAction: "Rotación rápida",
     batches: [
-      { id: "L-2023-Z2", batchNumber: "L-2023-Z2", quantity: 450, expDate: "2 Días", daysRemaining: 2, urgency: "0-3 DÍAS" }
+      {
+        id: "L-2023-Z2",
+        batchNumber: "L-2023-Z2",
+        quantity: 450,
+        expDate: "2 Días",
+        daysRemaining: 2,
+        urgency: "0-3 DÍAS",
+      },
     ],
-    movements: []
+    movements: [],
   },
   {
     id: "prod-8",
@@ -357,16 +455,24 @@ export const mockProducts = [
     reorderPoint: 1500,
     optimalOrderQty: 2000,
     leadTimeDays: 3,
-    description: "Medio líquido enriquecido para cultivo bacteriano de alta densidad.",
+    description:
+      "Medio líquido enriquecido para cultivo bacteriano de alta densidad.",
     unit: "uds",
     status: "SALUDABLE",
     statusLabel: "SALUDABLE",
     statusType: "success",
     recommendedAction: "Rotación FEFO",
     batches: [
-      { id: "L-2023-A4", batchNumber: "L-2023-A4", quantity: 3100, expDate: "5 Días", daysRemaining: 5, urgency: "4-7 DÍAS" }
+      {
+        id: "L-2023-A4",
+        batchNumber: "L-2023-A4",
+        quantity: 3100,
+        expDate: "5 Días",
+        daysRemaining: 5,
+        urgency: "4-7 DÍAS",
+      },
     ],
-    movements: []
+    movements: [],
   },
   {
     id: "prod-9",
@@ -387,9 +493,16 @@ export const mockProducts = [
     statusType: "success",
     recommendedAction: "Mantener en frío",
     batches: [
-      { id: "L-2023-B1", batchNumber: "L-2023-B1", quantity: 890, expDate: "6 Días", daysRemaining: 6, urgency: "4-7 DÍAS" }
+      {
+        id: "L-2023-B1",
+        batchNumber: "L-2023-B1",
+        quantity: 890,
+        expDate: "6 Días",
+        daysRemaining: 6,
+        urgency: "4-7 DÍAS",
+      },
     ],
-    movements: []
+    movements: [],
   },
   {
     id: "prod-10",
@@ -403,17 +516,25 @@ export const mockProducts = [
     reorderPoint: 100,
     optimalOrderQty: 200,
     leadTimeDays: 5,
-    description: "Anticuerpo IgG purificado por afinidad con alta especificidad.",
+    description:
+      "Anticuerpo IgG purificado por afinidad con alta especificidad.",
     unit: "uds",
     status: "SALUDABLE",
     statusLabel: "SALUDABLE",
     statusType: "success",
     recommendedAction: "Supervisar Lote",
     batches: [
-      { id: "L-2024-C9", batchNumber: "L-2024-C9", quantity: 150, expDate: "12 Días", daysRemaining: 12, urgency: "8+ DÍAS" }
+      {
+        id: "L-2024-C9",
+        batchNumber: "L-2024-C9",
+        quantity: 150,
+        expDate: "12 Días",
+        daysRemaining: 12,
+        urgency: "8+ DÍAS",
+      },
     ],
-    movements: []
-  }
+    movements: [],
+  },
 ];
 
 export const mockBatchesExpiring = [
@@ -426,7 +547,7 @@ export const mockBatchesExpiring = [
     expDate: "Mañana",
     daysRemaining: 1,
     statusGroup: "CRITICAL",
-    statusText: "0-3 DÍAS"
+    statusText: "0-3 DÍAS",
   },
   {
     id: "BATCH-02",
@@ -437,7 +558,7 @@ export const mockBatchesExpiring = [
     expDate: "2 Días",
     daysRemaining: 2,
     statusGroup: "CRITICAL",
-    statusText: "0-3 DÍAS"
+    statusText: "0-3 DÍAS",
   },
   {
     id: "BATCH-03",
@@ -448,7 +569,7 @@ export const mockBatchesExpiring = [
     expDate: "5 Días",
     daysRemaining: 5,
     statusGroup: "WARNING",
-    statusText: "4-7 DÍAS"
+    statusText: "4-7 DÍAS",
   },
   {
     id: "BATCH-04",
@@ -459,7 +580,7 @@ export const mockBatchesExpiring = [
     expDate: "6 Días",
     daysRemaining: 6,
     statusGroup: "WARNING",
-    statusText: "4-7 DÍAS"
+    statusText: "4-7 DÍAS",
   },
   {
     id: "BATCH-05",
@@ -470,7 +591,7 @@ export const mockBatchesExpiring = [
     expDate: "12 Días",
     daysRemaining: 12,
     statusGroup: "ATTENTION",
-    statusText: "8+ DÍAS"
+    statusText: "8+ DÍAS",
   },
   {
     id: "BATCH-06",
@@ -481,8 +602,8 @@ export const mockBatchesExpiring = [
     expDate: "15 Días",
     daysRemaining: 15,
     statusGroup: "ATTENTION",
-    statusText: "8+ DÍAS"
-  }
+    statusText: "8+ DÍAS",
+  },
 ];
 
 export const mockMovements = [
@@ -496,7 +617,7 @@ export const mockMovements = [
     formattedQty: "+5,000",
     batchNumber: "L-2023-10A",
     operator: "RPA-Sys01",
-    reason: "Recepción de orden automatizada RPA-2023-8891"
+    reason: "Recepción de orden automatizada RPA-2023-8891",
   },
   {
     id: "MOV-102",
@@ -508,7 +629,7 @@ export const mockMovements = [
     formattedQty: "-1,200",
     batchNumber: "L-2023-09C",
     operator: "J. Perez",
-    reason: "Despacho a línea de producción módulo baterías"
+    reason: "Despacho a línea de producción módulo baterías",
   },
   {
     id: "MOV-103",
@@ -520,19 +641,19 @@ export const mockMovements = [
     formattedQty: "-14",
     batchNumber: "L-2023-08B",
     operator: "M. Gomez",
-    reason: "Ajuste por conteo físico: merma y rotura en estantería"
+    reason: "Ajuste por conteo físico: merma y rotura en estantería",
   },
   {
     id: "MOV-104",
     dateTime: "23/10 09:05",
     type: "Entrada",
-    productName: "Pantallas OLED 6.1\"",
+    productName: 'Pantallas OLED 6.1"',
     sku: "DP-OL61-HD",
     quantity: 3500,
     formattedQty: "+3,500",
     batchNumber: "L-2023-10B",
     operator: "RPA-Sys02",
-    reason: "Ingreso directo de aduanas con verificación QR"
+    reason: "Ingreso directo de aduanas con verificación QR",
   },
   {
     id: "MOV-105",
@@ -544,8 +665,8 @@ export const mockMovements = [
     formattedQty: "-850",
     batchNumber: "L-2023-09A",
     operator: "RPA-Sys01",
-    reason: "Despacho programado cliente OEM industrial"
-  }
+    reason: "Despacho programado cliente OEM industrial",
+  },
 ];
 
 export const mockPurchaseOrders = [
@@ -556,13 +677,18 @@ export const mockPurchaseOrders = [
     supplierId: "PRV-001",
     dateTime: "24 Oct 2026, 14:32",
     quantity: 1250,
-    totalValue: 45200.00,
+    totalValue: 45200.0,
     formattedTotal: "$45,200.00",
     status: "PROCESSING",
     statusLabel: "PROCESSING",
     items: [
-      { sku: "SKU-8902", product: "Microcontrolador ARM Cortex-M4", qty: 1250, unitPrice: 36.16 }
-    ]
+      {
+        sku: "SKU-8902",
+        product: "Microcontrolador ARM Cortex-M4",
+        qty: 1250,
+        unitPrice: 36.16,
+      },
+    ],
   },
   {
     id: "RPA-2023-8890",
@@ -571,13 +697,18 @@ export const mockPurchaseOrders = [
     supplierId: "PRV-502",
     dateTime: "24 Oct 2026, 14:15",
     quantity: 850,
-    totalValue: 12850.50,
+    totalValue: 12850.5,
     formattedTotal: "$12,850.50",
     status: "PENDING",
     statusLabel: "PENDING",
     items: [
-      { sku: "SKU-4410", product: "Sensor Ultrasónico Industrial", qty: 850, unitPrice: 15.12 }
-    ]
+      {
+        sku: "SKU-4410",
+        product: "Sensor Ultrasónico Industrial",
+        qty: 850,
+        unitPrice: 15.12,
+      },
+    ],
   },
   {
     id: "RPA-2023-8889",
@@ -586,13 +717,18 @@ export const mockPurchaseOrders = [
     supplierId: "PRV-205",
     dateTime: "24 Oct 2026, 13:45",
     quantity: 3400,
-    totalValue: 112000.00,
+    totalValue: 112000.0,
     formattedTotal: "$112,000.00",
     status: "SENT",
     statusLabel: "SENT",
     items: [
-      { sku: "SKU-1123", product: "Módulo de Relé 4 Canales", qty: 3400, unitPrice: 32.94 }
-    ]
+      {
+        sku: "SKU-1123",
+        product: "Módulo de Relé 4 Canales",
+        qty: 3400,
+        unitPrice: 32.94,
+      },
+    ],
   },
   {
     id: "RPA-2023-8888",
@@ -601,15 +737,21 @@ export const mockPurchaseOrders = [
     supplierId: "PRV-603",
     dateTime: "24 Oct 2026, 11:20",
     quantity: 150,
-    totalValue: 4500.00,
+    totalValue: 4500.0,
     formattedTotal: "$4,500.00",
     status: "FAILED",
     statusLabel: "FAILED",
     errorCode: "RPA-ERR-042",
-    errorDetail: "Tiempo de espera agotado al conectar con el portal del proveedor Apex Manufacturing.",
+    errorDetail:
+      "Tiempo de espera agotado al conectar con el portal del proveedor Apex Manufacturing.",
     items: [
-      { sku: "MCH-4402-X", product: "Rodamiento de Bolas Cerámico", qty: 150, unitPrice: 30.00 }
-    ]
+      {
+        sku: "MCH-4402-X",
+        product: "Rodamiento de Bolas Cerámico",
+        qty: 150,
+        unitPrice: 30.0,
+      },
+    ],
   },
   {
     id: "RPA-2023-8887",
@@ -618,14 +760,19 @@ export const mockPurchaseOrders = [
     supplierId: "PRV-205",
     dateTime: "24 Oct 2026, 09:15",
     quantity: 500,
-    totalValue: 22000.00,
+    totalValue: 22000.0,
     formattedTotal: "$22,000.00",
     status: "SENT",
     statusLabel: "SENT",
     items: [
-      { sku: "SKU-8902", product: "Microcontrolador ARM Cortex-M4", qty: 500, unitPrice: 44.00 }
-    ]
-  }
+      {
+        sku: "SKU-8902",
+        product: "Microcontrolador ARM Cortex-M4",
+        qty: 500,
+        unitPrice: 44.0,
+      },
+    ],
+  },
 ];
 
 export const mockTrendingProducts = [
@@ -640,9 +787,9 @@ export const mockTrendingProducts = [
     dataSource: "Análisis de Mercado Global A",
     suggestedQty: 5000,
     formattedQty: "5,000 uds",
-    estimatedUnitCost: 24.50,
+    estimatedUnitCost: 24.5,
     potentialMargin: "+38%",
-    status: "PENDING"
+    status: "PENDING",
   },
   {
     id: "TREND-02",
@@ -655,9 +802,9 @@ export const mockTrendingProducts = [
     dataSource: "Tendencias de Cadena Suministro",
     suggestedQty: 1200,
     formattedQty: "1,200 uds",
-    estimatedUnitCost: 85.00,
+    estimatedUnitCost: 85.0,
     potentialMargin: "+42%",
-    status: "PENDING"
+    status: "PENDING",
   },
   {
     id: "TREND-03",
@@ -670,9 +817,9 @@ export const mockTrendingProducts = [
     dataSource: "Reporte de Escasez Q3",
     suggestedQty: 850,
     formattedQty: "850 uds",
-    estimatedUnitCost: 110.00,
+    estimatedUnitCost: 110.0,
     potentialMargin: "+25%",
-    status: "PENDING"
+    status: "PENDING",
   },
   {
     id: "TREND-04",
@@ -685,10 +832,10 @@ export const mockTrendingProducts = [
     dataSource: "Algoritmo Predictivo V3",
     suggestedQty: 2400,
     formattedQty: "2,400 uds",
-    estimatedUnitCost: 45.00,
+    estimatedUnitCost: 45.0,
     potentialMargin: "+31%",
-    status: "PENDING"
-  }
+    status: "PENDING",
+  },
 ];
 
 export const mockDashboardKpi = {
@@ -700,6 +847,6 @@ export const mockDashboardKpi = {
     active: 1248,
     processing: 84,
     completedToday: 4192,
-    failed: 3
-  }
+    failed: 3,
+  },
 };

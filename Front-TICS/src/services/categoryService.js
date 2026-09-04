@@ -37,7 +37,7 @@ export const categoryService = {
         name: categoryData.name,
         description: categoryData.description || "",
         totalProducts: Number(categoryData.totalProducts) || 0,
-        status: categoryData.status || "Activo"
+        status: categoryData.status || "Activo",
       };
       const updated = [newCat, ...current];
       saveLocalCategories(updated);
@@ -68,5 +68,5 @@ export const categoryService = {
       method: "PUT",
       body: JSON.stringify(categoryData),
     });
-  }
+  },
 };

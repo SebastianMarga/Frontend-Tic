@@ -24,15 +24,31 @@ export const userService = {
     if (USE_MOCK) {
       let data = getLocalUsers();
 
-      if (filters.role && filters.role !== "Todos los roles" && filters.role !== "Todos") {
-        data = data.filter((u) => u.role.toLowerCase() === filters.role.toLowerCase());
+      if (
+        filters.role &&
+        filters.role !== "Todos los roles" &&
+        filters.role !== "Todos"
+      ) {
+        data = data.filter(
+          (u) => u.role.toLowerCase() === filters.role.toLowerCase(),
+        );
       }
-      if (filters.status && filters.status !== "Cualquier estado" && filters.status !== "Todos") {
-        data = data.filter((u) => u.status.toLowerCase() === filters.status.toLowerCase());
+      if (
+        filters.status &&
+        filters.status !== "Cualquier estado" &&
+        filters.status !== "Todos"
+      ) {
+        data = data.filter(
+          (u) => u.status.toLowerCase() === filters.status.toLowerCase(),
+        );
       }
       if (filters.search) {
         const q = filters.search.toLowerCase().trim();
-        data = data.filter((u) => u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q));
+        data = data.filter(
+          (u) =>
+            u.name.toLowerCase().includes(q) ||
+            u.email.toLowerCase().includes(q),
+        );
       }
 
       return mockDelay([...data]);
@@ -61,7 +77,7 @@ export const userService = {
         email: userData.email,
         role: userData.role || "OPERATOR",
         status: "Activo",
-        createdAt: new Date().toISOString().split("T")[0]
+        createdAt: new Date().toISOString().split("T")[0],
       };
 
       const updated = [newUser, ...current];
@@ -84,7 +100,7 @@ export const userService = {
       current[index] = {
         ...current[index],
         ...userData,
-        role: userData.role || current[index].role
+        role: userData.role || current[index].role,
       };
       saveLocalUsers(current);
       return mockDelay(current[index]);
@@ -94,5 +110,5 @@ export const userService = {
       method: "PATCH",
       body: JSON.stringify(userData),
     });
-  }
+  },
 };

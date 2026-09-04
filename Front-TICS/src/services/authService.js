@@ -9,10 +9,10 @@ export const authService = {
     if (USE_MOCK) {
       await mockDelay(null, 300);
       const normalizedEmail = email?.trim().toLowerCase();
-      
+
       // Valida si coincide con algún usuario registrado o con credenciales de prueba estándar
       const matchedUser = mockUsers.find(
-        (u) => u.email.toLowerCase() === normalizedEmail
+        (u) => u.email.toLowerCase() === normalizedEmail,
       );
 
       // Si es admin@inventario.ia o cualquier usuario válido
@@ -20,18 +20,24 @@ export const authService = {
         const token = `mock_jwt_token_${matchedUser.id}_${Date.now()}`;
         const sessionData = {
           user: matchedUser,
-          token
+          token,
         };
         localStorage.setItem(AUTH_USER_KEY, JSON.stringify(matchedUser));
         localStorage.setItem(AUTH_TOKEN_KEY, token);
         return sessionData;
-      } else if (normalizedEmail === "admin@inventario.ia" && password === "admin123") {
+      } else if (
+        normalizedEmail === "admin@inventario.ia" &&
+        password === "admin123"
+      ) {
         const adminUser = mockUsers[0];
         const token = `mock_jwt_token_admin_${Date.now()}`;
         localStorage.setItem(AUTH_USER_KEY, JSON.stringify(adminUser));
         localStorage.setItem(AUTH_TOKEN_KEY, token);
         return { user: adminUser, token };
-      } else if (normalizedEmail === "operator@inventario.ia" || normalizedEmail === "miguel.gomez@inventarioia.com") {
+      } else if (
+        normalizedEmail === "operator@inventario.ia" ||
+        normalizedEmail === "miguel.gomez@inventarioia.com"
+      ) {
         const operatorUser = mockUsers[1];
         const token = `mock_jwt_token_operator_${Date.now()}`;
         localStorage.setItem(AUTH_USER_KEY, JSON.stringify(operatorUser));
@@ -64,7 +70,7 @@ export const authService = {
     } catch (e) {
       console.error("Error parsing current user", e);
     }
-    
+
     return null;
   },
 
@@ -79,5 +85,5 @@ export const authService = {
     localStorage.removeItem(AUTH_USER_KEY);
     localStorage.removeItem(AUTH_TOKEN_KEY);
     return Promise.resolve(true);
-  }
+  },
 };

@@ -1,45 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { X, Bot, Sparkles, Send } from 'lucide-react';
-import { supplierService } from '../../services/supplierService.js';
-import { productService } from '../../services/productService.js';
-import { rpaService } from '../../services/rpaService.js';
+import React, { useState, useEffect } from "react";
+import { X, Bot, Sparkles, Send } from "lucide-react";
+import { supplierService } from "../../services/supplierService.js";
+import { productService } from "../../services/productService.js";
+import { rpaService } from "../../services/rpaService.js";
 
-export default function ModalNuevaOrdenRPA({ isOpen, onClose, initialData, onCreated }) {
+export default function ModalNuevaOrdenRPA({
+  isOpen,
+  onClose,
+  initialData,
+  onCreated,
+}) {
   const [suppliers, setSuppliers] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const [selectedSupplierId, setSelectedSupplierId] = useState('');
-  const [selectedProductId, setSelectedProductId] = useState('');
+  const [selectedSupplierId, setSelectedSupplierId] = useState("");
+  const [selectedProductId, setSelectedProductId] = useState("");
   const [quantity, setQuantity] = useState(250);
-  const [priority, setPriority] = useState('NORMAL');
-  const [channel, setChannel] = useState('B2B_BOT');
+  const [priority, setPriority] = useState("NORMAL");
+  const [channel, setChannel] = useState("B2B_BOT");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      Promise.all([supplierService.getSuppliers(), productService.getProducts()]).then(
-        ([sups, prods]) => {
-          setSuppliers(sups);
-          setProducts(prods);
+      Promise.all([
+        supplierService.getSuppliers(),
+        productService.getProducts(),
+      ]).then(([sups, prods]) => {
+        setSuppliers(sups);
+        setProducts(prods);
 
-          if (initialData?.supplierId) {
-            setSelectedSupplierId(initialData.supplierId);
-          } else if (sups.length > 0) {
-            setSelectedSupplierId(sups[0].id);
-          }
-
-          if (initialData?.sku) {
-            const found = prods.find((p) => p.sku === initialData.sku);
-            if (found) setSelectedProductId(found.id);
-          } else if (prods.length > 0) {
-            setSelectedProductId(prods[0].id);
-          }
-
-          if (initialData?.quantity) {
-            setQuantity(initialData.quantity);
-          }
+        if (initialData?.supplierId) {
+          setSelectedSupplierId(initialData.supplierId);
+        } else if (sups.length > 0) {
+          setSelectedSupplierId(sups[0].id);
         }
-      );
+
+        if (initialData?.sku) {
+          const found = prods.find((p) => p.sku === initialData.sku);
+          if (found) setSelectedProductId(found.id);
+        } else if (prods.length > 0) {
+          setSelectedProductId(prods[0].id);
+        }
+
+        if (initialData?.quantity) {
+          setQuantity(initialData.quantity);
+        }
+      });
     }
   }, [isOpen, initialData]);
 
@@ -58,20 +64,24 @@ export default function ModalNuevaOrdenRPA({ isOpen, onClose, initialData, onCre
 
     try {
       await rpaService.createPurchaseOrder({
-        supplier: currentSupplier ? currentSupplier.name : 'Global Logistics Corp',
+        supplier: currentSupplier
+          ? currentSupplier.name
+          : "Global Logistics Corp",
         supplierId: selectedSupplierId,
-        productName: currentProduct ? currentProduct.name : 'Insumo Electrónico',
-        sku: currentProduct ? currentProduct.sku : 'SKU-GEN',
+        productName: currentProduct
+          ? currentProduct.name
+          : "Insumo Electrónico",
+        sku: currentProduct ? currentProduct.sku : "SKU-GEN",
         quantity: Number(quantity),
         totalValue: estimatedTotal,
         priority,
-        channel
+        channel,
       });
 
       onCreated();
       onClose();
     } catch (err) {
-      alert('Error creando orden RPA: ' + err.message);
+      alert("Error creando orden RPA: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -81,13 +91,24 @@ export default function ModalNuevaOrdenRPA({ isOpen, onClose, initialData, onCre
     <div className="modal-overlay">
       <div className="modal-content modal-lg" id="modal-nueva-orden-rpa">
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ background: '#0b1c30', color: '#ffffff', padding: '6px', borderRadius: '4px' }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div
+              style={{
+                background: "#0b1c30",
+                color: "#ffffff",
+                padding: "6px",
+                borderRadius: "4px",
+              }}
+            >
               <Bot size={16} />
             </div>
             <h2 className="modal-title">Generar Orden de Compra RPA</h2>
           </div>
-          <button className="modal-close-btn" onClick={onClose} id="btn-cerrar-nueva-orden">
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+            id="btn-cerrar-nueva-orden"
+          >
             <X size={18} />
           </button>
         </div>
@@ -158,35 +179,65 @@ export default function ModalNuevaOrdenRPA({ isOpen, onClose, initialData, onCre
             {/* Cuadro de resumen económico */}
             <div
               style={{
-                backgroundColor: '#f8fafc',
-                padding: '16px',
-                borderRadius: '6px',
-                border: '1px solid #e2e8f0',
-                margin: '12px 0 16px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
+                backgroundColor: "#f8fafc",
+                padding: "16px",
+                borderRadius: "6px",
+                border: "1px solid #e2e8f0",
+                margin: "12px 0 16px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
               <div>
-                <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 700 }}>VALOR ESTIMADO DE COMPRA</span>
-                <div className="mono" style={{ fontSize: '22px', fontWeight: 800, color: '#0b1c30' }}>
-                  ${estimatedTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <span
+                  style={{
+                    fontSize: "11px",
+                    color: "#64748b",
+                    fontWeight: 700,
+                  }}
+                >
+                  VALOR ESTIMADO DE COMPRA
+                </span>
+                <div
+                  className="mono"
+                  style={{
+                    fontSize: "22px",
+                    fontWeight: 800,
+                    color: "#0b1c30",
+                  }}
+                >
+                  $
+                  {estimatedTotal.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </div>
               </div>
-              <div style={{ textAlign: 'right' }}>
+              <div style={{ textAlign: "right" }}>
                 <span className="badge badge-info">Zero-Touch Dispatch</span>
               </div>
             </div>
           </div>
 
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary" disabled={loading} id="btn-lanzar-bot-rpa">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+              id="btn-lanzar-bot-rpa"
+            >
               <Send size={14} />
-              <span>{loading ? 'Iniciando bot...' : 'Lanzar Bot de Compra RPA'}</span>
+              <span>
+                {loading ? "Iniciando bot..." : "Lanzar Bot de Compra RPA"}
+              </span>
             </button>
           </div>
         </form>

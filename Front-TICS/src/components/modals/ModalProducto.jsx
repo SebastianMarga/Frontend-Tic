@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { X, Package, Sparkles } from 'lucide-react';
-import { productService } from '../../services/productService.js';
-import { categoryService } from '../../services/categoryService.js';
-import { supplierService } from '../../services/supplierService.js';
+import React, { useState, useEffect } from "react";
+import { X, Package, Sparkles } from "lucide-react";
+import { productService } from "../../services/productService.js";
+import { categoryService } from "../../services/categoryService.js";
+import { supplierService } from "../../services/supplierService.js";
 
-export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved }) {
-  const [sku, setSku] = useState('');
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
-  const [supplier, setSupplier] = useState('');
+export default function ModalProducto({
+  isOpen,
+  onClose,
+  productToEdit,
+  onSaved,
+}) {
+  const [sku, setSku] = useState("");
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [supplier, setSupplier] = useState("");
   const [currentStock, setCurrentStock] = useState(0);
   const [dynamicThreshold, setDynamicThreshold] = useState(100);
   const [optimalOrderQty, setOptimalOrderQty] = useState(200);
   const [leadTimeDays, setLeadTimeDays] = useState(5);
-  const [description, setDescription] = useState('');
-  const [unit, setUnit] = useState('uds');
+  const [description, setDescription] = useState("");
+  const [unit, setUnit] = useState("uds");
 
   const [categories, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
@@ -33,25 +38,25 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
       });
 
       if (productToEdit) {
-        setSku(productToEdit.sku || '');
-        setName(productToEdit.name || '');
-        setCategory(productToEdit.category || '');
-        setSupplier(productToEdit.supplier || '');
+        setSku(productToEdit.sku || "");
+        setName(productToEdit.name || "");
+        setCategory(productToEdit.category || "");
+        setSupplier(productToEdit.supplier || "");
         setCurrentStock(productToEdit.currentStock || 0);
         setDynamicThreshold(productToEdit.dynamicThreshold || 100);
         setOptimalOrderQty(productToEdit.optimalOrderQty || 200);
         setLeadTimeDays(productToEdit.leadTimeDays || 5);
-        setDescription(productToEdit.description || '');
-        setUnit(productToEdit.unit || 'uds');
+        setDescription(productToEdit.description || "");
+        setUnit(productToEdit.unit || "uds");
       } else {
         setSku(`SKU-${Math.floor(1000 + Math.random() * 9000)}`);
-        setName('');
+        setName("");
         setCurrentStock(0);
         setDynamicThreshold(100);
         setOptimalOrderQty(250);
         setLeadTimeDays(5);
-        setDescription('');
-        setUnit('uds');
+        setDescription("");
+        setUnit("uds");
       }
     }
   }, [isOpen, productToEdit]);
@@ -73,7 +78,7 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
         optimalOrderQty: Number(optimalOrderQty),
         leadTimeDays: Number(leadTimeDays),
         description,
-        unit
+        unit,
       };
 
       if (productToEdit) {
@@ -85,7 +90,7 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
       onSaved();
       onClose();
     } catch (err) {
-      alert('Error guardando producto: ' + err.message);
+      alert("Error guardando producto: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -96,9 +101,15 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
       <div className="modal-content modal-lg" id="modal-producto">
         <div className="modal-header">
           <h2 className="modal-title">
-            {productToEdit ? 'Editar Parámetros de Producto' : 'Nuevo Producto en Catálogo'}
+            {productToEdit
+              ? "Editar Parámetros de Producto"
+              : "Nuevo Producto en Catálogo"}
           </h2>
-          <button className="modal-close-btn" onClick={onClose} id="btn-cerrar-modal-producto">
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+            id="btn-cerrar-modal-producto"
+          >
             <X size={18} />
           </button>
         </div>
@@ -178,31 +189,35 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
 
             <div
               style={{
-                backgroundColor: '#f8fafc',
-                padding: '16px',
-                borderRadius: '6px',
-                border: '1px solid #e2e8f0',
-                margin: '16px 0'
+                backgroundColor: "#f8fafc",
+                padding: "16px",
+                borderRadius: "6px",
+                border: "1px solid #e2e8f0",
+                margin: "16px 0",
               }}
             >
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  marginBottom: '12px',
-                  color: '#0b1c30',
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  marginBottom: "12px",
+                  color: "#0b1c30",
                   fontWeight: 700,
-                  fontSize: '12px'
+                  fontSize: "12px",
                 }}
               >
                 <Sparkles size={14} />
-                <span>PARÁMETROS DINÁMICOS DEL MODELO IA & REABASTECIMIENTO</span>
+                <span>
+                  PARÁMETROS DINÁMICOS DEL MODELO IA & REABASTECIMIENTO
+                </span>
               </div>
 
               <div className="form-row">
                 <div className="form-group" style={{ margin: 0 }}>
-                  <label className="form-label">Umbral Dinámico IA (Punto de Reorden)</label>
+                  <label className="form-label">
+                    Umbral Dinámico IA (Punto de Reorden)
+                  </label>
                   <input
                     type="number"
                     className="form-input"
@@ -213,7 +228,9 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
                 </div>
 
                 <div className="form-group" style={{ margin: 0 }}>
-                  <label className="form-label">Cantidad Óptima de Reorden (Lote Sugerido)</label>
+                  <label className="form-label">
+                    Cantidad Óptima de Reorden (Lote Sugerido)
+                  </label>
                   <input
                     type="number"
                     className="form-input"
@@ -234,7 +251,11 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
                   value={currentStock}
                   onChange={(e) => setCurrentStock(e.target.value)}
                   disabled={!!productToEdit}
-                  title={productToEdit ? 'Para modificar stock use Registrar Movimiento' : ''}
+                  title={
+                    productToEdit
+                      ? "Para modificar stock use Registrar Movimiento"
+                      : ""
+                  }
                 />
               </div>
 
@@ -250,7 +271,9 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
             </div>
 
             <div className="form-group">
-              <label className="form-label">Descripción / Especificaciones</label>
+              <label className="form-label">
+                Descripción / Especificaciones
+              </label>
               <textarea
                 className="form-textarea"
                 rows="2"
@@ -262,11 +285,23 @@ export default function ModalProducto({ isOpen, onClose, productToEdit, onSaved 
           </div>
 
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Guardando...' : productToEdit ? 'Actualizar Producto' : 'Guardar Producto'}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+            >
+              {loading
+                ? "Guardando..."
+                : productToEdit
+                  ? "Actualizar Producto"
+                  : "Guardar Producto"}
             </button>
           </div>
         </form>

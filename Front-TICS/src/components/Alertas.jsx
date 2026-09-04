@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Clock,
   AlertTriangle,
@@ -8,10 +8,10 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
-  CheckCircle
-} from 'lucide-react';
-import { batchService } from '../services/batchService.js';
-import './Alertas.css';
+  CheckCircle,
+} from "lucide-react";
+import { batchService } from "../services/batchService.js";
+import "./Alertas.css";
 
 export default function Alertas({ userRole, onOpenModalMovimiento }) {
   const [batches, setBatches] = useState([]);
@@ -24,7 +24,7 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
       const data = await batchService.getExpiringBatches(daysFilter);
       setBatches(data);
     } catch (err) {
-      console.error('Error cargando alertas de vencimiento:', err);
+      console.error("Error cargando alertas de vencimiento:", err);
     } finally {
       setLoading(false);
     }
@@ -35,11 +35,11 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
   }, [daysFilter]);
 
   const handleDispatchFefo = (batch) => {
-    onOpenModalMovimiento('salida', {
+    onOpenModalMovimiento("salida", {
       sku: batch.sku,
       productName: batch.productName,
       batchNumber: batch.batchNumber,
-      quantity: batch.quantity
+      quantity: batch.quantity,
     });
   };
 
@@ -50,14 +50,17 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
         <div className="page-header-titles">
           <h1 className="page-title">Alertas de Vencimiento</h1>
           <p className="page-subtitle">
-            Monitoreo predictivo de caducidades para minimizar mermas y priorizar despachos
+            Monitoreo predictivo de caducidades para minimizar mermas y
+            priorizar despachos
           </p>
         </div>
 
         <div className="page-actions">
           <button
             className="btn btn-secondary"
-            onClick={() => alert('Descargando reporte de lotes críticos en formato CSV...')}
+            onClick={() =>
+              alert("Descargando reporte de lotes críticos en formato CSV...")
+            }
             id="btn-exportar-lotes-criticos"
           >
             <Download size={15} />
@@ -92,7 +95,9 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
             <DollarSign className="kpi-icon" size={18} color="#2563eb" />
           </div>
           <div className="kpi-value info">$18,450.00</div>
-          <div className="kpi-subtitle">Costo de inventario perecedero activo</div>
+          <div className="kpi-subtitle">
+            Costo de inventario perecedero activo
+          </div>
         </div>
       </div>
 
@@ -123,26 +128,38 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                 <th>FECHA DE VENCIMIENTO</th>
                 <th>DÍAS RESTANTES</th>
                 <th>ACCIÓN SUGERIDA</th>
-                <th style={{ textAlign: 'right' }}>ACCIONES</th>
+                <th style={{ textAlign: "right" }}>ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px' }}>
+                  <td
+                    colSpan="7"
+                    style={{ textAlign: "center", padding: "32px" }}
+                  >
                     Calculando matrices de caducidad...
                   </td>
                 </tr>
               ) : batches.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px', color: '#64748b' }}>
-                    Excelente: no hay lotes próximos a vencer en el rango seleccionado.
+                  <td
+                    colSpan="7"
+                    style={{
+                      textAlign: "center",
+                      padding: "32px",
+                      color: "#64748b",
+                    }}
+                  >
+                    Excelente: no hay lotes próximos a vencer en el rango
+                    seleccionado.
                   </td>
                 </tr>
               ) : (
                 batches.map((b) => {
                   const isCritical = b.daysRemaining <= 15;
-                  const isWarning = b.daysRemaining > 15 && b.daysRemaining <= 30;
+                  const isWarning =
+                    b.daysRemaining > 15 && b.daysRemaining <= 30;
 
                   return (
                     <tr key={b.id} id={`row-lote-${b.batchNumber}`}>
@@ -150,31 +167,52 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                         {b.batchNumber}
                       </td>
                       <td>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontWeight: 600 }}>{b.productName}</span>
-                          <span className="mono" style={{ fontSize: '11px', color: '#64748b' }}>
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
+                          <span style={{ fontWeight: 600 }}>
+                            {b.productName}
+                          </span>
+                          <span
+                            className="mono"
+                            style={{ fontSize: "11px", color: "#64748b" }}
+                          >
                             {b.sku}
                           </span>
                         </div>
                       </td>
-                      <td className="text-right mono" style={{ fontWeight: 600 }}>
+                      <td
+                        className="text-right mono"
+                        style={{ fontWeight: 600 }}
+                      >
                         {b.quantity.toLocaleString()} uds
                       </td>
                       <td className="mono">{b.expDate}</td>
                       <td>
                         <span
                           className={`alerta-days-pill ${
-                            isCritical ? 'critical' : isWarning ? 'warning' : 'moderate'
+                            isCritical
+                              ? "critical"
+                              : isWarning
+                                ? "warning"
+                                : "moderate"
                           }`}
                         >
                           <Clock size={12} />
                           <span>{b.daysRemaining} días restantes</span>
                         </span>
                       </td>
-                      <td style={{ fontWeight: 500, color: isCritical ? '#b91c1c' : '#475569' }}>
-                        {isCritical ? 'Priorizar despacho inmediato' : 'Rotación FEFO prioritaria'}
+                      <td
+                        style={{
+                          fontWeight: 500,
+                          color: isCritical ? "#b91c1c" : "#475569",
+                        }}
+                      >
+                        {isCritical
+                          ? "Priorizar despacho inmediato"
+                          : "Rotación FEFO prioritaria"}
                       </td>
-                      <td style={{ textAlign: 'right' }}>
+                      <td style={{ textAlign: "right" }}>
                         <button
                           className="btn btn-secondary btn-sm"
                           onClick={() => handleDispatchFefo(b)}

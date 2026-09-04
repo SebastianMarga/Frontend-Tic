@@ -35,7 +35,10 @@ export async function request(endpoint, options = {}) {
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => ({}));
-    throw new Error(errorBody.message || `HTTP Error ${response.status}: ${response.statusText}`);
+    throw new Error(
+      errorBody.message ||
+        `HTTP Error ${response.status}: ${response.statusText}`,
+    );
   }
 
   return response.json();

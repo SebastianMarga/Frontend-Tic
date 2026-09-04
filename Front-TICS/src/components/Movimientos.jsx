@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Download,
   Plus,
@@ -9,19 +9,19 @@ import {
   ChevronRight,
   ArrowDownLeft,
   ArrowUpRight,
-  RefreshCw
-} from 'lucide-react';
-import { stockService } from '../services/stockService.js';
-import './Movimientos.css';
+  RefreshCw,
+} from "lucide-react";
+import { stockService } from "../services/stockService.js";
+import "./Movimientos.css";
 
 export default function Movimientos({
   userRole,
   onOpenModalMovimiento,
-  onOpenModalAjuste
+  onOpenModalAjuste,
 }) {
   const [movements, setMovements] = useState([]);
-  const [search, setSearch] = useState('');
-  const [typeFilter, setTypeFilter] = useState('Todos');
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("Todos");
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,11 +30,11 @@ export default function Movimientos({
       setLoading(true);
       const data = await stockService.getMovements({
         search,
-        type: typeFilter
+        type: typeFilter,
       });
       setMovements(data);
     } catch (err) {
-      console.error('Error cargando movimientos:', err);
+      console.error("Error cargando movimientos:", err);
     } finally {
       setLoading(false);
     }
@@ -48,10 +48,10 @@ export default function Movimientos({
     try {
       const res = await stockService.exportMovementsForIa();
       alert(
-        `✓ Exportación generada con éxito:\n- Registros: ${res.exportedRecords}\n- Formato: ${res.format}\n- Timestamp: ${res.timestamp}\n\nLos datos históricos están listos para alimentar el algoritmo predictivo de IA.`
+        `✓ Exportación generada con éxito:\n- Registros: ${res.exportedRecords}\n- Formato: ${res.format}\n- Timestamp: ${res.timestamp}\n\nLos datos históricos están listos para alimentar el algoritmo predictivo de IA.`,
       );
     } catch (e) {
-      alert('Error en exportación: ' + e.message);
+      alert("Error en exportación: " + e.message);
     }
   };
 
@@ -78,7 +78,7 @@ export default function Movimientos({
 
           <button
             className="btn btn-primary"
-            onClick={() => onOpenModalMovimiento('entrada')}
+            onClick={() => onOpenModalMovimiento("entrada")}
             id="btn-mov-registrar-entrada"
           >
             <Plus size={15} />
@@ -87,7 +87,7 @@ export default function Movimientos({
 
           <button
             className="btn btn-secondary"
-            onClick={() => onOpenModalMovimiento('salida')}
+            onClick={() => onOpenModalMovimiento("salida")}
             id="btn-mov-registrar-salida"
           >
             <Minus size={15} />
@@ -156,29 +156,45 @@ export default function Movimientos({
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px' }}>
+                  <td
+                    colSpan="7"
+                    style={{ textAlign: "center", padding: "32px" }}
+                  >
                     Cargando movimientos...
                   </td>
                 </tr>
               ) : movements.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px', color: '#64748b' }}>
+                  <td
+                    colSpan="7"
+                    style={{
+                      textAlign: "center",
+                      padding: "32px",
+                      color: "#64748b",
+                    }}
+                  >
                     No se encontraron movimientos registrados.
                   </td>
                 </tr>
               ) : (
                 movements.map((mov) => {
-                  const isEntrada = mov.type.toLowerCase() === 'entrada';
-                  const isSalida = mov.type.toLowerCase() === 'salida';
-                  const isAjuste = mov.type.toLowerCase() === 'ajuste';
+                  const isEntrada = mov.type.toLowerCase() === "entrada";
+                  const isSalida = mov.type.toLowerCase() === "salida";
+                  const isAjuste = mov.type.toLowerCase() === "ajuste";
 
                   return (
                     <tr key={mov.id} id={`row-mov-${mov.id}`}>
-                      <td style={{ fontSize: '12px', color: '#64748b' }}>{mov.dateTime}</td>
+                      <td style={{ fontSize: "12px", color: "#64748b" }}>
+                        {mov.dateTime}
+                      </td>
                       <td>
                         <span
                           className={`mov-type-badge ${
-                            isEntrada ? 'entrada' : isSalida ? 'salida' : 'ajuste'
+                            isEntrada
+                              ? "entrada"
+                              : isSalida
+                                ? "salida"
+                                : "ajuste"
                           }`}
                         >
                           {isEntrada ? (
@@ -192,27 +208,40 @@ export default function Movimientos({
                         </span>
                       </td>
                       <td>
-                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontWeight: 600 }}>{mov.productName}</span>
-                          <span className="mono" style={{ fontSize: '11px', color: '#64748b' }}>
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
+                        >
+                          <span style={{ fontWeight: 600 }}>
+                            {mov.productName}
+                          </span>
+                          <span
+                            className="mono"
+                            style={{ fontSize: "11px", color: "#64748b" }}
+                          >
                             {mov.sku}
                           </span>
                         </div>
                       </td>
                       <td
                         className={`text-right mono ${
-                          isEntrada ? 'qty-positive' : isSalida ? 'qty-negative' : 'qty-neutral'
+                          isEntrada
+                            ? "qty-positive"
+                            : isSalida
+                              ? "qty-negative"
+                              : "qty-neutral"
                         }`}
                       >
                         {mov.formattedQty}
                       </td>
-                      <td className="mono" style={{ fontSize: '12px' }}>
+                      <td className="mono" style={{ fontSize: "12px" }}>
                         {mov.batchNumber}
                       </td>
                       <td>
                         <span className="badge badge-gray">{mov.operator}</span>
                       </td>
-                      <td style={{ color: '#475569', fontSize: '13px' }}>{mov.reason}</td>
+                      <td style={{ color: "#475569", fontSize: "13px" }}>
+                        {mov.reason}
+                      </td>
                     </tr>
                   );
                 })

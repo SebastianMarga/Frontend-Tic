@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Boxes,
   AlertTriangle,
@@ -10,25 +10,25 @@ import {
   ExternalLink,
   ChevronLeft,
   ChevronRight,
-  ArrowUpRight
-} from 'lucide-react';
-import { productService } from '../services/productService.js';
-import { rpaService } from '../services/rpaService.js';
-import { batchService } from '../services/batchService.js';
-import './Dashboard.css';
+  ArrowUpRight,
+} from "lucide-react";
+import { productService } from "../services/productService.js";
+import { rpaService } from "../services/rpaService.js";
+import { batchService } from "../services/batchService.js";
+import "./Dashboard.css";
 
 export default function Dashboard({
   onNavigate,
   onOpenModalMovimiento,
   onOpenNewOrderModal,
-  onSelectProduct
+  onSelectProduct,
 }) {
   const [loading, setLoading] = useState(true);
   const [kpiData, setKpiData] = useState({
     activeProducts: 14230,
     lowStockAlerts: 84,
     expiringBatches: 12,
-    activeRpaOrders: 345
+    activeRpaOrders: 345,
   });
   const [alertProducts, setAlertProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,8 +38,8 @@ export default function Dashboard({
       setLoading(true);
       const [products, orders, expiring] = await Promise.all([
         productService.getProducts({ lowStockOnly: true }),
-        rpaService.getPurchaseOrders('PROCESSING'),
-        batchService.getExpiringBatches(30)
+        rpaService.getPurchaseOrders("PROCESSING"),
+        batchService.getExpiringBatches(30),
       ]);
 
       setAlertProducts(products.slice(0, 5));
@@ -47,10 +47,10 @@ export default function Dashboard({
         activeProducts: 14230,
         lowStockAlerts: products.length || 84,
         expiringBatches: expiring.length || 12,
-        activeRpaOrders: orders.length ? orders.length * 70 + 65 : 345
+        activeRpaOrders: orders.length ? orders.length * 70 + 65 : 345,
       });
     } catch (error) {
-      console.error('Error cargando datos del dashboard:', error);
+      console.error("Error cargando datos del dashboard:", error);
     } finally {
       setLoading(false);
     }
@@ -61,13 +61,13 @@ export default function Dashboard({
   }, []);
 
   const handleActionClick = (product) => {
-    if (product.status === 'STOCK_BAJO' || product.status === 'AGOTADO') {
+    if (product.status === "STOCK_BAJO" || product.status === "AGOTADO") {
       onOpenNewOrderModal({
         sku: product.sku,
         productName: product.name,
         supplier: product.supplier,
         supplierId: product.supplierId,
-        quantity: product.optimalOrderQty || 200
+        quantity: product.optimalOrderQty || 200,
       });
     } else {
       onSelectProduct(product);
@@ -80,7 +80,7 @@ export default function Dashboard({
       <div className="dashboard-actions-bar">
         <button
           className="btn btn-secondary"
-          onClick={() => onOpenModalMovimiento('entrada')}
+          onClick={() => onOpenModalMovimiento("entrada")}
           id="btn-dash-registrar-entrada"
         >
           <Plus size={16} />
@@ -89,7 +89,7 @@ export default function Dashboard({
 
         <button
           className="btn btn-secondary"
-          onClick={() => onOpenModalMovimiento('salida')}
+          onClick={() => onOpenModalMovimiento("salida")}
           id="btn-dash-registrar-salida"
         >
           <Minus size={16} />
@@ -98,7 +98,7 @@ export default function Dashboard({
 
         <button
           className="btn btn-primary"
-          onClick={() => onNavigate('tendencias')}
+          onClick={() => onNavigate("tendencias")}
           id="btn-dash-revisar-ia"
         >
           <Sparkles size={16} />
@@ -111,21 +111,23 @@ export default function Dashboard({
         {/* KPI 1: Productos Activos */}
         <div
           className="kpi-card kpi-link-card"
-          onClick={() => onNavigate('catalogo')}
+          onClick={() => onNavigate("catalogo")}
           id="kpi-card-productos"
         >
           <div className="kpi-card-header">
             <span className="kpi-title">Productos Activos</span>
             <Boxes className="kpi-icon" size={18} />
           </div>
-          <div className="kpi-value">{kpiData.activeProducts.toLocaleString()}</div>
+          <div className="kpi-value">
+            {kpiData.activeProducts.toLocaleString()}
+          </div>
           <div className="kpi-subtitle">Catálogo unificado en tiempo real</div>
         </div>
 
         {/* KPI 2: Alerta Stock Bajo */}
         <div
           className="kpi-card kpi-link-card"
-          onClick={() => onNavigate('catalogo')}
+          onClick={() => onNavigate("catalogo")}
           id="kpi-card-stock-bajo"
         >
           <div className="kpi-card-header">
@@ -139,7 +141,7 @@ export default function Dashboard({
         {/* KPI 3: Lotes Próximos a Vencer */}
         <div
           className="kpi-card kpi-link-card"
-          onClick={() => onNavigate('alertas')}
+          onClick={() => onNavigate("alertas")}
           id="kpi-card-lotes-vencer"
         >
           <div className="kpi-card-header">
@@ -153,7 +155,7 @@ export default function Dashboard({
         {/* KPI 4: Órdenes RPA Activas */}
         <div
           className="kpi-card kpi-link-card"
-          onClick={() => onNavigate('rpa')}
+          onClick={() => onNavigate("rpa")}
           id="kpi-card-ordenes-rpa"
         >
           <div className="kpi-card-header">
@@ -161,7 +163,9 @@ export default function Dashboard({
             <Bot className="kpi-icon" size={18} />
           </div>
           <div className="kpi-value">{kpiData.activeRpaOrders}</div>
-          <div className="kpi-subtitle">Automatización en cola de ejecución</div>
+          <div className="kpi-subtitle">
+            Automatización en cola de ejecución
+          </div>
         </div>
       </div>
 
@@ -169,14 +173,16 @@ export default function Dashboard({
       <div className="dashboard-table-card">
         <div className="dashboard-table-header">
           <div className="dashboard-table-title-area">
-            <h2 className="dashboard-table-title">Alertas de Reorden y Stock Bajo</h2>
+            <h2 className="dashboard-table-title">
+              Alertas de Reorden y Stock Bajo
+            </h2>
             <p className="dashboard-table-subtitle">
               Priorizadas por impacto operativo predictivo.
             </p>
           </div>
           <button
             className="dashboard-table-icon-btn"
-            onClick={() => onNavigate('catalogo')}
+            onClick={() => onNavigate("catalogo")}
             title="Ver catálogo completo"
             id="btn-dash-ver-catalogo"
           >
@@ -199,7 +205,14 @@ export default function Dashboard({
             <tbody>
               {alertProducts.length === 0 ? (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '32px', color: '#64748b' }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      textAlign: "center",
+                      padding: "32px",
+                      color: "#64748b",
+                    }}
+                  >
                     No hay alertas críticas de stock en este momento.
                   </td>
                 </tr>
@@ -209,7 +222,7 @@ export default function Dashboard({
                     <td className="mono">{item.sku}</td>
                     <td>
                       <span
-                        style={{ fontWeight: 600, cursor: 'pointer' }}
+                        style={{ fontWeight: 600, cursor: "pointer" }}
                         onClick={() => onSelectProduct(item)}
                         title="Ver detalle del producto"
                       >
@@ -219,30 +232,34 @@ export default function Dashboard({
                     <td className="text-right mono" style={{ fontWeight: 600 }}>
                       {item.currentStock}
                     </td>
-                    <td className="text-right mono">{item.reorderPoint || item.dynamicThreshold}</td>
+                    <td className="text-right mono">
+                      {item.reorderPoint || item.dynamicThreshold}
+                    </td>
                     <td>
-                      {item.status === 'AGOTADO' && (
+                      {item.status === "AGOTADO" && (
                         <span className="badge badge-danger">AGOTADO</span>
                       )}
-                      {item.status === 'STOCK_BAJO' && (
+                      {item.status === "STOCK_BAJO" && (
                         <span className="badge badge-warning">STOCK BAJO</span>
                       )}
-                      {item.status === 'REORDEN_PROXIMO' && (
-                        <span className="badge badge-warning">REORDEN PRÓXIMO</span>
+                      {item.status === "REORDEN_PROXIMO" && (
+                        <span className="badge badge-warning">
+                          REORDEN PRÓXIMO
+                        </span>
                       )}
-                      {item.status === 'SALUDABLE' && (
+                      {item.status === "SALUDABLE" && (
                         <span className="badge badge-success">SALUDABLE</span>
                       )}
                     </td>
                     <td>
                       <button
                         className={`action-link-btn ${
-                          item.status === 'AGOTADO' ? 'action-btn-urgent' : ''
+                          item.status === "AGOTADO" ? "action-btn-urgent" : ""
                         }`}
                         onClick={() => handleActionClick(item)}
                         id={`btn-accion-reorden-${item.sku}`}
                       >
-                        {item.recommendedAction || 'Ejecutar RPA Reorden'}
+                        {item.recommendedAction || "Ejecutar RPA Reorden"}
                       </button>
                     </td>
                   </tr>
@@ -253,7 +270,9 @@ export default function Dashboard({
         </div>
 
         <div className="table-footer">
-          <span>Mostrando {alertProducts.length} de {kpiData.lowStockAlerts} alertas</span>
+          <span>
+            Mostrando {alertProducts.length} de {kpiData.lowStockAlerts} alertas
+          </span>
           <div className="pagination">
             <button
               className="page-btn"

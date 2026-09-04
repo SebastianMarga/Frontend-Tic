@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Download,
   Plus,
@@ -7,23 +7,23 @@ import {
   Trash2,
   ChevronLeft,
   ChevronRight,
-  AlertTriangle
-} from 'lucide-react';
-import { supplierService } from '../services/supplierService.js';
-import { categoryService } from '../services/categoryService.js';
-import './DatosMaestros.css';
+  AlertTriangle,
+} from "lucide-react";
+import { supplierService } from "../services/supplierService.js";
+import { categoryService } from "../services/categoryService.js";
+import "./DatosMaestros.css";
 
 export default function DatosMaestros({
   userRole,
   onOpenCreateSupplier,
   onOpenEditSupplier,
   onOpenCreateCategory,
-  onOpenEditCategory
+  onOpenEditCategory,
 }) {
-  const [activeTab, setActiveTab] = useState('proveedores');
+  const [activeTab, setActiveTab] = useState("proveedores");
   const [suppliers, setSuppliers] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
@@ -31,12 +31,12 @@ export default function DatosMaestros({
       setLoading(true);
       const [supList, catList] = await Promise.all([
         supplierService.getSuppliers(),
-        categoryService.getCategories()
+        categoryService.getCategories(),
       ]);
       setSuppliers(supList);
       setCategories(catList);
     } catch (err) {
-      console.error('Error cargando datos maestros:', err);
+      console.error("Error cargando datos maestros:", err);
     } finally {
       setLoading(false);
     }
@@ -46,7 +46,7 @@ export default function DatosMaestros({
     loadData();
   }, []);
 
-  const isAdmin = userRole === 'ADMIN';
+  const isAdmin = userRole === "ADMIN";
 
   // Filtrado de proveedores
   const filteredSuppliers = suppliers.filter((s) => {
@@ -69,12 +69,12 @@ export default function DatosMaestros({
   });
 
   const handleDeleteSupplier = async (id) => {
-    if (window.confirm('¿Está seguro de que desea eliminar este proveedor?')) {
+    if (window.confirm("¿Está seguro de que desea eliminar este proveedor?")) {
       try {
         await supplierService.deleteSupplier(id);
         setSuppliers((prev) => prev.filter((s) => s.id !== id));
       } catch (e) {
-        alert(e.message || 'No se pudo eliminar el proveedor');
+        alert(e.message || "No se pudo eliminar el proveedor");
       }
     }
   };
@@ -93,7 +93,9 @@ export default function DatosMaestros({
         <div className="page-actions">
           <button
             className="btn btn-secondary"
-            onClick={() => alert('Exportando datos maestros a formato CSV / Excel...')}
+            onClick={() =>
+              alert("Exportando datos maestros a formato CSV / Excel...")
+            }
             id="btn-exportar-maestros"
           >
             <Download size={15} />
@@ -104,14 +106,16 @@ export default function DatosMaestros({
             <button
               className="btn btn-primary"
               onClick={() => {
-                if (activeTab === 'proveedores') onOpenCreateSupplier();
+                if (activeTab === "proveedores") onOpenCreateSupplier();
                 else onOpenCreateCategory();
               }}
               id="btn-nuevo-maestro"
             >
               <Plus size={15} />
               <span>
-                {activeTab === 'proveedores' ? 'NUEVO PROVEEDOR' : 'NUEVA CATEGORÍA'}
+                {activeTab === "proveedores"
+                  ? "NUEVO PROVEEDOR"
+                  : "NUEVA CATEGORÍA"}
               </span>
             </button>
           )}
@@ -121,15 +125,15 @@ export default function DatosMaestros({
       {/* Tabs */}
       <div className="tabs-header">
         <button
-          className={`tab-btn ${activeTab === 'proveedores' ? 'active' : ''}`}
-          onClick={() => setActiveTab('proveedores')}
+          className={`tab-btn ${activeTab === "proveedores" ? "active" : ""}`}
+          onClick={() => setActiveTab("proveedores")}
           id="tab-proveedores"
         >
           Gestión de Proveedores
         </button>
         <button
-          className={`tab-btn ${activeTab === 'categorias' ? 'active' : ''}`}
-          onClick={() => setActiveTab('categorias')}
+          className={`tab-btn ${activeTab === "categorias" ? "active" : ""}`}
+          onClick={() => setActiveTab("categorias")}
           id="tab-categorias"
         >
           Categorías
@@ -144,9 +148,9 @@ export default function DatosMaestros({
             type="text"
             className="search-input"
             placeholder={
-              activeTab === 'proveedores'
-                ? 'Buscar ID, Nombre, Email...'
-                : 'Buscar Categoría...'
+              activeTab === "proveedores"
+                ? "Buscar ID, Nombre, Email..."
+                : "Buscar Categoría..."
             }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -158,7 +162,7 @@ export default function DatosMaestros({
       {/* Contenedor de Tabla */}
       <div className="card">
         <div className="table-container">
-          {activeTab === 'proveedores' ? (
+          {activeTab === "proveedores" ? (
             <table className="data-table" id="tabla-proveedores">
               <thead>
                 <tr>
@@ -167,7 +171,7 @@ export default function DatosMaestros({
                   <th>EMAIL (RPA)</th>
                   <th>TELÉFONO</th>
                   <th className="text-right">PROD. ASOCIADOS</th>
-                  <th style={{ textAlign: 'right' }}>ACCIONES</th>
+                  <th style={{ textAlign: "right" }}>ACCIONES</th>
                 </tr>
               </thead>
               <tbody>
@@ -182,7 +186,7 @@ export default function DatosMaestros({
                         )}
                       </div>
                     </td>
-                    <td className="mono" style={{ color: '#475569' }}>
+                    <td className="mono" style={{ color: "#475569" }}>
                       {s.email}
                     </td>
                     <td className="mono">{s.phone}</td>
@@ -228,7 +232,7 @@ export default function DatosMaestros({
                   <th>DESCRIPCIÓN</th>
                   <th className="text-right">TOTAL PRODUCTOS</th>
                   <th>ESTADO</th>
-                  <th style={{ textAlign: 'right' }}>ACCIONES</th>
+                  <th style={{ textAlign: "right" }}>ACCIONES</th>
                 </tr>
               </thead>
               <tbody>
@@ -236,7 +240,7 @@ export default function DatosMaestros({
                   <tr key={c.id} id={`row-categoria-${c.id}`}>
                     <td className="mono">{c.id}</td>
                     <td style={{ fontWeight: 600 }}>{c.name}</td>
-                    <td style={{ color: '#64748b' }}>{c.description}</td>
+                    <td style={{ color: "#64748b" }}>{c.description}</td>
                     <td className="text-right mono" style={{ fontWeight: 600 }}>
                       {c.totalProducts}
                     </td>
@@ -268,14 +272,12 @@ export default function DatosMaestros({
         <div className="table-footer">
           <span>
             Mostrando 1-
-            {activeTab === 'proveedores'
+            {activeTab === "proveedores"
               ? filteredSuppliers.length
-              : filteredCategories.length}{' '}
-            de{' '}
-            {activeTab === 'proveedores'
-              ? suppliers.length
-              : categories.length}{' '}
-            {activeTab === 'proveedores' ? 'proveedores' : 'categorías'}
+              : filteredCategories.length}{" "}
+            de{" "}
+            {activeTab === "proveedores" ? suppliers.length : categories.length}{" "}
+            {activeTab === "proveedores" ? "proveedores" : "categorías"}
           </span>
           <div className="pagination">
             <button className="page-btn" disabled>

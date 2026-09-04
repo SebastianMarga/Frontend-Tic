@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { X, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
-import { productService } from '../../services/productService.js';
-import { stockService } from '../../services/stockService.js';
+import React, { useState, useEffect } from "react";
+import { X, ArrowDownLeft, ArrowUpRight } from "lucide-react";
+import { productService } from "../../services/productService.js";
+import { stockService } from "../../services/stockService.js";
 
-export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', preselectedProduct, onSaved }) {
+export default function ModalMovimiento({
+  isOpen,
+  onClose,
+  type = "entrada",
+  preselectedProduct,
+  onSaved,
+}) {
   const [products, setProducts] = useState([]);
-  const [selectedProductId, setSelectedProductId] = useState('');
+  const [selectedProductId, setSelectedProductId] = useState("");
   const [quantity, setQuantity] = useState(100);
-  const [batchNumber, setBatchNumber] = useState('');
-  const [expDate, setExpDate] = useState('2026-11-30');
-  const [reason, setReason] = useState('');
+  const [batchNumber, setBatchNumber] = useState("");
+  const [expDate, setExpDate] = useState("2026-11-30");
+  const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,16 +29,24 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
         }
       });
 
-      setBatchNumber(`L-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`);
+      setBatchNumber(
+        `L-${new Date().getFullYear()}-${Math.floor(100 + Math.random() * 900)}`,
+      );
       setQuantity(100);
-      setReason(type === 'entrada' ? 'Recepción de mercancía estándar' : 'Despacho a línea de producción');
+      setReason(
+        type === "entrada"
+          ? "Recepción de mercancía estándar"
+          : "Despacho a línea de producción",
+      );
     }
   }, [isOpen, type, preselectedProduct]);
 
   if (!isOpen) return null;
 
-  const isEntrada = type === 'entrada';
-  const selectedProduct = products.find((p) => p.id === selectedProductId || p.sku === selectedProductId);
+  const isEntrada = type === "entrada";
+  const selectedProduct = products.find(
+    (p) => p.id === selectedProductId || p.sku === selectedProductId,
+  );
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,20 +59,20 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
           quantity: Number(quantity),
           batchNumber,
           expDate,
-          note: reason
+          note: reason,
         });
       } else {
         await stockService.registerStockOut({
           productId: selectedProductId,
           quantity: Number(quantity),
-          reason
+          reason,
         });
       }
 
       onSaved();
       onClose();
     } catch (err) {
-      alert('Error registrando movimiento: ' + err.message);
+      alert("Error registrando movimiento: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -74,21 +88,41 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
     <div className="modal-overlay">
       <div className="modal-content" id="modal-movimiento">
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             {isEntrada ? (
-              <div style={{ background: '#d1fae5', color: '#065f46', padding: '6px', borderRadius: '4px' }}>
+              <div
+                style={{
+                  background: "#d1fae5",
+                  color: "#065f46",
+                  padding: "6px",
+                  borderRadius: "4px",
+                }}
+              >
                 <ArrowDownLeft size={16} />
               </div>
             ) : (
-              <div style={{ background: '#eff6ff', color: '#1d4ed8', padding: '6px', borderRadius: '4px' }}>
+              <div
+                style={{
+                  background: "#eff6ff",
+                  color: "#1d4ed8",
+                  padding: "6px",
+                  borderRadius: "4px",
+                }}
+              >
                 <ArrowUpRight size={16} />
               </div>
             )}
             <h2 className="modal-title">
-              {isEntrada ? 'Registrar Entrada de Inventario' : 'Registrar Salida de Inventario'}
+              {isEntrada
+                ? "Registrar Entrada de Inventario"
+                : "Registrar Salida de Inventario"}
             </h2>
           </div>
-          <button className="modal-close-btn" onClick={onClose} id="btn-cerrar-modal-movimiento">
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+            id="btn-cerrar-modal-movimiento"
+          >
             <X size={18} />
           </button>
         </div>
@@ -113,7 +147,9 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
 
             <div className="form-row">
               <div className="form-group">
-                <label className="form-label">Cantidad {isEntrada ? 'a Ingresar' : 'a Despachar'}</label>
+                <label className="form-label">
+                  Cantidad {isEntrada ? "a Ingresar" : "a Despachar"}
+                </label>
                 <input
                   type="number"
                   min="1"
@@ -151,7 +187,9 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
 
             {isEntrada && (
               <div className="form-group">
-                <label className="form-label">Fecha de Vencimiento del Lote (FEFO)</label>
+                <label className="form-label">
+                  Fecha de Vencimiento del Lote (FEFO)
+                </label>
                 <input
                   type="date"
                   className="form-input"
@@ -178,24 +216,29 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
             {selectedProduct && (
               <div
                 style={{
-                  backgroundColor: '#f8fafc',
-                  padding: '12px 16px',
-                  borderRadius: '6px',
-                  border: '1px solid #e2e8f0',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  fontSize: '13px'
+                  backgroundColor: "#f8fafc",
+                  padding: "12px 16px",
+                  borderRadius: "6px",
+                  border: "1px solid #e2e8f0",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: "13px",
                 }}
               >
                 <div>
-                  <span style={{ color: '#64748b' }}>Stock Actual: </span>
-                  <span className="mono" style={{ fontWeight: 600 }}>{selectedProduct.currentStock} uds</span>
+                  <span style={{ color: "#64748b" }}>Stock Actual: </span>
+                  <span className="mono" style={{ fontWeight: 600 }}>
+                    {selectedProduct.currentStock} uds
+                  </span>
                 </div>
-                <div style={{ fontSize: '16px', color: '#94a3b8' }}>➔</div>
+                <div style={{ fontSize: "16px", color: "#94a3b8" }}>➔</div>
                 <div>
-                  <span style={{ color: '#64748b' }}>Stock Resultante: </span>
-                  <span className="mono" style={{ fontWeight: 800, color: '#0b1c30' }}>
+                  <span style={{ color: "#64748b" }}>Stock Resultante: </span>
+                  <span
+                    className="mono"
+                    style={{ fontWeight: 800, color: "#0b1c30" }}
+                  >
                     {calculatedNewStock} uds
                   </span>
                 </div>
@@ -204,16 +247,24 @@ export default function ModalMovimiento({ isOpen, onClose, type = 'entrada', pre
           </div>
 
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancelar
             </button>
             <button
               type="submit"
-              className={isEntrada ? 'btn btn-success' : 'btn btn-primary'}
+              className={isEntrada ? "btn btn-success" : "btn btn-primary"}
               disabled={loading}
               id="btn-submit-movimiento"
             >
-              {loading ? 'Procesando...' : isEntrada ? 'Confirmar Entrada' : 'Confirmar Salida'}
+              {loading
+                ? "Procesando..."
+                : isEntrada
+                  ? "Confirmar Entrada"
+                  : "Confirmar Salida"}
             </button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Search,
   Plus,
@@ -9,18 +9,18 @@ import {
   CheckCircle,
   AlertCircle,
   ChevronLeft,
-  ChevronRight
-} from 'lucide-react';
-import { productService } from '../services/productService.js';
-import { categoryService } from '../services/categoryService.js';
-import { supplierService } from '../services/supplierService.js';
-import './Catalogo.css';
+  ChevronRight,
+} from "lucide-react";
+import { productService } from "../services/productService.js";
+import { categoryService } from "../services/categoryService.js";
+import { supplierService } from "../services/supplierService.js";
+import "./Catalogo.css";
 
 export default function Catalogo({
   userRole,
   onOpenCreateProduct,
   onOpenEditProduct,
-  onOpenProductDetail
+  onOpenProductDetail,
 }) {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -28,9 +28,9 @@ export default function Catalogo({
   const [loading, setLoading] = useState(true);
 
   // Filtros
-  const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
-  const [selectedSupplier, setSelectedSupplier] = useState('Todos');
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [selectedSupplier, setSelectedSupplier] = useState("Todos");
   const [currentPage, setCurrentPage] = useState(1);
 
   const loadData = async () => {
@@ -40,16 +40,16 @@ export default function Catalogo({
         productService.getProducts({
           search,
           category: selectedCategory,
-          supplier: selectedSupplier
+          supplier: selectedSupplier,
         }),
         categoryService.getCategories(),
-        supplierService.getSuppliers()
+        supplierService.getSuppliers(),
       ]);
       setProducts(prodList);
       setCategories(catList);
       setSuppliers(supList);
     } catch (error) {
-      console.error('Error cargando catálogo:', error);
+      console.error("Error cargando catálogo:", error);
     } finally {
       setLoading(false);
     }
@@ -59,7 +59,7 @@ export default function Catalogo({
     loadData();
   }, [search, selectedCategory, selectedSupplier]);
 
-  const isAdmin = userRole === 'ADMIN';
+  const isAdmin = userRole === "ADMIN";
 
   return (
     <div className="page-container" id="catalogo-view">
@@ -120,7 +120,7 @@ export default function Catalogo({
             className="btn btn-primary"
             onClick={onOpenCreateProduct}
             id="btn-nuevo-producto"
-            style={{ marginLeft: 'auto' }}
+            style={{ marginLeft: "auto" }}
           >
             <Plus size={16} />
             <span>Nuevo Producto</span>
@@ -140,19 +140,29 @@ export default function Catalogo({
                 <th>PROVEEDOR</th>
                 <th className="text-right">STOCK ACTUAL</th>
                 <th className="text-right">UMBRAL DINÁMICO IA</th>
-                <th style={{ textAlign: 'right' }}>ACCIONES</th>
+                <th style={{ textAlign: "right" }}>ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px' }}>
+                  <td
+                    colSpan="7"
+                    style={{ textAlign: "center", padding: "32px" }}
+                  >
                     Cargando catálogo...
                   </td>
                 </tr>
               ) : products.length === 0 ? (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: 'center', padding: '32px', color: '#64748b' }}>
+                  <td
+                    colSpan="7"
+                    style={{
+                      textAlign: "center",
+                      padding: "32px",
+                      color: "#64748b",
+                    }}
+                  >
                     No se encontraron productos con los filtros aplicados.
                   </td>
                 </tr>
@@ -170,8 +180,8 @@ export default function Catalogo({
                         <span
                           style={{
                             fontWeight: 600,
-                            cursor: 'pointer',
-                            color: 'var(--text-primary)'
+                            cursor: "pointer",
+                            color: "var(--text-primary)",
                           }}
                           onClick={() => onOpenProductDetail(item)}
                           title="Haga clic para ver lotes FEFO e historial"
@@ -180,12 +190,15 @@ export default function Catalogo({
                         </span>
                       </td>
                       <td>{item.category}</td>
-                      <td style={{ color: 'var(--text-secondary)' }}>{item.supplier}</td>
+                      <td style={{ color: "var(--text-secondary)" }}>
+                        {item.supplier}
+                      </td>
                       <td>
                         <div className="stock-cell">
                           <div className="stock-value-row">
                             <span className="mono">
-                              {item.currentStock.toLocaleString()} {item.unit || 'uds'}
+                              {item.currentStock.toLocaleString()}{" "}
+                              {item.unit || "uds"}
                             </span>
                             {isOut ? (
                               <AlertCircle size={14} color="#dc2626" />
@@ -197,15 +210,24 @@ export default function Catalogo({
                           </div>
                           <span
                             className={`stock-status-pill ${
-                              isOut ? 'danger' : isLow ? 'warning' : 'success'
+                              isOut ? "danger" : isLow ? "warning" : "success"
                             }`}
                           >
-                            {item.statusLabel || (isOut ? 'AGOTADO' : isLow ? 'STOCK BAJO' : 'SALUDABLE')}
+                            {item.statusLabel ||
+                              (isOut
+                                ? "AGOTADO"
+                                : isLow
+                                  ? "STOCK BAJO"
+                                  : "SALUDABLE")}
                           </span>
                         </div>
                       </td>
-                      <td className="text-right mono" style={{ fontWeight: 500 }}>
-                        {item.dynamicThreshold?.toLocaleString() || 100} {item.unit || 'uds'}
+                      <td
+                        className="text-right mono"
+                        style={{ fontWeight: 500 }}
+                      >
+                        {item.dynamicThreshold?.toLocaleString() || 100}{" "}
+                        {item.unit || "uds"}
                       </td>
                       <td>
                         <div className="table-actions-row">

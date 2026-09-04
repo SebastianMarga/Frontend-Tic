@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { X, SlidersHorizontal, AlertCircle } from 'lucide-react';
-import { productService } from '../../services/productService.js';
-import { stockService } from '../../services/stockService.js';
+import React, { useState, useEffect } from "react";
+import { X, SlidersHorizontal, AlertCircle } from "lucide-react";
+import { productService } from "../../services/productService.js";
+import { stockService } from "../../services/stockService.js";
 
 export default function ModalAjusteConteo({ isOpen, onClose, onSaved }) {
   const [products, setProducts] = useState([]);
-  const [selectedProductId, setSelectedProductId] = useState('');
+  const [selectedProductId, setSelectedProductId] = useState("");
   const [physicalCount, setPhysicalCount] = useState(0);
-  const [reason, setReason] = useState('Ajuste por conteo físico trimestral');
+  const [reason, setReason] = useState("Ajuste por conteo físico trimestral");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -43,12 +43,12 @@ export default function ModalAjusteConteo({ isOpen, onClose, onSaved }) {
       await stockService.registerAdjustment({
         productId: selectedProductId,
         newPhysicalStock: Number(physicalCount),
-        reason
+        reason,
       });
       onSaved();
       onClose();
     } catch (err) {
-      alert('Error en ajuste de inventario: ' + err.message);
+      alert("Error en ajuste de inventario: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -58,11 +58,17 @@ export default function ModalAjusteConteo({ isOpen, onClose, onSaved }) {
     <div className="modal-overlay">
       <div className="modal-content" id="modal-ajuste-conteo">
         <div className="modal-header">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <SlidersHorizontal size={18} />
-            <h2 className="modal-title">Ajuste / Conteo Físico de Inventario</h2>
+            <h2 className="modal-title">
+              Ajuste / Conteo Físico de Inventario
+            </h2>
           </div>
-          <button className="modal-close-btn" onClick={onClose} id="btn-cerrar-modal-ajuste">
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+            id="btn-cerrar-modal-ajuste"
+          >
             <X size={18} />
           </button>
         </div>
@@ -97,7 +103,9 @@ export default function ModalAjusteConteo({ isOpen, onClose, onSaved }) {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Conteo Físico Real (Auditado)</label>
+                <label className="form-label">
+                  Conteo Físico Real (Auditado)
+                </label>
                 <input
                   type="number"
                   min="0"
@@ -112,23 +120,35 @@ export default function ModalAjusteConteo({ isOpen, onClose, onSaved }) {
             {/* Discrepancia calculada */}
             <div
               style={{
-                backgroundColor: difference === 0 ? '#f8fafc' : difference > 0 ? '#ecfdf5' : '#fef2f2',
-                border: `1px solid ${difference === 0 ? '#e2e8f0' : difference > 0 ? '#a7f3d0' : '#fecaca'}`,
-                padding: '12px 16px',
-                borderRadius: '6px',
-                marginBottom: '16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                backgroundColor:
+                  difference === 0
+                    ? "#f8fafc"
+                    : difference > 0
+                      ? "#ecfdf5"
+                      : "#fef2f2",
+                border: `1px solid ${difference === 0 ? "#e2e8f0" : difference > 0 ? "#a7f3d0" : "#fecaca"}`,
+                padding: "12px 16px",
+                borderRadius: "6px",
+                marginBottom: "16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
-              <span style={{ fontSize: '13px', fontWeight: 600 }}>Diferencia de Inventario:</span>
+              <span style={{ fontSize: "13px", fontWeight: 600 }}>
+                Diferencia de Inventario:
+              </span>
               <span
                 className="mono"
                 style={{
-                  fontSize: '15px',
+                  fontSize: "15px",
                   fontWeight: 800,
-                  color: difference === 0 ? '#64748b' : difference > 0 ? '#059669' : '#dc2626'
+                  color:
+                    difference === 0
+                      ? "#64748b"
+                      : difference > 0
+                        ? "#059669"
+                        : "#dc2626",
                 }}
               >
                 {difference > 0 ? `+${difference}` : difference} uds
@@ -149,11 +169,20 @@ export default function ModalAjusteConteo({ isOpen, onClose, onSaved }) {
           </div>
 
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary" disabled={loading} id="btn-submit-ajuste">
-              {loading ? 'Aplicando ajuste...' : 'Confirmar Ajuste Físico'}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+              id="btn-submit-ajuste"
+            >
+              {loading ? "Aplicando ajuste..." : "Confirmar Ajuste Físico"}
             </button>
           </div>
         </form>

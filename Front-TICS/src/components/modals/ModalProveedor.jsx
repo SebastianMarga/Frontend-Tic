@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { X, Building2 } from 'lucide-react';
-import { supplierService } from '../../services/supplierService.js';
+import React, { useState, useEffect } from "react";
+import { X, Building2 } from "lucide-react";
+import { supplierService } from "../../services/supplierService.js";
 
-export default function ModalProveedor({ isOpen, onClose, supplierToEdit, onSaved }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+export default function ModalProveedor({
+  isOpen,
+  onClose,
+  supplierToEdit,
+  onSaved,
+}) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       if (supplierToEdit) {
-        setName(supplierToEdit.name || '');
-        setEmail(supplierToEdit.email || '');
-        setPhone(supplierToEdit.phone || '');
+        setName(supplierToEdit.name || "");
+        setEmail(supplierToEdit.email || "");
+        setPhone(supplierToEdit.phone || "");
       } else {
-        setName('');
-        setEmail('');
-        setPhone('');
+        setName("");
+        setEmail("");
+        setPhone("");
       }
     }
   }, [isOpen, supplierToEdit]);
@@ -30,14 +35,18 @@ export default function ModalProveedor({ isOpen, onClose, supplierToEdit, onSave
 
     try {
       if (supplierToEdit) {
-        await supplierService.updateSupplier(supplierToEdit.id, { name, email, phone });
+        await supplierService.updateSupplier(supplierToEdit.id, {
+          name,
+          email,
+          phone,
+        });
       } else {
         await supplierService.createSupplier({ name, email, phone });
       }
       onSaved();
       onClose();
     } catch (err) {
-      alert('Error guardando proveedor: ' + err.message);
+      alert("Error guardando proveedor: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -48,9 +57,13 @@ export default function ModalProveedor({ isOpen, onClose, supplierToEdit, onSave
       <div className="modal-content" id="modal-proveedor">
         <div className="modal-header">
           <h2 className="modal-title">
-            {supplierToEdit ? 'Editar Proveedor' : 'Nuevo Proveedor'}
+            {supplierToEdit ? "Editar Proveedor" : "Nuevo Proveedor"}
           </h2>
-          <button className="modal-close-btn" onClick={onClose} id="btn-cerrar-modal-proveedor">
+          <button
+            className="modal-close-btn"
+            onClick={onClose}
+            id="btn-cerrar-modal-proveedor"
+          >
             <X size={18} />
           </button>
         </div>
@@ -103,11 +116,24 @@ export default function ModalProveedor({ isOpen, onClose, supplierToEdit, onSave
           </div>
 
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary" disabled={loading} id="btn-submit-proveedor">
-              {loading ? 'Guardando...' : supplierToEdit ? 'Actualizar' : 'Guardar Proveedor'}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+              id="btn-submit-proveedor"
+            >
+              {loading
+                ? "Guardando..."
+                : supplierToEdit
+                  ? "Actualizar"
+                  : "Guardar Proveedor"}
             </button>
           </div>
         </form>

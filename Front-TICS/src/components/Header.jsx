@@ -1,6 +1,13 @@
-import React from 'react';
-import { Search, Bell, LogOut, ShieldCheck, UserCheck, ChevronDown } from 'lucide-react';
-import './Header.css';
+import React from "react";
+import {
+  Search,
+  Bell,
+  LogOut,
+  ShieldCheck,
+  UserCheck,
+  ChevronDown,
+} from "lucide-react";
+import "./Header.css";
 
 export default function Header({
   activeView,
@@ -8,37 +15,40 @@ export default function Header({
   onToggleRole,
   onLogout,
   searchQuery,
-  onSearchChange
+  onSearchChange,
 }) {
   const getBreadcrumb = () => {
     switch (activeView) {
-      case 'dashboard':
-        return { main: 'Panel de Control', sub: null };
-      case 'catalogo':
-        return { main: 'Panel de Control', sub: 'Catálogo de Productos' };
-      case 'movimientos':
-        return { main: 'Panel de Control', sub: 'Movimientos de Inventario' };
-      case 'alertas':
-        return { main: 'Panel de Control', sub: 'Alertas de Vencimiento' };
-      case 'rpa':
-        return { main: 'Panel de Control', sub: 'Supervisión de Órdenes RPA' };
-      case 'tendencias':
-        return { main: 'Panel de Control', sub: 'Productos en Tendencia (IA)' };
-      case 'datosMaestros':
-        return { main: 'Panel de Control', sub: 'Datos Maestros' };
-      case 'usuarios':
-        return { main: 'Panel de Control', sub: 'Administración de Usuarios y Accesos' };
-      case 'configuracion':
-        return { main: 'Panel de Control', sub: 'Configuración del Sistema' };
-      case 'ayuda':
-        return { main: 'Panel de Control', sub: 'Centro de Ayuda' };
+      case "dashboard":
+        return { main: "Panel de Control", sub: null };
+      case "catalogo":
+        return { main: "Panel de Control", sub: "Catálogo de Productos" };
+      case "movimientos":
+        return { main: "Panel de Control", sub: "Movimientos de Inventario" };
+      case "alertas":
+        return { main: "Panel de Control", sub: "Alertas de Vencimiento" };
+      case "rpa":
+        return { main: "Panel de Control", sub: "Supervisión de Órdenes RPA" };
+      case "tendencias":
+        return { main: "Panel de Control", sub: "Productos en Tendencia (IA)" };
+      case "datosMaestros":
+        return { main: "Panel de Control", sub: "Datos Maestros" };
+      case "usuarios":
+        return {
+          main: "Panel de Control",
+          sub: "Administración de Usuarios y Accesos",
+        };
+      case "configuracion":
+        return { main: "Panel de Control", sub: "Configuración del Sistema" };
+      case "ayuda":
+        return { main: "Panel de Control", sub: "Centro de Ayuda" };
       default:
-        return { main: 'Panel de Control', sub: null };
+        return { main: "Panel de Control", sub: null };
     }
   };
 
   const breadcrumb = getBreadcrumb();
-  const isAdmin = currentUser?.role === 'ADMIN';
+  const isAdmin = currentUser?.role === "ADMIN";
 
   return (
     <header className="header" id="app-header">
@@ -60,13 +70,13 @@ export default function Header({
         {/* Toggle de rol para testing fluido ADMIN vs OPERATOR */}
         <div className="role-switcher-container">
           <button
-            className={`role-badge-btn ${isAdmin ? 'role-admin' : 'role-operator'}`}
+            className={`role-badge-btn ${isAdmin ? "role-admin" : "role-operator"}`}
             onClick={onToggleRole}
             title="Haga clic para alternar entre rol ADMIN y OPERATOR"
             id="btn-toggle-role-header"
           >
             {isAdmin ? <ShieldCheck size={13} /> : <UserCheck size={13} />}
-            <span>{currentUser?.role || 'ADMIN'}</span>
+            <span>{currentUser?.role || "ADMIN"}</span>
           </button>
         </div>
 
@@ -83,11 +93,15 @@ export default function Header({
         {/* Perfil de Usuario */}
         <div className="header-user-profile">
           <div className="header-user-avatar">
-            {currentUser?.initials || 'EP'}
+            {currentUser?.initials || "EP"}
           </div>
           <div className="header-user-info">
-            <span className="header-user-name">{currentUser?.name || 'Elena Pérez'}</span>
-            <span className="header-user-role">{currentUser?.role || 'ADMIN'}</span>
+            <span className="header-user-name">
+              {currentUser?.name || "Elena Pérez"}
+            </span>
+            <span className="header-user-role">
+              {currentUser?.role || "ADMIN"}
+            </span>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   LayoutDashboard,
   Package,
@@ -12,37 +12,37 @@ import {
   HelpCircle,
   Plus,
   Boxes,
-  MessageCircle
-} from 'lucide-react';
-import './Sidebar.css';
+  MessageCircle,
+} from "lucide-react";
+import "./Sidebar.css";
 
 export default function Sidebar({
   activeView,
   setActiveView,
   onOpenNewOrderModal,
   userRole,
-  expiringCount = 12
+  expiringCount = 12,
 }) {
   const menuItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'catalogo', label: 'Catálogo', icon: Package },
-    { id: 'movimientos', label: 'Movimientos', icon: ArrowLeftRight },
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "catalogo", label: "Catálogo", icon: Package },
+    { id: "movimientos", label: "Movimientos", icon: ArrowLeftRight },
     {
-      id: 'alertas',
-      label: 'Alertas de Vencimiento',
+      id: "alertas",
+      label: "Alertas de Vencimiento",
       icon: Clock,
-      badge: expiringCount > 0 ? expiringCount : null
+      badge: expiringCount > 0 ? expiringCount : null,
     },
-    { id: 'rpa', label: 'Órdenes RPA', icon: Bot },
-    { id: 'tendencias', label: 'Sugerencias IA', icon: Sparkles },
-    { id: 'chatbot', label: 'Asistente Virtual', icon: MessageCircle },
-    { id: 'datosMaestros', label: 'Datos Maestros', icon: Database },
+    { id: "rpa", label: "Órdenes RPA", icon: Bot },
+    { id: "tendencias", label: "Sugerencias IA", icon: Sparkles },
+    { id: "chatbot", label: "Asistente Virtual", icon: MessageCircle },
+    { id: "datosMaestros", label: "Datos Maestros", icon: Database },
     {
-      id: 'usuarios',
-      label: 'Usuarios',
+      id: "usuarios",
+      label: "Usuarios",
       icon: Users,
-      adminOnly: true
-    }
+      adminOnly: true,
+    },
   ];
 
   return (
@@ -64,15 +64,19 @@ export default function Sidebar({
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeView === item.id;
-            const isRestricted = item.adminOnly && userRole === 'OPERATOR';
+            const isRestricted = item.adminOnly && userRole === "OPERATOR";
 
             return (
               <button
                 key={item.id}
                 id={`sidebar-nav-${item.id}`}
-                className={`sidebar-nav-item ${isActive ? 'active' : ''}`}
+                className={`sidebar-nav-item ${isActive ? "active" : ""}`}
                 onClick={() => setActiveView(item.id)}
-                title={isRestricted ? 'Acceso limitado a administradores' : item.label}
+                title={
+                  isRestricted
+                    ? "Acceso limitado a administradores"
+                    : item.label
+                }
               >
                 <div className="sidebar-nav-item-left">
                   <Icon size={18} />

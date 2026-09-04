@@ -1,13 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { Plus, Search, Edit2, Shield, User, ChevronLeft, ChevronRight, UserCheck } from 'lucide-react';
-import { userService } from '../services/userService.js';
-import './Usuarios.css';
+import React, { useState, useEffect } from "react";
+import {
+  Plus,
+  Search,
+  Edit2,
+  Shield,
+  User,
+  ChevronLeft,
+  ChevronRight,
+  UserCheck,
+} from "lucide-react";
+import { userService } from "../services/userService.js";
+import "./Usuarios.css";
 
-export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser }) {
+export default function Usuarios({
+  userRole,
+  onOpenCreateUser,
+  onOpenEditUser,
+}) {
   const [users, setUsers] = useState([]);
-  const [search, setSearch] = useState('');
-  const [roleFilter, setRoleFilter] = useState('Todos');
-  const [statusFilter, setStatusFilter] = useState('Todos');
+  const [search, setSearch] = useState("");
+  const [roleFilter, setRoleFilter] = useState("Todos");
+  const [statusFilter, setStatusFilter] = useState("Todos");
   const [loading, setLoading] = useState(true);
 
   const loadUsers = async () => {
@@ -16,11 +29,11 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
       const data = await userService.getUsers({
         search,
         role: roleFilter,
-        status: statusFilter
+        status: statusFilter,
       });
       setUsers(data);
     } catch (e) {
-      console.error('Error cargando usuarios:', e);
+      console.error("Error cargando usuarios:", e);
     } finally {
       setLoading(false);
     }
@@ -30,7 +43,7 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
     loadUsers();
   }, [search, roleFilter, statusFilter]);
 
-  const isAdmin = userRole === 'ADMIN';
+  const isAdmin = userRole === "ADMIN";
 
   return (
     <div className="page-container" id="usuarios-view">
@@ -39,7 +52,8 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
         <div className="page-header-titles">
           <h1 className="page-title">Administración de Usuarios y Accesos</h1>
           <p className="page-subtitle">
-            Control de roles, permisos y credenciales del personal operativo y administrativo.
+            Control de roles, permisos y credenciales del personal operativo y
+            administrativo.
           </p>
         </div>
 
@@ -105,19 +119,29 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
                 <th>ROL ASIGNADO</th>
                 <th>ESTADO</th>
                 <th>FECHA DE CREACIÓN</th>
-                <th style={{ textAlign: 'right' }}>ACCIONES</th>
+                <th style={{ textAlign: "right" }}>ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '32px' }}>
+                  <td
+                    colSpan="6"
+                    style={{ textAlign: "center", padding: "32px" }}
+                  >
                     Cargando usuarios...
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan="6" style={{ textAlign: 'center', padding: '32px', color: '#64748b' }}>
+                  <td
+                    colSpan="6"
+                    style={{
+                      textAlign: "center",
+                      padding: "32px",
+                      color: "#64748b",
+                    }}
+                  >
                     No se encontraron usuarios con los filtros seleccionados.
                   </td>
                 </tr>
@@ -128,24 +152,24 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
                       <div className="user-cell">
                         <div
                           className={`user-avatar-circle ${
-                            user.role === 'OPERATOR' ? 'operator-avatar' : ''
+                            user.role === "OPERATOR" ? "operator-avatar" : ""
                           }`}
                         >
-                          {user.initials || 'US'}
+                          {user.initials || "US"}
                         </div>
                         <span className="user-name-text">{user.name}</span>
                       </div>
                     </td>
-                    <td className="mono" style={{ color: '#475569' }}>
+                    <td className="mono" style={{ color: "#475569" }}>
                       {user.email}
                     </td>
                     <td>
                       <span
                         className={`role-pill ${
-                          user.role === 'ADMIN' ? 'admin' : 'operator'
+                          user.role === "ADMIN" ? "admin" : "operator"
                         }`}
                       >
-                        {user.role === 'ADMIN' ? (
+                        {user.role === "ADMIN" ? (
                           <Shield size={12} />
                         ) : (
                           <UserCheck size={12} />
@@ -157,16 +181,19 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
                       <span className="status-dot-cell">
                         <span
                           className={`status-dot ${
-                            user.status !== 'Activo' ? 'inactive' : ''
+                            user.status !== "Activo" ? "inactive" : ""
                           }`}
                         ></span>
                         <span>{user.status}</span>
                       </span>
                     </td>
-                    <td className="mono" style={{ color: '#64748b', fontSize: '12px' }}>
+                    <td
+                      className="mono"
+                      style={{ color: "#64748b", fontSize: "12px" }}
+                    >
                       {user.createdAt}
                     </td>
-                    <td style={{ textAlign: 'right' }}>
+                    <td style={{ textAlign: "right" }}>
                       {isAdmin && (
                         <div className="table-actions-row">
                           <button
@@ -189,7 +216,9 @@ export default function Usuarios({ userRole, onOpenCreateUser, onOpenEditUser })
 
         {/* Footer */}
         <div className="table-footer">
-          <span>Mostrando 1 a {users.length} de {users.length} usuarios</span>
+          <span>
+            Mostrando 1 a {users.length} de {users.length} usuarios
+          </span>
           <div className="pagination">
             <button className="page-btn" disabled>
               <ChevronLeft size={16} />

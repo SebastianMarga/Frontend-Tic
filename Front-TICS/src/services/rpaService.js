@@ -53,15 +53,30 @@ export const rpaService = {
         orderId: newId,
         supplier: orderData.supplier || "Global Logistics Corp",
         supplierId: orderData.supplierId || "PRV-001",
-        dateTime: new Date().toLocaleDateString("es-ES", { day: "2-digit", month: "short", year: "numeric" }) + ", " + new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }),
+        dateTime:
+          new Date().toLocaleDateString("es-ES", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          }) +
+          ", " +
+          new Date().toLocaleTimeString("es-ES", {
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
         quantity: Number(orderData.quantity) || 200,
         totalValue: Number(orderData.totalValue) || 7200,
         formattedTotal: `$${(Number(orderData.totalValue) || 7200).toLocaleString("en-US", { minimumFractionDigits: 2 })}`,
         status: "PROCESSING",
         statusLabel: "PROCESSING",
         items: orderData.items || [
-          { sku: orderData.sku || "SKU-AUTO", product: orderData.productName || "Insumo Reorden", qty: Number(orderData.quantity) || 200, unitPrice: 36.00 }
-        ]
+          {
+            sku: orderData.sku || "SKU-AUTO",
+            product: orderData.productName || "Insumo Reorden",
+            qty: Number(orderData.quantity) || 200,
+            unitPrice: 36.0,
+          },
+        ],
       };
       const updated = [newOrder, ...current];
       saveLocalOrders(updated);
@@ -124,5 +139,5 @@ export const rpaService = {
       method: "PATCH",
       body: JSON.stringify({ status: "PROCESSING", correctiveAction }),
     });
-  }
+  },
 };

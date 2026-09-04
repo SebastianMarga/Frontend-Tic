@@ -32,12 +32,16 @@ function buildMockReply(userText) {
   const text = userText.toLowerCase();
 
   if (text.includes("stock") || text.includes("inventario")) {
-    return "Según el catálogo actual, puedo ayudarte a revisar niveles de stock. " +
-      "Ve a la sección 'Catálogo' para ver el detalle por producto, o dime el nombre del producto y te oriento.";
+    return (
+      "Según el catálogo actual, puedo ayudarte a revisar niveles de stock. " +
+      "Ve a la sección 'Catálogo' para ver el detalle por producto, o dime el nombre del producto y te oriento."
+    );
   }
   if (text.includes("vencimiento") || text.includes("alerta")) {
-    return "Tienes alertas activas de próximos vencimientos en la sección 'Alertas de Vencimiento'. " +
-      "¿Quieres que te resuma los productos más críticos?";
+    return (
+      "Tienes alertas activas de próximos vencimientos en la sección 'Alertas de Vencimiento'. " +
+      "¿Quieres que te resuma los productos más críticos?"
+    );
   }
   if (text.includes("proveedor")) {
     return "La información de proveedores está en 'Datos Maestros'. Puedo ayudarte a ubicar uno si me das el nombre.";
@@ -52,8 +56,10 @@ function buildMockReply(userText) {
     return "¡Con gusto! Aquí estaré si necesitas algo más.";
   }
 
-  return "Todavía estoy en modo demostración (sin conexión al modelo de IA final), " +
-    "pero ya puedo mostrar cómo se verá la conversación. Pronto responderé con información real del sistema.";
+  return (
+    "Todavía estoy en modo demostración (sin conexión al modelo de IA final), " +
+    "pero ya puedo mostrar cómo se verá la conversación. Pronto responderé con información real del sistema."
+  );
 }
 
 export const chatbotService = {

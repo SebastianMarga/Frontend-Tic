@@ -43,8 +43,10 @@ export const aiService = {
 
       // Add to products catalog if not exists
       const storedProducts = localStorage.getItem("inventario_products_data");
-      const products = storedProducts ? JSON.parse(storedProducts) : mockProducts;
-      
+      const products = storedProducts
+        ? JSON.parse(storedProducts)
+        : mockProducts;
+
       const newSku = `SKU-TR-${Math.floor(1000 + Math.random() * 9000)}`;
       const newProd = {
         id: `prod-ia-${Date.now()}`,
@@ -54,8 +56,12 @@ export const aiService = {
         supplier: "Global Parts Network",
         supplierId: "PRV-401",
         currentStock: 0,
-        dynamicThreshold: trends[index].suggestedQty ? Math.round(trends[index].suggestedQty * 0.2) : 200,
-        reorderPoint: trends[index].suggestedQty ? Math.round(trends[index].suggestedQty * 0.2) : 200,
+        dynamicThreshold: trends[index].suggestedQty
+          ? Math.round(trends[index].suggestedQty * 0.2)
+          : 200,
+        reorderPoint: trends[index].suggestedQty
+          ? Math.round(trends[index].suggestedQty * 0.2)
+          : 200,
         optimalOrderQty: trends[index].suggestedQty || 1000,
         leadTimeDays: 7,
         description: `Producto incorporado vía sugerencia de IA (${trends[index].badgeType}). Fuente: ${trends[index].dataSource}`,
@@ -65,11 +71,14 @@ export const aiService = {
         statusType: "danger",
         recommendedAction: "Generar PO inicial RPA",
         batches: [],
-        movements: []
+        movements: [],
       };
 
       products.unshift(newProd);
-      localStorage.setItem("inventario_products_data", JSON.stringify(products));
+      localStorage.setItem(
+        "inventario_products_data",
+        JSON.stringify(products),
+      );
 
       return mockDelay({ suggestion: trends[index], createdProduct: newProd });
     }
@@ -104,12 +113,18 @@ export const aiService = {
         category: trendData.category || "General",
         score: trendData.score || 85,
         badgeType: trendData.badgeType || "DEMANDA EMERGENTE",
-        confidenceBadge: trendData.badgeType === "ALTA CONFIANZA" ? "💡 ALTA CONFIANZA" : "📈 DEMANDA EMERGENTE",
-        confidenceClass: trendData.badgeType === "ALTA CONFIANZA" ? "badge-blue" : "badge-teal",
+        confidenceBadge:
+          trendData.badgeType === "ALTA CONFIANZA"
+            ? "💡 ALTA CONFIANZA"
+            : "📈 DEMANDA EMERGENTE",
+        confidenceClass:
+          trendData.badgeType === "ALTA CONFIANZA"
+            ? "badge-blue"
+            : "badge-teal",
         dataSource: trendData.dataSource || "Algoritmo Predictivo IA",
         suggestedQty: Number(trendData.suggestedQty) || 1000,
         formattedQty: `${Number(trendData.suggestedQty || 1000).toLocaleString()} uds`,
-        status: "PENDING"
+        status: "PENDING",
       };
       const updated = [newTrend, ...trends];
       saveLocalTrending(updated);
@@ -120,5 +135,5 @@ export const aiService = {
       method: "POST",
       body: JSON.stringify(trendData),
     });
-  }
+  },
 };

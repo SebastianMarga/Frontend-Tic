@@ -76,7 +76,9 @@ export const supplierService = {
       const current = getLocalSuppliers();
       const target = current.find((s) => s.id === id);
       if (target && target.associatedProducts > 0) {
-        throw new Error("No se puede eliminar un proveedor con productos asociados");
+        throw new Error(
+          "No se puede eliminar un proveedor con productos asociados",
+        );
       }
       const updated = current.filter((s) => s.id !== id);
       saveLocalSuppliers(updated);
@@ -86,5 +88,5 @@ export const supplierService = {
     return request(`/suppliers/${id}`, {
       method: "DELETE",
     });
-  }
+  },
 };
