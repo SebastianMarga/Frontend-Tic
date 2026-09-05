@@ -9,6 +9,7 @@ import RPAOrdenes from './components/RPAOrdenes.jsx';
 import Movimientos from './components/Movimientos.jsx';
 import Alertas from './components/Alertas.jsx';
 import Usuarios from './components/Usuarios.jsx';
+import Chatbot from "./components/Chatbot.jsx";
 import Login from './components/Login.jsx';
 import Registro from './components/Registro.jsx';
 
@@ -241,6 +242,7 @@ export default function App() {
               }}
             />
           )}
+          {activeView === "chatbot" && <Chatbot currentUser={currentUser} />}
         </main>
       </div>
 

@@ -1,5 +1,4 @@
-// Asegúrate de apuntar al puerto donde corre tu backend de Express
-const API_URL = import.meta.env.VITE_API_URL;
+import apiFetch from '../interceptors/api.js';
 
 export const chatbotService = {
   async getHistory() {
@@ -22,19 +21,7 @@ export const chatbotService = {
 
   async sendMessage(textToSend) {
 
-    const response = await fetch(`${API_URL}inventory/query`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ prompt: textToSend })
-    });
-
-    if (!response.ok) {
-      throw new Error('Error de conexión con el backend');
-    }
-
-    const data = await response.json();
+    const data = await apiFetch.post('inventory/query', { prompt: textToSend });
 
     return {
       id: `bot-msg-${Date.now()}`,
