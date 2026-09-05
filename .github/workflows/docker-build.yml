@@ -29,3 +29,5 @@ jobs:
           tags: lincolmvf/frontend-tic-s:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            VITE_API_URL=${{ secrets.VITE_API_URL }}
