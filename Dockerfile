@@ -1,4 +1,5 @@
 # Etapa 1: Construcción (Build)
+# Etapa 1: Construcción (Build)
 FROM node:20 AS builder
 WORKDIR /app
 COPY package*.json ./
