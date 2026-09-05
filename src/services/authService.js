@@ -1,4 +1,3 @@
-// src/services/authService.js
 import apiFetch from "../interceptors/api.js";
 
 const AUTH_USER_KEY = "inventario_auth_user";

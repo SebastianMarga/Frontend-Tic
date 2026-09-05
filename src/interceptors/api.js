@@ -37,7 +37,7 @@ export const apiFetch = async (endpoint, options = {}) => {
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
   let response = await fetch(`${API_URL}${cleanEndpoint}`, defaultOptions);
 
-  if (response.status === 401 && !endpoint.includes('/auth/')) {
+  if (response.status === 401 && !endpoint.includes('auth/')) {
     if (options._retry) {
       return response;
     }

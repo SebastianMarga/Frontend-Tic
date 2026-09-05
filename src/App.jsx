@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import Sidebar from './components/Sidebar.jsx';
 import Header from './components/Header.jsx';
 import Dashboard from './components/Dashboard.jsx';

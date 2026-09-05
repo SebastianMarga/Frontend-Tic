@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Boxes, Lock, Mail, ArrowRight, AlertCircle, UserPlus } from 'lucide-react';
 import { authService } from '../services/authService.js';
 import './Login.css';
+import toast from 'react-hot-toast';
 
 export default function Login({ onLoginSuccess, onSwitchToRegister }) {
   const [email, setEmail] = useState('admin@inventario.ia');
@@ -11,16 +12,19 @@ export default function Login({ onLoginSuccess, onSwitchToRegister }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
     setLoading(true);
 
     try {
       const session = await authService.login(email, password);
-      if (session?.user) {
-        onLoginSuccess(session.user);
+      if (session.ok === false) {
+        toast.error('Credenciales Inválidas');
+        return
       }
+      toast.success('Login Exitoso');
+      onLoginSuccess(session.user);
     } catch (err) {
-      setError(err.message || 'Error de autenticación');
+      toast.error(err.message);
+      console.error(err.message || 'Error de autenticación');
     } finally {
       setLoading(false);
     }
