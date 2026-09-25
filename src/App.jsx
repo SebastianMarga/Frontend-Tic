@@ -82,8 +82,8 @@ export default function App() {
     if (authMode === 'register') {
       return (
         <Registro
-          onRegisterSuccess={(user) => {
-            setCurrentUser(user);
+          onRegisterSuccess={() => {
+            setCurrentUser(null);
             setAuthMode('login');
           }}
           onSwitchToLogin={() => setAuthMode('login')}

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { userService } from "../services/userService.js";
 import "./Usuarios.css";
+import toast from "react-hot-toast";
 
 export default function Usuarios({
   userRole,
@@ -26,14 +27,11 @@ export default function Usuarios({
   const loadUsers = async () => {
     try {
       setLoading(true);
-      const data = await userService.getUsers({
-        search,
-        role: roleFilter,
-        status: statusFilter,
-      });
+      const data = await userService.getUsers();
       setUsers(data);
     } catch (e) {
       console.error("Error cargando usuarios:", e);
+      toast.error('Error al cargar los usuarios.')
     } finally {
       setLoading(false);
     }
@@ -151,9 +149,8 @@ export default function Usuarios({
                     <td>
                       <div className="user-cell">
                         <div
-                          className={`user-avatar-circle ${
-                            user.role === "OPERATOR" ? "operator-avatar" : ""
-                          }`}
+                          className={`user-avatar-circle ${user.role === "OPERATOR" ? "operator-avatar" : ""
+                            }`}
                         >
                           {user.initials || "US"}
                         </div>
@@ -165,9 +162,8 @@ export default function Usuarios({
                     </td>
                     <td>
                       <span
-                        className={`role-pill ${
-                          user.role === "ADMIN" ? "admin" : "operator"
-                        }`}
+                        className={`role-pill ${user.role === "ADMIN" ? "admin" : "operator"
+                          }`}
                       >
                         {user.role === "ADMIN" ? (
                           <Shield size={12} />
@@ -180,11 +176,10 @@ export default function Usuarios({
                     <td>
                       <span className="status-dot-cell">
                         <span
-                          className={`status-dot ${
-                            user.status !== "Activo" ? "inactive" : ""
-                          }`}
+                          className={`status-dot ${!user.isActive ? "inactive" : ""
+                            }`}
                         ></span>
-                        <span>{user.status}</span>
+                        <span>{user.isActive ? 'Activo' : 'Inactivo'}</span>
                       </span>
                     </td>
                     <td

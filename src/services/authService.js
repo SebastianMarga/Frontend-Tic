@@ -12,6 +12,11 @@ export const authService = {
     return data;
   },
 
+  async register(name, email, password) {
+    const data = await apiFetch.post("auth/register", { name, email, password });
+    return data;
+  },
+
   getCurrentUser() {
     try {
       const stored = localStorage.getItem(AUTH_USER_KEY);

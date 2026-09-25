@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Boxes, User, Mail, Lock, Shield, UserCheck, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { authService } from '../services/authService.js';
 import './Login.css';
+import toast from 'react-hot-toast';
 
 export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
   const [name, setName] = useState('');
@@ -39,27 +40,18 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
     }
 
     if (!acceptTerms) {
-      setError('Debe aceptar las políticas de trazabilidad y uso del sistema.');
+      setError('Debe aceptar las políticas del sistema.');
       return;
     }
 
     setLoading(true);
 
     try {
-      // El registro público es estrictamente con rol OPERATOR
-      const session = await authService.register({
-        name: name.trim(),
-        email: email.trim(),
-        password,
-        role: 'OPERATOR'
-      });
+      await authService.register(name, email, password);
+      toast.success('Registro Exitoso');
 
-      setSuccessMsg('¡Cuenta registrada exitosamente! Iniciando sesión...');
-      setTimeout(() => {
-        if (session?.user) {
-          onRegisterSuccess(session.user);
-        }
-      }, 700);
+      onRegisterSuccess();
+      onSwitchToLogin();
     } catch (err) {
       setError(err.message || 'Ocurrió un error al registrar el usuario.');
     } finally {
@@ -229,7 +221,7 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
                 id="chk-accept-terms"
               />
               <span>
-                Acepto los términos de trazabilidad operativa y políticas de seguridad Zero-Touch.
+                Acepto los términos y políticas de seguridad Zero-Touch.
               </span>
             </label>
           </div>

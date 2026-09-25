@@ -164,29 +164,6 @@ export default function Login({ onLoginSuccess, onSwitchToRegister }) {
             Regístrate aquí
           </button>
         </div>
-
-        {/* Atajos Rápidos para testing de roles */}
-        <div className="login-demo-helpers">
-          <span className="login-demo-title">Accesos de Prueba Rápidos:</span>
-          <div className="login-demo-pills">
-            <button
-              type="button"
-              className="login-demo-pill"
-              onClick={() => handleQuickDemo('admin@inventario.ia', 'admin123')}
-              id="btn-demo-admin"
-            >
-              Rol ADMIN
-            </button>
-            <button
-              type="button"
-              className="login-demo-pill"
-              onClick={() => handleQuickDemo('miguel.gomez@inventarioia.com', 'operator123')}
-              id="btn-demo-operator"
-            >
-              Rol OPERATOR
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
