@@ -82,7 +82,7 @@ export const apiFetch = async (endpoint, options = {}) => {
     throw new Error(errorData.error || 'Error en la petición');
   }
 
-  return response.ok ? await response.json() : response;
+  return response.ok ? await response.json().catch(() => ({})) : response;
 };
 
 apiFetch.get = (endpoint, options = {}) => apiFetch(endpoint, { ...options, method: 'GET' });
