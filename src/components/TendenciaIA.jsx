@@ -10,7 +10,6 @@ import {
   XCircle,
 } from "lucide-react";
 import { trendingService } from "../services/trendingService.js";
-import "./TendenciaIA.css";
 import toast from "react-hot-toast";
 
 // Normaliza el estado por si el backend lo envía en inglés o español
@@ -115,35 +114,71 @@ export default function TendenciaIA({ userRole, onNavigate }) {
       </div>
 
       {/* Pestañas de Filtrado por Estado */}
-      <div className="trends-tabs-bar">
+      <div className="flex gap-2 border-b border-border mb-5 pb-3">
         <button
           type="button"
-          className={`trend-tab-btn ${activeTab === "PENDING" ? "active" : ""}`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm border border-transparent text-[13px] font-semibold cursor-pointer transition-all duration-150 ${
+            activeTab === "PENDING"
+              ? "bg-btn-primary-bg text-btn-primary-text"
+              : "bg-transparent text-text-secondary hover:bg-slate-50 hover:text-text-primary"
+          }`}
           onClick={() => setActiveTab("PENDING")}
         >
           <Clock size={15} />
           <span>Pendientes</span>
-          <span className="trend-tab-badge">{counts.PENDING}</span>
+          <span
+            className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+              activeTab === "PENDING"
+                ? "bg-white/20 text-white"
+                : "bg-slate-200 text-slate-700"
+            }`}
+          >
+            {counts.PENDING}
+          </span>
         </button>
 
         <button
           type="button"
-          className={`trend-tab-btn ${activeTab === "APPROVED" ? "active" : ""}`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm border border-transparent text-[13px] font-semibold cursor-pointer transition-all duration-150 ${
+            activeTab === "APPROVED"
+              ? "bg-btn-primary-bg text-btn-primary-text"
+              : "bg-transparent text-text-secondary hover:bg-slate-50 hover:text-text-primary"
+          }`}
           onClick={() => setActiveTab("APPROVED")}
         >
           <CheckCircle2 size={15} />
           <span>Aprobados</span>
-          <span className="trend-tab-badge badge-green">{counts.APPROVED}</span>
+          <span
+            className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+              activeTab === "APPROVED"
+                ? "bg-white/20 text-white"
+                : "bg-slate-200 text-slate-700"
+            }`}
+          >
+            {counts.APPROVED}
+          </span>
         </button>
 
         <button
           type="button"
-          className={`trend-tab-btn ${activeTab === "REJECTED" ? "active" : ""}`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-sm border border-transparent text-[13px] font-semibold cursor-pointer transition-all duration-150 ${
+            activeTab === "REJECTED"
+              ? "bg-btn-primary-bg text-btn-primary-text"
+              : "bg-transparent text-text-secondary hover:bg-slate-50 hover:text-text-primary"
+          }`}
           onClick={() => setActiveTab("REJECTED")}
         >
           <XCircle size={15} />
           <span>Desaprobados</span>
-          <span className="trend-tab-badge badge-red">{counts.REJECTED}</span>
+          <span
+            className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
+              activeTab === "REJECTED"
+                ? "bg-white/20 text-white"
+                : "bg-slate-200 text-slate-700"
+            }`}
+          >
+            {counts.REJECTED}
+          </span>
         </button>
       </div>
 
@@ -212,54 +247,62 @@ export default function TendenciaIA({ userRole, onNavigate }) {
           </button>
         </div>
       ) : (
-        <div className="tendencias-grid">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-4">
           {filteredTrends.map((item) => {
             const itemStatus = normalizeStatus(item.status);
 
             return (
               <div
-                className="trend-card"
+                className="card p-6 flex flex-col justify-between transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-md"
                 key={item.id}
                 id={`card-trend-${item.id}`}
               >
                 <div>
-                  <div className="trend-card-top">
+                  <div className="flex justify-between items-start mb-4">
                     <a
                       href={item.urlProduct || "https://www.infotec.com.pe/"}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="trend-badge-pill badge-blue"
+                      className="badge bg-sky-100 text-sky-700"
                     >
                       Ver producto
                     </a>
-                    <div className="trend-score-box">
-                      <span className="trend-score-value">
+                    <div className="flex flex-col items-end">
+                      <span className="text-[28px] font-extrabold leading-none text-success font-mono">
                         {item.trendScore ? item.trendScore : "S/N"}
                       </span>
-                      <span className="trend-score-label">
+                      <span className="text-[10px] font-bold tracking-wide text-text-secondary uppercase mt-0.5">
                         {item.trendScore ? "TENDENCIA" : ""}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="trend-title">{item.suggestedName}</h3>
+                  <h3 className="text-lg font-bold text-text-primary mb-5 leading-[1.3]">
+                    {item.suggestedName}
+                  </h3>
 
-                  <div className="trend-details-grid">
-                    <div className="trend-detail-item">
-                      <span className="trend-detail-label">FUENTE DE DATOS</span>
-                      <span className="trend-detail-value">
+                  <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100 mb-6">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold tracking-wide text-text-secondary uppercase">
+                        FUENTE DE DATOS
+                      </span>
+                      <span className="text-[13px] font-extrabold text-text-primary uppercase">
                         {item.source ? item.source : "S/F"}
                       </span>
                     </div>
-                    <div className="trend-detail-item">
-                      <span className="trend-detail-label">CANT. SUGERIDA</span>
-                      <span className="trend-detail-value mono">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold tracking-wide text-text-secondary uppercase">
+                        CANT. SUGERIDA
+                      </span>
+                      <span className="text-[13px] font-extrabold text-text-primary uppercase font-mono">
                         {item.suggestedAmount ? item.suggestedAmount : "S/N"}
                       </span>
                     </div>
-                    <div className="trend-detail-item">
-                      <span className="trend-detail-label">PRECIO SUGERIDO</span>
-                      <span className="trend-detail-value mono">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[10px] font-bold tracking-wide text-text-secondary uppercase">
+                        PRECIO SUGERIDO
+                      </span>
+                      <span className="text-[13px] font-extrabold text-text-primary uppercase font-mono">
                         {item.suggestedPrice
                           ? `S/ ${item.suggestedPrice}`
                           : "S/N"}
@@ -270,9 +313,9 @@ export default function TendenciaIA({ userRole, onNavigate }) {
 
                 {/* Acciones solo para PENDIENTES; etiqueta fija para el resto */}
                 {itemStatus === "PENDING" ? (
-                  <div className="trend-actions-row">
+                  <div className="grid grid-cols-2 gap-3">
                     <button
-                      className="btn btn-approve"
+                      className="btn btn-success"
                       onClick={() => handleApprove(item)}
                       id={`btn-approve-${item.id}`}
                     >
@@ -280,7 +323,7 @@ export default function TendenciaIA({ userRole, onNavigate }) {
                       <span>Aprobar</span>
                     </button>
                     <button
-                      className="btn btn-reject"
+                      className="btn bg-transparent border border-border text-slate-600 font-semibold hover:bg-slate-50 hover:text-text-primary hover:border-slate-400"
                       onClick={() => handleReject(item)}
                       id={`btn-reject-${item.id}`}
                     >
@@ -289,12 +332,12 @@ export default function TendenciaIA({ userRole, onNavigate }) {
                     </button>
                   </div>
                 ) : itemStatus === "APPROVED" ? (
-                  <div className="trend-status-footer status-approved">
+                  <div className="flex items-center justify-center gap-2 p-2.5 rounded-sm text-[13px] font-bold bg-success-light border border-success-border text-emerald-800">
                     <CheckCircle2 size={16} />
                     <span>Sugerencia Aprobada</span>
                   </div>
                 ) : (
-                  <div className="trend-status-footer status-rejected">
+                  <div className="flex items-center justify-center gap-2 p-2.5 rounded-sm text-[13px] font-bold bg-danger-light border border-danger-border text-red-800">
                     <XCircle size={16} />
                     <span>Sugerencia Desaprobada</span>
                   </div>

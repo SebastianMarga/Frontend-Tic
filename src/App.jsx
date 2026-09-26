@@ -102,7 +102,7 @@ export default function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className="flex min-h-screen bg-app">
       {/* Barra lateral de navegación */}
       <Sidebar
         activeView={activeView}
@@ -116,7 +116,7 @@ export default function App() {
       />
 
       {/* Área de contenido principal */}
-      <div className="main-content">
+      <div className="flex-1 flex flex-col min-w-0 ml-[260px] min-h-screen">
         <Header
           activeView={activeView}
           currentUser={currentUser}
@@ -126,7 +126,7 @@ export default function App() {
           onSearchChange={setGlobalSearch}
         />
 
-        <main key={refreshKey}>
+        <main key={refreshKey} className="min-w-0">
           {activeView === 'dashboard' && (
             <Dashboard
               onNavigate={setActiveView}

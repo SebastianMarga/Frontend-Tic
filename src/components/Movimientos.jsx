@@ -12,7 +12,6 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { stockService } from "../services/stockService.js";
-import "./Movimientos.css";
 
 export default function Movimientos({
   userRole,
@@ -156,23 +155,13 @@ export default function Movimientos({
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center py-8">
                     Cargando movimientos...
                   </td>
                 </tr>
               ) : movements.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
-                  >
+                  <td colSpan="7" className="text-center py-8 text-slate-500">
                     No se encontraron movimientos registrados.
                   </td>
                 </tr>
@@ -184,17 +173,17 @@ export default function Movimientos({
 
                   return (
                     <tr key={mov.id} id={`row-mov-${mov.id}`}>
-                      <td style={{ fontSize: "12px", color: "#64748b" }}>
+                      <td className="text-xs text-slate-500">
                         {mov.dateTime}
                       </td>
                       <td>
                         <span
-                          className={`mov-type-badge ${
+                          className={`inline-flex items-center gap-1 py-1 px-2 rounded-sm text-[11px] font-bold uppercase ${
                             isEntrada
-                              ? "entrada"
+                              ? "bg-emerald-100 text-emerald-800"
                               : isSalida
-                                ? "salida"
-                                : "ajuste"
+                                ? "bg-blue-50 text-blue-700"
+                                : "bg-amber-100 text-amber-800"
                           }`}
                         >
                           {isEntrada ? (
@@ -208,38 +197,31 @@ export default function Movimientos({
                         </span>
                       </td>
                       <td>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <span style={{ fontWeight: 600 }}>
+                        <div className="flex flex-col">
+                          <span className="font-semibold">
                             {mov.productName}
                           </span>
-                          <span
-                            className="mono"
-                            style={{ fontSize: "11px", color: "#64748b" }}
-                          >
+                          <span className="mono text-[11px] text-slate-500">
                             {mov.sku}
                           </span>
                         </div>
                       </td>
                       <td
-                        className={`text-right mono ${
+                        className={`text-right mono font-bold ${
                           isEntrada
-                            ? "qty-positive"
+                            ? "text-emerald-600"
                             : isSalida
-                              ? "qty-negative"
-                              : "qty-neutral"
+                              ? "text-red-600"
+                              : "text-slate-600"
                         }`}
                       >
                         {mov.formattedQty}
                       </td>
-                      <td className="mono" style={{ fontSize: "12px" }}>
-                        {mov.batchNumber}
-                      </td>
+                      <td className="mono text-xs">{mov.batchNumber}</td>
                       <td>
                         <span className="badge badge-gray">{mov.operator}</span>
                       </td>
-                      <td style={{ color: "#475569", fontSize: "13px" }}>
+                      <td className="text-slate-600 text-[13px]">
                         {mov.reason}
                       </td>
                     </tr>

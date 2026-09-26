@@ -14,7 +14,6 @@ import {
 import { productService } from "../services/productService.js";
 import { categoryService } from "../services/categoryService.js";
 import { supplierService } from "../services/supplierService.js";
-import "./Catalogo.css";
 
 export default function Catalogo({
   userRole,
@@ -27,7 +26,6 @@ export default function Catalogo({
   const [suppliers, setSuppliers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Filtros
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [selectedSupplier, setSelectedSupplier] = useState("Todos");
@@ -117,10 +115,9 @@ export default function Catalogo({
 
         {isAdmin && (
           <button
-            className="btn btn-primary"
+            className="btn btn-primary ml-auto"
             onClick={onOpenCreateProduct}
             id="btn-nuevo-producto"
-            style={{ marginLeft: "auto" }}
           >
             <Plus size={16} />
             <span>Nuevo Producto</span>
@@ -140,29 +137,19 @@ export default function Catalogo({
                 <th>PROVEEDOR</th>
                 <th className="text-right">STOCK ACTUAL</th>
                 <th className="text-right">UMBRAL DINÁMICO IA</th>
-                <th style={{ textAlign: "right" }}>ACCIONES</th>
+                <th className="text-right">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center py-8">
                     Cargando catálogo...
                   </td>
                 </tr>
               ) : products.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
-                  >
+                  <td colSpan="7" className="text-center py-8 text-slate-500">
                     No se encontraron productos con los filtros aplicados.
                   </td>
                 </tr>
@@ -173,16 +160,10 @@ export default function Catalogo({
 
                   return (
                     <tr key={item.id} id={`row-producto-${item.sku}`}>
-                      <td className="mono" style={{ fontWeight: 600 }}>
-                        {item.sku}
-                      </td>
+                      <td className="mono font-semibold">{item.sku}</td>
                       <td>
                         <span
-                          style={{
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            color: "var(--text-primary)",
-                          }}
+                          className="font-semibold cursor-pointer text-text-primary"
                           onClick={() => onOpenProductDetail(item)}
                           title="Haga clic para ver lotes FEFO e historial"
                         >
@@ -190,12 +171,10 @@ export default function Catalogo({
                         </span>
                       </td>
                       <td>{item.category}</td>
-                      <td style={{ color: "var(--text-secondary)" }}>
-                        {item.supplier}
-                      </td>
+                      <td className="text-text-secondary">{item.supplier}</td>
                       <td>
-                        <div className="stock-cell">
-                          <div className="stock-value-row">
+                        <div className="flex flex-col items-end gap-0.5">
+                          <div className="flex items-center gap-1.5 font-bold">
                             <span className="mono">
                               {item.currentStock.toLocaleString()}{" "}
                               {item.unit || "uds"}
@@ -209,8 +188,12 @@ export default function Catalogo({
                             )}
                           </div>
                           <span
-                            className={`stock-status-pill ${
-                              isOut ? "danger" : isLow ? "warning" : "success"
+                            className={`text-[10px] font-bold tracking-wide py-0.5 px-1.5 rounded-sm uppercase ${
+                              isOut
+                                ? "text-red-700 bg-red-100"
+                                : isLow
+                                  ? "text-amber-700 bg-amber-100"
+                                  : "text-emerald-700 bg-emerald-100"
                             }`}
                           >
                             {item.statusLabel ||
@@ -222,17 +205,14 @@ export default function Catalogo({
                           </span>
                         </div>
                       </td>
-                      <td
-                        className="text-right mono"
-                        style={{ fontWeight: 500 }}
-                      >
+                      <td className="text-right mono font-medium">
                         {item.dynamicThreshold?.toLocaleString() || 100}{" "}
                         {item.unit || "uds"}
                       </td>
                       <td>
-                        <div className="table-actions-row">
+                        <div className="flex items-center gap-1.5 justify-end">
                           <button
-                            className="row-action-icon-btn"
+                            className="bg-transparent border border-border py-1.5 px-2 rounded-sm cursor-pointer text-slate-600 text-xs flex items-center gap-1 transition-all hover:bg-slate-100 hover:text-text-primary hover:border-slate-400"
                             onClick={() => onOpenProductDetail(item)}
                             title="Ver detalles e historial"
                             id={`btn-detalle-${item.sku}`}
@@ -242,7 +222,7 @@ export default function Catalogo({
                           </button>
                           {isAdmin && (
                             <button
-                              className="row-action-icon-btn"
+                              className="bg-transparent border border-border py-1.5 px-2 rounded-sm cursor-pointer text-slate-600 text-xs flex items-center gap-1 transition-all hover:bg-slate-100 hover:text-text-primary hover:border-slate-400"
                               onClick={() => onOpenEditProduct(item)}
                               title="Editar producto y umbrales"
                               id={`btn-editar-${item.sku}`}

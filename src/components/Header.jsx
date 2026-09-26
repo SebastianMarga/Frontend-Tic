@@ -7,7 +7,6 @@ import {
   UserCheck,
   ChevronDown,
 } from "lucide-react";
-import "./Header.css";
 
 export default function Header({
   activeView,
@@ -51,26 +50,35 @@ export default function Header({
   const isAdmin = currentUser?.role === "ADMIN";
 
   return (
-    <header className="header" id="app-header">
+    <header
+      className="h-16 bg-header border-b border-border flex items-center justify-between px-8 sticky top-0 z-[90]"
+      id="app-header"
+    >
       {/* Título de la vista / Breadcrumb */}
-      <div className="header-left">
-        <div className="header-breadcrumb">
+      <div className="flex items-center gap-4">
+        <div className="text-[15px] font-semibold text-text-primary flex items-center gap-2">
           <span>{breadcrumb.main}</span>
           {breadcrumb.sub && (
             <>
-              <span className="header-breadcrumb-separator">›</span>
-              <span className="header-breadcrumb-sub">{breadcrumb.sub}</span>
+              <span className="text-text-muted font-normal">›</span>
+              <span className="text-text-secondary font-medium">
+                {breadcrumb.sub}
+              </span>
             </>
           )}
         </div>
       </div>
 
       {/* Selector de Rol interactivo, Notificaciones y Perfil */}
-      <div className="header-right">
+      <div className="flex items-center gap-4">
         {/* Toggle de rol para testing fluido ADMIN vs OPERATOR */}
-        <div className="role-switcher-container">
+        <div className="flex items-center gap-2">
           <button
-            className={`role-badge-btn ${isAdmin ? "role-admin" : "role-operator"}`}
+            className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-sm text-[11px] font-bold tracking-wide uppercase cursor-pointer border transition-all ${
+              isAdmin
+                ? "bg-[#0b1c30] text-white border-transparent"
+                : "bg-emerald-100 text-emerald-800 border-emerald-200"
+            }`}
             onClick={onToggleRole}
             title="Haga clic para alternar entre rol ADMIN y OPERATOR"
             id="btn-toggle-role-header"
@@ -82,7 +90,7 @@ export default function Header({
 
         {/* Cerrar Sesión */}
         <button
-          className="header-icon-btn"
+          className="bg-transparent border-none cursor-pointer text-slate-600 p-2 rounded-sm flex items-center justify-center relative transition-all hover:bg-slate-100 hover:text-text-primary"
           onClick={onLogout}
           title="Cerrar Sesión"
           id="btn-header-logout"
@@ -91,15 +99,15 @@ export default function Header({
         </button>
 
         {/* Perfil de Usuario */}
-        <div className="header-user-profile">
-          <div className="header-user-avatar">
+        <div className="flex items-center gap-2.5 pl-2 border-l border-border">
+          <div className="w-8 h-8 rounded-full bg-slate-800 text-white text-xs font-semibold flex items-center justify-center overflow-hidden">
             {currentUser?.initials || "EP"}
           </div>
-          <div className="header-user-info">
-            <span className="header-user-name">
+          <div className="flex flex-col">
+            <span className="text-[13px] font-semibold text-text-primary leading-tight">
               {currentUser?.name || "Elena Pérez"}
             </span>
-            <span className="header-user-role">
+            <span className="text-[11px] text-text-secondary">
               {currentUser?.role || "ADMIN"}
             </span>
           </div>

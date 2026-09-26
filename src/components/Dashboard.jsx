@@ -15,7 +15,6 @@ import {
 import { productService } from "../services/productService.js";
 import { rpaService } from "../services/rpaService.js";
 import { batchService } from "../services/batchService.js";
-import "./Dashboard.css";
 
 export default function Dashboard({
   onNavigate,
@@ -77,7 +76,7 @@ export default function Dashboard({
   return (
     <div className="page-container" id="dashboard-view">
       {/* Botones de acción rápida superiores */}
-      <div className="dashboard-actions-bar">
+      <div className="flex justify-end items-center gap-3 mb-6">
         <button
           className="btn btn-secondary"
           onClick={() => onOpenModalMovimiento("entrada")}
@@ -110,7 +109,7 @@ export default function Dashboard({
       <div className="kpi-grid">
         {/* KPI 1: Productos Activos */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300"
           onClick={() => onNavigate("catalogo")}
           id="kpi-card-productos"
         >
@@ -126,7 +125,7 @@ export default function Dashboard({
 
         {/* KPI 2: Alerta Stock Bajo */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300"
           onClick={() => onNavigate("catalogo")}
           id="kpi-card-stock-bajo"
         >
@@ -140,7 +139,7 @@ export default function Dashboard({
 
         {/* KPI 3: Lotes Próximos a Vencer */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300"
           onClick={() => onNavigate("alertas")}
           id="kpi-card-lotes-vencer"
         >
@@ -154,7 +153,7 @@ export default function Dashboard({
 
         {/* KPI 4: Órdenes RPA Activas */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300"
           onClick={() => onNavigate("rpa")}
           id="kpi-card-ordenes-rpa"
         >
@@ -170,18 +169,18 @@ export default function Dashboard({
       </div>
 
       {/* Tabla de Alertas de Reorden y Stock Bajo */}
-      <div className="dashboard-table-card">
-        <div className="dashboard-table-header">
-          <div className="dashboard-table-title-area">
-            <h2 className="dashboard-table-title">
+      <div className="card">
+        <div className="py-5 px-6 border-b border-border flex justify-between items-start">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-lg font-bold text-text-primary">
               Alertas de Reorden y Stock Bajo
             </h2>
-            <p className="dashboard-table-subtitle">
+            <p className="text-[13px] text-text-secondary">
               Priorizadas por impacto operativo predictivo.
             </p>
           </div>
           <button
-            className="dashboard-table-icon-btn"
+            className="bg-transparent border-none text-text-secondary cursor-pointer p-1.5 rounded-sm flex items-center justify-center transition-all hover:bg-slate-100 hover:text-text-primary"
             onClick={() => onNavigate("catalogo")}
             title="Ver catálogo completo"
             id="btn-dash-ver-catalogo"
@@ -205,14 +204,7 @@ export default function Dashboard({
             <tbody>
               {alertProducts.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="6"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
-                  >
+                  <td colSpan="6" className="text-center py-8 text-slate-500">
                     No hay alertas críticas de stock en este momento.
                   </td>
                 </tr>
@@ -222,14 +214,14 @@ export default function Dashboard({
                     <td className="mono">{item.sku}</td>
                     <td>
                       <span
-                        style={{ fontWeight: 600, cursor: "pointer" }}
+                        className="font-semibold cursor-pointer"
                         onClick={() => onSelectProduct(item)}
                         title="Ver detalle del producto"
                       >
                         {item.name}
                       </span>
                     </td>
-                    <td className="text-right mono" style={{ fontWeight: 600 }}>
+                    <td className="text-right mono font-semibold">
                       {item.currentStock}
                     </td>
                     <td className="text-right mono">
@@ -253,8 +245,10 @@ export default function Dashboard({
                     </td>
                     <td>
                       <button
-                        className={`action-link-btn ${
-                          item.status === "AGOTADO" ? "action-btn-urgent" : ""
+                        className={`bg-transparent border-none font-semibold text-[13px] cursor-pointer underline underline-offset-2 py-1 px-2 rounded-sm transition-colors ${
+                          item.status === "AGOTADO"
+                            ? "text-red-600 hover:bg-red-100 hover:text-red-900"
+                            : "text-[#0b1c30] hover:bg-slate-100 hover:text-blue-700"
                         }`}
                         onClick={() => handleActionClick(item)}
                         id={`btn-accion-reorden-${item.sku}`}

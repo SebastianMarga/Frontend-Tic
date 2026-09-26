@@ -12,7 +12,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { rpaService } from "../services/rpaService.js";
-import "./RPAOrdenes.css";
 
 export default function RPAOrdenes({
   userRole,
@@ -179,18 +178,22 @@ export default function RPAOrdenes({
                     </td>
                     <td>
                       {order.status === "SENT" && (
-                        <span className="rpa-status-badge sent">SENT</span>
+                        <span className="badge bg-sky-100 text-sky-700">
+                          SENT
+                        </span>
                       )}
                       {order.status === "PROCESSING" && (
-                        <span className="rpa-status-badge processing">
+                        <span className="badge bg-blue-50 text-blue-700 animate-[rpaPulseLight_1.8s_infinite_ease-in-out]">
                           PROCESSING
                         </span>
                       )}
                       {order.status === "FAILED" && (
-                        <span className="rpa-status-badge failed">FAILED</span>
+                        <span className="badge bg-red-100 text-danger">
+                          FAILED
+                        </span>
                       )}
                       {order.status === "COMPLETED" && (
-                        <span className="rpa-status-badge completed">
+                        <span className="badge bg-emerald-100 text-emerald-700">
                           COMPLETED
                         </span>
                       )}
@@ -201,7 +204,7 @@ export default function RPAOrdenes({
                     <td style={{ textAlign: "right" }}>
                       {order.status === "FAILED" ? (
                         <button
-                          className="action-btn-review-error"
+                          className="text-danger font-semibold bg-transparent border-none cursor-pointer underline underline-offset-2 text-[13px] inline-flex items-center gap-1 hover:text-red-800"
                           onClick={() => onOpenIncidentModal(order)}
                           id={`btn-revisar-error-${order.orderId}`}
                         >

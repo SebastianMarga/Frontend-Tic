@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Boxes, User, Mail, Lock, Shield, UserCheck, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { authService } from '../services/authService.js';
-import './Login.css';
 import toast from 'react-hot-toast';
 
 export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
@@ -60,22 +59,27 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
   };
 
   return (
-    <div className="login-wrapper" id="registro-view">
-      <div className="login-card" style={{ maxWidth: '480px' }}>
-        {/* Identidad de Marca */}
-        <div className="login-brand-header">
-          <div className="login-logo-box">
+    <div
+      className="min-h-screen w-full flex items-center justify-center bg-slate-50 p-6"
+      id="registro-view"
+    >
+      <div className="w-full max-w-[480px] bg-white border border-border rounded-lg shadow-md py-10 px-9 flex flex-col">
+        <div className="flex flex-col items-center text-center mb-7">
+          <div className="w-12 h-12 bg-[#0b1c30] rounded-[10px] flex items-center justify-center text-white mb-3">
             <Boxes size={28} />
           </div>
-          <h1 className="login-system-name">Inventario IA</h1>
-          <span className="login-system-sub">Gestión Zero-Touch</span>
+          <h1 className="text-xl font-extrabold text-text-primary tracking-tight">
+            Inventario IA
+          </h1>
+          <span className="text-xs text-text-secondary font-medium">
+            Gestión Zero-Touch
+          </span>
         </div>
 
-        {/* Selector de Pestañas: Iniciar Sesión / Registro */}
-        <div className="auth-tabs-switcher">
+        <div className="flex bg-slate-100 p-1 rounded-md mb-6 gap-1 border border-border">
           <button
             type="button"
-            className="auth-tab-btn"
+            className="flex-1 py-2 px-3 border-none bg-transparent text-slate-500 text-[13px] font-semibold rounded-sm cursor-pointer transition-all text-center hover:text-slate-900"
             onClick={onSwitchToLogin}
             id="tab-switch-to-login"
           >
@@ -83,27 +87,29 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
           </button>
           <button
             type="button"
-            className="auth-tab-btn active"
+            className="flex-1 py-2 px-3 border-none bg-white text-[#0b1c30] text-[13px] font-bold rounded-sm cursor-pointer transition-all text-center shadow-[0_1px_3px_rgba(0,0,0,0.08)]"
             id="tab-active-registro"
           >
             Registro
           </button>
         </div>
 
-        <h2 className="login-form-title">Crear Nueva Cuenta</h2>
-        <p className="login-form-desc">
+        <h2 className="text-base font-bold text-text-primary mb-1">
+          Crear Nueva Cuenta
+        </h2>
+        <p className="text-[13px] text-text-secondary mb-6">
           Complete los datos para habilitar su acceso y firma operativa en el inventario.
         </p>
 
         {error && (
-          <div className="login-error-box">
+          <div className="bg-red-100 border border-red-200 text-red-800 py-2.5 px-3.5 rounded-sm text-xs font-medium mb-4 flex items-center gap-2">
             <AlertCircle size={16} />
             <span>{error}</span>
           </div>
         )}
 
         {successMsg && (
-          <div className="login-success-box">
+          <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 py-2.5 px-3.5 rounded-sm text-xs font-semibold mb-4 flex items-center gap-2">
             <CheckCircle2 size={16} />
             <span>{successMsg}</span>
           </div>
@@ -115,12 +121,12 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
             <label className="form-label" htmlFor="reg-name">
               NOMBRE COMPLETO
             </label>
-            <div className="input-with-icon-wrapper">
-              <User size={15} className="input-field-icon" />
+            <div className="relative flex items-center">
+              <User size={15} className="absolute left-3 text-slate-400 pointer-events-none" />
               <input
                 id="reg-name"
                 type="text"
-                className="form-input with-icon"
+                className="form-input pl-9"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Ej. Sofía Morales"
@@ -134,12 +140,12 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
             <label className="form-label" htmlFor="reg-email">
               CORREO ELECTRÓNICO CORPORATIVO
             </label>
-            <div className="input-with-icon-wrapper">
-              <Mail size={15} className="input-field-icon" />
+            <div className="relative flex items-center">
+              <Mail size={15} className="absolute left-3 text-slate-400 pointer-events-none" />
               <input
                 id="reg-email"
                 type="email"
-                className="form-input with-icon"
+                className="form-input pl-9"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="sofia.morales@inventario.ia"
@@ -151,19 +157,24 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
           {/* Rol del usuario - Estrictamente OPERATOR en registro público */}
           <div className="form-group">
             <label className="form-label">ROL ASIGNADO EN REGISTRO</label>
-            <div className="role-locked-info-card" id="card-role-locked-operator">
-              <div className="role-locked-header">
-                <div className="role-locked-badge">
+            <div
+              className="bg-slate-50 border-[1.5px] border-border rounded-sm py-3 px-3.5 flex flex-col gap-2"
+              id="card-role-locked-operator"
+            >
+              <div className="flex items-center justify-between">
+                <div className="inline-flex items-center gap-1.5 bg-[#0b1c30] text-white py-1 px-2.5 rounded text-[11px] font-bold tracking-wide">
                   <UserCheck size={14} />
                   <span>OPERATOR</span>
                 </div>
-                <span className="role-locked-tag">Rol Predeterminado</span>
+                <span className="text-[11px] text-slate-500 font-medium">
+                  Rol Predeterminado
+                </span>
               </div>
-              <p className="role-locked-desc">
+              <p className="text-xs text-slate-700 leading-snug">
                 Acceso operativo para registro de entradas, salidas y auditoría de inventario físico.
               </p>
-              <div className="role-locked-policy">
-                <Shield size={13} style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div className="flex items-start gap-2 bg-blue-50 border border-blue-200 border-l-[3px] border-l-blue-700 py-2 px-2.5 rounded text-[11px] text-blue-900 leading-snug">
+                <Shield size={13} className="shrink-0 mt-0.5" />
                 <span>
                   <strong>Política de Seguridad:</strong> La asignación del rol <strong>ADMIN</strong> requiere autorización y solo puede ser otorgada editando el perfil por otro usuario con rol Administrador.
                 </span>
@@ -177,12 +188,12 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
               <label className="form-label" htmlFor="reg-password">
                 CONTRASEÑA
               </label>
-              <div className="input-with-icon-wrapper">
-                <Lock size={15} className="input-field-icon" />
+              <div className="relative flex items-center">
+                <Lock size={15} className="absolute left-3 text-slate-400 pointer-events-none" />
                 <input
                   id="reg-password"
                   type="password"
-                  className="form-input with-icon"
+                  className="form-input pl-9"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Mínimo 6 caracteres"
@@ -195,12 +206,12 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
               <label className="form-label" htmlFor="reg-confirm-password">
                 CONFIRMAR CONTRASEÑA
               </label>
-              <div className="input-with-icon-wrapper">
-                <Lock size={15} className="input-field-icon" />
+              <div className="relative flex items-center">
+                <Lock size={15} className="absolute left-3 text-slate-400 pointer-events-none" />
                 <input
                   id="reg-confirm-password"
                   type="password"
-                  className="form-input with-icon"
+                  className="form-input pl-9"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Repita la contraseña"
@@ -211,13 +222,13 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
           </div>
 
           {/* Checkbox de términos y trazabilidad */}
-          <div style={{ margin: '14px 0 18px', fontSize: '12px' }}>
-            <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', cursor: 'pointer', color: '#475569' }}>
+          <div className="my-3.5 mb-4.5 text-xs">
+            <label className="flex items-start gap-2 cursor-pointer text-slate-600">
               <input
                 type="checkbox"
                 checked={acceptTerms}
                 onChange={(e) => setAcceptTerms(e.target.checked)}
-                style={{ marginTop: '2px' }}
+                className="mt-0.5"
                 id="chk-accept-terms"
               />
               <span>
@@ -229,7 +240,7 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
           {/* Botón de Enviar */}
           <button
             type="submit"
-            className="login-btn-submit"
+            className="w-full bg-[#0b1c30] text-white border-none rounded-sm py-3 text-sm font-semibold cursor-pointer mt-3 transition-colors flex items-center justify-center gap-2 hover:bg-slate-800 disabled:opacity-60 disabled:cursor-not-allowed"
             disabled={loading}
             id="btn-register-submit"
           >
@@ -239,11 +250,11 @@ export default function Registro({ onRegisterSuccess, onSwitchToLogin }) {
         </form>
 
         {/* Enlace para volver a Iniciar Sesión */}
-        <div className="auth-switch-footer">
+        <div className="mt-4 text-center text-[13px] text-slate-500 flex items-center justify-center gap-1.5">
           <span>¿Ya tienes una cuenta registrada?</span>
           <button
             type="button"
-            className="auth-switch-link-btn"
+            className="bg-none border-none text-[#0b1c30] font-bold cursor-pointer p-0 text-[13px] underline hover:opacity-80"
             onClick={onSwitchToLogin}
             id="btn-link-switch-to-login"
           >

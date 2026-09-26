@@ -10,7 +10,6 @@ import {
   UserCheck,
 } from "lucide-react";
 import { userService } from "../services/userService.js";
-import "./Usuarios.css";
 import toast from "react-hot-toast";
 
 export default function Usuarios({
@@ -147,14 +146,19 @@ export default function Usuarios({
                 users.map((user) => (
                   <tr key={user.id} id={`row-usuario-${user.id}`}>
                     <td>
-                      <div className="user-cell">
+                      <div className="flex items-center gap-3">
                         <div
-                          className={`user-avatar-circle ${user.role === "OPERATOR" ? "operator-avatar" : ""
-                            }`}
+                          className={`w-[34px] h-[34px] rounded-full text-white text-xs font-bold flex items-center justify-center ${
+                            user.role === "OPERATOR"
+                              ? "bg-success"
+                              : "bg-text-primary"
+                          }`}
                         >
                           {user.initials || "US"}
                         </div>
-                        <span className="user-name-text">{user.name}</span>
+                        <span className="font-semibold text-text-primary">
+                          {user.name}
+                        </span>
                       </div>
                     </td>
                     <td className="mono" style={{ color: "#475569" }}>
@@ -162,8 +166,11 @@ export default function Usuarios({
                     </td>
                     <td>
                       <span
-                        className={`role-pill ${user.role === "ADMIN" ? "admin" : "operator"
-                          }`}
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-[11px] font-bold tracking-wide uppercase ${
+                          user.role === "ADMIN"
+                            ? "bg-text-primary text-white"
+                            : "bg-emerald-100 text-emerald-800"
+                        }`}
                       >
                         {user.role === "ADMIN" ? (
                           <Shield size={12} />
@@ -174,10 +181,11 @@ export default function Usuarios({
                       </span>
                     </td>
                     <td>
-                      <span className="status-dot-cell">
+                      <span className="inline-flex items-center gap-1.5 text-[13px] font-medium">
                         <span
-                          className={`status-dot ${!user.isActive ? "inactive" : ""
-                            }`}
+                          className={`w-2 h-2 rounded-full ${
+                            !user.isActive ? "bg-text-muted" : "bg-success"
+                          }`}
                         ></span>
                         <span>{user.isActive ? 'Activo' : 'Inactivo'}</span>
                       </span>

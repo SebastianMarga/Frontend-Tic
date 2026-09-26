@@ -11,7 +11,6 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { batchService } from "../services/batchService.js";
-import "./Alertas.css";
 
 export default function Alertas({ userRole, onOpenModalMovimiento }) {
   const [batches, setBatches] = useState([]);
@@ -70,7 +69,7 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
       </div>
 
       {/* Grid de KPIs de Caducidad */}
-      <div className="alertas-kpi-grid">
+      <div className="grid grid-cols-3 gap-4 mb-6 max-md:grid-cols-1">
         <div className="kpi-card" id="kpi-lotes-criticos">
           <div className="kpi-card-header">
             <span className="kpi-title">&lt; 30 Días (Crítico)</span>
@@ -128,29 +127,19 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                 <th>FECHA DE VENCIMIENTO</th>
                 <th>DÍAS RESTANTES</th>
                 <th>ACCIÓN SUGERIDA</th>
-                <th style={{ textAlign: "right" }}>ACCIONES</th>
+                <th className="text-right">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center p-8">
                     Calculando matrices de caducidad...
                   </td>
                 </tr>
               ) : batches.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
-                  >
+                  <td colSpan="7" className="text-center p-8 text-text-secondary">
                     Excelente: no hay lotes próximos a vencer en el rango
                     seleccionado.
                   </td>
@@ -163,39 +152,31 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
 
                   return (
                     <tr key={b.id} id={`row-lote-${b.batchNumber}`}>
-                      <td className="mono" style={{ fontWeight: 600 }}>
+                      <td className="mono font-semibold">
                         {b.batchNumber}
                       </td>
                       <td>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <span style={{ fontWeight: 600 }}>
+                        <div className="flex flex-col">
+                          <span className="font-semibold">
                             {b.productName}
                           </span>
-                          <span
-                            className="mono"
-                            style={{ fontSize: "11px", color: "#64748b" }}
-                          >
+                          <span className="mono text-[11px] text-text-secondary">
                             {b.sku}
                           </span>
                         </div>
                       </td>
-                      <td
-                        className="text-right mono"
-                        style={{ fontWeight: 600 }}
-                      >
+                      <td className="text-right mono font-semibold">
                         {b.quantity.toLocaleString()} uds
                       </td>
                       <td className="mono">{b.expDate}</td>
                       <td>
                         <span
-                          className={`alerta-days-pill ${
+                          className={`badge normal-case tracking-normal ${
                             isCritical
-                              ? "critical"
+                              ? "badge-danger"
                               : isWarning
-                                ? "warning"
-                                : "moderate"
+                                ? "badge-warning"
+                                : "badge-info"
                           }`}
                         >
                           <Clock size={12} />
@@ -203,16 +184,15 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                         </span>
                       </td>
                       <td
-                        style={{
-                          fontWeight: 500,
-                          color: isCritical ? "#b91c1c" : "#475569",
-                        }}
+                        className={`font-medium ${
+                          isCritical ? "text-danger" : "text-slate-600"
+                        }`}
                       >
                         {isCritical
                           ? "Priorizar despacho inmediato"
                           : "Rotación FEFO prioritaria"}
                       </td>
-                      <td style={{ textAlign: "right" }}>
+                      <td className="text-right">
                         <button
                           className="btn btn-secondary btn-sm"
                           onClick={() => handleDispatchFefo(b)}

@@ -14,7 +14,6 @@ import {
   Boxes,
   MessageCircle,
 } from "lucide-react";
-import "./Sidebar.css";
 
 export default function Sidebar({
   activeView,
@@ -46,21 +45,25 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-top">
+    <aside className="w-[260px] h-screen fixed top-0 left-0 bg-sidebar border-r border-border flex flex-col justify-between py-6 px-4 pb-5 z-[100] overflow-y-auto">
+      <div className="flex flex-col gap-5">
         {/* Logo de la plataforma */}
-        <div className="sidebar-brand">
-          <div className="sidebar-logo-icon">
+        <div className="flex items-center gap-3 px-1">
+          <div className="w-[38px] h-[38px] bg-[#0b1c30] rounded-lg flex items-center justify-center text-white">
             <Boxes size={22} />
           </div>
-          <div className="sidebar-brand-text">
-            <span className="sidebar-title">Inventario IA</span>
-            <span className="sidebar-subtitle">Gestión Zero-Touch</span>
+          <div className="flex flex-col">
+            <span className="text-[15px] font-bold text-text-primary leading-tight">
+              Inventario IA
+            </span>
+            <span className="text-[11px] text-text-secondary font-normal">
+              Gestión Zero-Touch
+            </span>
           </div>
         </div>
 
         {/* Navegación Principal */}
-        <nav className="sidebar-nav">
+        <nav className="flex flex-col gap-1 mt-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeView === item.id;
@@ -70,7 +73,11 @@ export default function Sidebar({
               <button
                 key={item.id}
                 id={`sidebar-nav-${item.id}`}
-                className={`sidebar-nav-item ${isActive ? "active" : ""}`}
+                className={`relative flex items-center justify-between py-2.5 px-3 rounded-sm text-[13px] font-medium cursor-pointer transition-all border border-transparent w-full text-left ${
+                  isActive
+                    ? "bg-blue-50 text-blue-700 font-semibold"
+                    : "text-slate-600 bg-transparent hover:bg-slate-50 hover:text-text-primary"
+                }`}
                 onClick={() => setActiveView(item.id)}
                 title={
                   isRestricted
@@ -78,12 +85,17 @@ export default function Sidebar({
                     : item.label
                 }
               >
-                <div className="sidebar-nav-item-left">
+                <div className="flex items-center gap-3">
                   <Icon size={18} />
                   <span>{item.label}</span>
                 </div>
                 {item.badge && (
-                  <span className="sidebar-nav-badge">{item.badge}</span>
+                  <span className="bg-red-100 text-red-700 text-[10px] font-bold py-0.5 px-1.5 rounded-pill">
+                    {item.badge}
+                  </span>
+                )}
+                {isActive && (
+                  <span className="absolute -right-4 top-[15%] bottom-[15%] w-[3px] bg-blue-700 rounded-l-md" />
                 )}
               </button>
             );
