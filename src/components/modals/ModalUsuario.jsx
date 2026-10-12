@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { X, UserPlus, Shield } from "lucide-react";
 import { userService } from "../../services/userService.js";
+import toast from "react-hot-toast";
 
 export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [role, setRole] = useState("OPERATOR");
   const [status, setStatus] = useState("Activo");
   const [loading, setLoading] = useState(false);
@@ -14,11 +16,13 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
       if (userToEdit) {
         setName(userToEdit.name || "");
         setEmail(userToEdit.email || "");
+        setPassword("");
         setRole(userToEdit.role || "OPERATOR");
-        setStatus(userToEdit.status || "Activo");
+        setStatus(userToEdit.isActive ? "Activo" : "Inactivo");
       } else {
         setName("");
         setEmail("");
+        setPassword("");
         setRole("OPERATOR");
         setStatus("Activo");
       }
@@ -33,19 +37,33 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
 
     try {
       if (userToEdit) {
-        await userService.updateUserRole(userToEdit.id, {
+        const updatePayload = {
           name,
           email,
           role,
-          status,
-        });
+          isActive: status === "Activo",
+        };
+
+        if (password.trim() !== "") {
+          updatePayload.password = password;
+        }
+
+        await userService.updateUser(updatePayload, userToEdit.id);
+        toast.success("Usuario actualizado exitosamente.");
       } else {
-        await userService.createUser({ name, email, role, status });
+        await userService.createUser({
+          name,
+          email,
+          password,
+          role,
+          isActive: status === "Activo"
+        });
+        toast.success("Usuario creado exitosamente.");
       }
       onSaved();
       onClose();
     } catch (err) {
-      alert("Error guardando usuario: " + err.message);
+      toast.error("Error guardando usuario: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -82,14 +100,14 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
                 className="form-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ej. Sofía Morales"
+                placeholder="Ej. Fabrizio Go Loza"
                 required
               />
             </div>
 
             <div className="form-group">
               <label className="form-label" htmlFor="user-email-input">
-                Correo Electrónico Corporativo
+                Correo Electrónico
               </label>
               <input
                 id="user-email-input"
@@ -97,15 +115,34 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
                 className="form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="sofia.morales@inventarioia.com"
+                placeholder="go.loza@gmail.com"
                 required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="user-password-input">
+                Contraseña
+              </label>
+              <input
+                id="user-password-input"
+                type="password"
+                className="form-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={
+                  userToEdit
+                    ? "••••••••"
+                    : "Ingresa una contraseña"
+                }
+                required={!userToEdit}
               />
             </div>
 
             <div className="form-row">
               <div className="form-group">
                 <label className="form-label" htmlFor="user-role-select">
-                  Rol en el Sistema
+                  Rol
                 </label>
                 <select
                   id="user-role-select"
@@ -113,10 +150,8 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                 >
-                  <option value="ADMIN">ADMIN (Acceso Total & Gestión)</option>
-                  <option value="OPERATOR">
-                    OPERATOR (Registro & Supervisión)
-                  </option>
+                  <option value="ADMIN">ADMIN</option>
+                  <option value="OPERATOR">OPERATOR</option>
                 </select>
               </div>
 

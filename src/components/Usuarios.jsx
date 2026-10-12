@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   UserCheck,
+  Trash2
 } from "lucide-react";
 import { userService } from "../services/userService.js";
 import "./Usuarios.css";
@@ -40,6 +41,23 @@ export default function Usuarios({
   useEffect(() => {
     loadUsers();
   }, [search, roleFilter, statusFilter]);
+
+  const handleDeleteUser = async (id) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este usuario?")) return;
+    const authUser = JSON.parse(localStorage.getItem('inventario_auth_user'));
+    if (id === authUser.id) {
+      toast.error('No se puede eliminar el usuario autenticado.');
+      return;
+    }
+    try {
+      await userService.removeUser(id);
+      toast.success("Usuario eliminado correctamente.");
+      loadUsers();
+    } catch (error) {
+      toast.error("Error al eliminar el usuario.");
+      console.error(error);
+    }
+  };
 
   const isAdmin = userRole === "ADMIN";
 
@@ -152,7 +170,7 @@ export default function Usuarios({
                           className={`user-avatar-circle ${user.role === "OPERATOR" ? "operator-avatar" : ""
                             }`}
                         >
-                          {user.initials || "US"}
+                          {user.name.charAt(0).toUpperCase() || "US"}
                         </div>
                         <span className="user-name-text">{user.name}</span>
                       </div>
@@ -190,14 +208,22 @@ export default function Usuarios({
                     </td>
                     <td style={{ textAlign: "right" }}>
                       {isAdmin && (
-                        <div className="table-actions-row">
+                        <div className="flex items-center justify-end gap-2">
                           <button
-                            className="row-action-icon-btn"
+                            className="row-action-icon-btn flex items-center justify-center p-2 rounded hover:bg-slate-100 transition-colors text-slate-500 hover:text-indigo-600"
                             onClick={() => onOpenEditUser(user)}
-                            title="Editar usuario o rol"
+                            title="Editar usuario"
                             id={`btn-edit-user-${user.id}`}
                           >
-                            <Edit2 size={13} />
+                            <Edit2 size={15} />
+                          </button>
+                          <button
+                            className="flex items-center justify-center p-2 rounded hover:bg-rose-50 transition-colors text-slate-500 hover:text-rose-600"
+                            onClick={() => handleDeleteUser(user.id)}
+                            title="Eliminar usuario"
+                            id={`btn-delete-user-${user.id}`}
+                          >
+                            <Trash2 size={15} />
                           </button>
                         </div>
                       )}

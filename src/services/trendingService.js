@@ -7,11 +7,11 @@ export const trendingService = {
     return data;
   },
 
-  async approveTrendProduct(id) {
-    await apiFetch.patch(`/trends/${id}/approve`);
+  async approveTrendProduct(ids) {
+    await apiFetch.patch(`/trends/approve`, ids);
   },
 
-  async rejectTrendProducto(id) {
-    await apiFetch.patch(`/trends/${id}/reject`);
+  async rejectTrendProduct(ids) {
+    await apiFetch.patch(`/trends/reject`, ids);
   }
 }

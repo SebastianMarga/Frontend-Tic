@@ -78,11 +78,26 @@ export const apiFetch = async (endpoint, options = {}) => {
   }
 
   if (!response.ok && !endpoint.includes('/auth/refresh')) {
-    const errorData = await response.json().catch(() => ({}));
+    let errorData = {};
+    try {
+      const text = await response.text();
+      errorData = text ? JSON.parse(text) : {};
+    } catch {
+      errorData = {};
+    }
     throw new Error(errorData.error || 'Error en la petición');
   }
 
-  return response.ok ? await response.json().catch(() => ({})) : response;
+  const text = await response.text();
+  if (!text) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {};
+  }
 };
 
 apiFetch.get = (endpoint, options = {}) => apiFetch(endpoint, { ...options, method: 'GET' });

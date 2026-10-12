@@ -5,8 +5,8 @@ import './Login.css';
 import toast from 'react-hot-toast';
 
 export default function Login({ onLoginSuccess, onSwitchToRegister }) {
-  const [email, setEmail] = useState('admin@inventario.ia');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('admin@gmail.com');
+  const [password, setPassword] = useState('Usuario123!');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -92,7 +92,7 @@ export default function Login({ onLoginSuccess, onSwitchToRegister }) {
                 className="form-input with-icon"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="nombre@inventario.ia"
+                placeholder="nombre@gmail.com"
                 required
               />
             </div>
