@@ -15,7 +15,6 @@ import { productService } from "../services/productService.js";
 import { categoryService } from "../services/categoryService.js";
 import { supplierService } from "../services/supplierService.js";
 
-
 export default function Catalogo({
   userRole,
   onOpenCreateProduct,
@@ -117,10 +116,9 @@ export default function Catalogo({
 
         {isAdmin && (
           <button
-            className="btn btn-primary"
+            className="btn btn-primary ml-auto"
             onClick={onOpenCreateProduct}
             id="btn-nuevo-producto"
-            style={{ marginLeft: "auto" }}
           >
             <Plus size={16} />
             <span>Nuevo Producto</span>
@@ -140,16 +138,13 @@ export default function Catalogo({
                 <th>PROVEEDOR</th>
                 <th className="text-right">STOCK ACTUAL</th>
                 <th className="text-right">UMBRAL DINÁMICO IA</th>
-                <th style={{ textAlign: "right" }}>ACCIONES</th>
+                <th className="!text-right">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center !p-[32px]">
                     Cargando catálogo...
                   </td>
                 </tr>
@@ -157,11 +152,7 @@ export default function Catalogo({
                 <tr>
                   <td
                     colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
+                    className="text-center !p-[32px] !text-[#64748b]"
                   >
                     No se encontraron productos con los filtros aplicados.
                   </td>
@@ -173,16 +164,10 @@ export default function Catalogo({
 
                   return (
                     <tr key={item.id} id={`row-producto-${item.sku}`}>
-                      <td className="mono" style={{ fontWeight: 600 }}>
-                        {item.sku}
-                      </td>
+                      <td className="mono font-[600]">{item.sku}</td>
                       <td>
                         <span
-                          style={{
-                            fontWeight: 600,
-                            cursor: "pointer",
-                            color: "var(--text-primary)",
-                          }}
+                          className="font-[600] cursor-pointer text-[var(--text-primary)] hover:underline"
                           onClick={() => onOpenProductDetail(item)}
                           title="Haga clic para ver lotes FEFO e historial"
                         >
@@ -190,12 +175,12 @@ export default function Catalogo({
                         </span>
                       </td>
                       <td>{item.category}</td>
-                      <td style={{ color: "var(--text-secondary)" }}>
+                      <td className="!text-[var(--text-secondary)]">
                         {item.supplier}
                       </td>
                       <td>
-                        <div className="stock-cell">
-                          <div className="stock-value-row">
+                        <div className="flex flex-col items-end gap-[2px]">
+                          <div className="flex items-center gap-[6px] font-[700]">
                             <span className="mono">
                               {item.currentStock.toLocaleString()}{" "}
                               {item.unit || "uds"}
@@ -209,8 +194,12 @@ export default function Catalogo({
                             )}
                           </div>
                           <span
-                            className={`stock-status-pill ${
-                              isOut ? "danger" : isLow ? "warning" : "success"
+                            className={`text-[10px] leading-[1.5] font-[700] tracking-[0.04em] px-[6px] py-[1px] rounded-[4px] uppercase ${
+                              isOut
+                                ? "text-[#b91c1c] bg-[#fee2e2]"
+                                : isLow
+                                  ? "text-[#b45309] bg-[#fef3c7]"
+                                  : "text-[#047857] bg-[#d1fae5]"
                             }`}
                           >
                             {item.statusLabel ||
@@ -222,17 +211,14 @@ export default function Catalogo({
                           </span>
                         </div>
                       </td>
-                      <td
-                        className="text-right mono"
-                        style={{ fontWeight: 500 }}
-                      >
+                      <td className="text-right mono font-[500]">
                         {item.dynamicThreshold?.toLocaleString() || 100}{" "}
                         {item.unit || "uds"}
                       </td>
                       <td>
-                        <div className="table-actions-row">
+                        <div className="flex items-center justify-end gap-[6px]">
                           <button
-                            className="row-action-icon-btn"
+                            className="bg-transparent border border-solid border-slate-200 px-[8px] py-[4px] rounded-[var(--radius-sm)] cursor-pointer text-slate-600 text-[12px] flex items-center gap-[4px] transition-all duration-150 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-400"
                             onClick={() => onOpenProductDetail(item)}
                             title="Ver detalles e historial"
                             id={`btn-detalle-${item.sku}`}
@@ -242,7 +228,7 @@ export default function Catalogo({
                           </button>
                           {isAdmin && (
                             <button
-                              className="row-action-icon-btn"
+                              className="bg-transparent border border-solid border-slate-200 px-[8px] py-[4px] rounded-[var(--radius-sm)] cursor-pointer text-slate-600 text-[12px] flex items-center gap-[4px] transition-all duration-150 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-400"
                               onClick={() => onOpenEditProduct(item)}
                               title="Editar producto y umbrales"
                               id={`btn-editar-${item.sku}`}

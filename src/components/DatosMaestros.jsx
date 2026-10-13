@@ -122,16 +122,24 @@ export default function DatosMaestros({
       </div>
 
       {/* Tabs */}
-      <div className="tabs-header">
+      <div className="flex items-center gap-[24px] border-b border-solid border-[var(--border-color)] mb-[20px]">
         <button
-          className={`tab-btn ${activeTab === "proveedores" ? "active" : ""}`}
+          className={`bg-transparent border-none outline-none text-[15px] leading-[1.5] font-[600] py-[12px] px-[4px] cursor-pointer relative transition-colors duration-150 ease-in-out ${
+            activeTab === "proveedores"
+              ? "text-[var(--text-primary)] after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0b1c30]"
+              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+          }`}
           onClick={() => setActiveTab("proveedores")}
           id="tab-proveedores"
         >
           Gestión de Proveedores
         </button>
         <button
-          className={`tab-btn ${activeTab === "categorias" ? "active" : ""}`}
+          className={`bg-transparent border-none outline-none text-[15px] leading-[1.5] font-[600] py-[12px] px-[4px] cursor-pointer relative transition-colors duration-150 ease-in-out ${
+            activeTab === "categorias"
+              ? "text-[var(--text-primary)] after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0b1c30]"
+              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+          }`}
           onClick={() => setActiveTab("categorias")}
           id="tab-categorias"
         >
@@ -170,7 +178,7 @@ export default function DatosMaestros({
                   <th>EMAIL (RPA)</th>
                   <th>TELÉFONO</th>
                   <th className="text-right">PROD. ASOCIADOS</th>
-                  <th style={{ textAlign: "right" }}>ACCIONES</th>
+                  <th className="!text-right">ACCIONES</th>
                 </tr>
               </thead>
               <tbody>
@@ -178,26 +186,26 @@ export default function DatosMaestros({
                   <tr key={s.id} id={`row-proveedor-${s.id}`}>
                     <td className="mono">{s.id}</td>
                     <td>
-                      <div className="supplier-name-cell">
-                        <span style={{ fontWeight: 600 }}>{s.name}</span>
+                      <div className="flex items-center gap-[8px]">
+                        <span className="font-[600]">{s.name}</span>
                         {s.hasRpaError && (
-                          <span className="tag-rpa-error">ERROR RPA</span>
+                          <span className="bg-[#fee2e2] text-[#b91c1c] text-[10px] leading-[1.5] font-[700] py-[2px] px-[6px] rounded-[var(--radius-sm)]">
+                            ERROR RPA
+                          </span>
                         )}
                       </div>
                     </td>
-                    <td className="mono" style={{ color: "#475569" }}>
-                      {s.email}
-                    </td>
+                    <td className="mono !text-[#475569]">{s.email}</td>
                     <td className="mono">{s.phone}</td>
-                    <td className="text-right mono" style={{ fontWeight: 600 }}>
+                    <td className="text-right mono font-[600]">
                       {s.associatedProducts.toLocaleString()}
                     </td>
                     <td>
-                      <div className="table-actions-row">
+                      <div className="flex items-center justify-end gap-[6px]">
                         {isAdmin && (
                           <>
                             <button
-                              className="row-action-icon-btn"
+                              className="bg-transparent border border-solid border-slate-200 px-[8px] py-[4px] rounded-[var(--radius-sm)] cursor-pointer text-slate-600 text-[12px] flex items-center gap-[4px] transition-all duration-150 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-400"
                               onClick={() => onOpenEditSupplier(s)}
                               title="Editar proveedor"
                               id={`btn-edit-sup-${s.id}`}
@@ -206,7 +214,7 @@ export default function DatosMaestros({
                             </button>
                             {s.associatedProducts === 0 && (
                               <button
-                                className="row-action-icon-btn"
+                                className="bg-transparent border border-solid border-slate-200 px-[8px] py-[4px] rounded-[var(--radius-sm)] cursor-pointer text-slate-600 text-[12px] flex items-center gap-[4px] transition-all duration-150 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-400"
                                 onClick={() => handleDeleteSupplier(s.id)}
                                 title="Eliminar proveedor"
                                 id={`btn-del-sup-${s.id}`}
@@ -231,26 +239,26 @@ export default function DatosMaestros({
                   <th>DESCRIPCIÓN</th>
                   <th className="text-right">TOTAL PRODUCTOS</th>
                   <th>ESTADO</th>
-                  <th style={{ textAlign: "right" }}>ACCIONES</th>
+                  <th className="!text-right">ACCIONES</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredCategories.map((c) => (
                   <tr key={c.id} id={`row-categoria-${c.id}`}>
                     <td className="mono">{c.id}</td>
-                    <td style={{ fontWeight: 600 }}>{c.name}</td>
-                    <td style={{ color: "#64748b" }}>{c.description}</td>
-                    <td className="text-right mono" style={{ fontWeight: 600 }}>
+                    <td className="font-[600]">{c.name}</td>
+                    <td className="!text-[#64748b]">{c.description}</td>
+                    <td className="text-right mono font-[600]">
                       {c.totalProducts}
                     </td>
                     <td>
                       <span className="badge badge-success">{c.status}</span>
                     </td>
                     <td>
-                      <div className="table-actions-row">
+                      <div className="flex items-center justify-end gap-[6px]">
                         {isAdmin && (
                           <button
-                            className="row-action-icon-btn"
+                            className="bg-transparent border border-solid border-slate-200 px-[8px] py-[4px] rounded-[var(--radius-sm)] cursor-pointer text-slate-600 text-[12px] flex items-center gap-[4px] transition-all duration-150 hover:bg-slate-100 hover:text-slate-900 hover:border-slate-400"
                             onClick={() => onOpenEditCategory(c)}
                             title="Editar categoría"
                             id={`btn-edit-cat-${c.id}`}

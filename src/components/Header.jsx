@@ -50,26 +50,35 @@ export default function Header({
   const isAdmin = currentUser?.role === "ADMIN";
 
   return (
-    <header className="header" id="app-header">
+    <header
+      className="h-[64px] bg-[var(--bg-header)] border-b border-solid border-[var(--border-color)] flex items-center justify-between py-0 px-[32px] sticky top-0 z-[90]"
+      id="app-header"
+    >
       {/* Título de la vista / Breadcrumb */}
-      <div className="header-left">
-        <div className="header-breadcrumb">
+      <div className="flex items-center gap-[16px]">
+        <div className="text-[15px] leading-[1.5] font-[600] text-[var(--text-primary)] flex items-center gap-[8px]">
           <span>{breadcrumb.main}</span>
           {breadcrumb.sub && (
             <>
-              <span className="header-breadcrumb-separator">›</span>
-              <span className="header-breadcrumb-sub">{breadcrumb.sub}</span>
+              <span className="text-[var(--text-muted)] font-[400]">›</span>
+              <span className="text-[var(--text-secondary)] font-[500]">
+                {breadcrumb.sub}
+              </span>
             </>
           )}
         </div>
       </div>
 
       {/* Selector de Rol interactivo, Notificaciones y Perfil */}
-      <div className="header-right">
+      <div className="flex items-center gap-[16px]">
         {/* Toggle de rol para testing fluido ADMIN vs OPERATOR */}
-        <div className="role-switcher-container">
+        <div className="flex items-center gap-[8px]">
           <button
-            className={`role-badge-btn ${isAdmin ? "role-admin" : "role-operator"}`}
+            className={`inline-flex items-center gap-[6px] py-[4px] px-[10px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.05em] uppercase cursor-pointer border border-solid transition-all duration-150 ease-in-out m-0 outline-none ${
+              isAdmin
+                ? "bg-[#0b1c30] text-[#ffffff] border-transparent"
+                : "bg-[#d1fae5] text-[#065f46] border-[#a7f3d0]"
+            }`}
             onClick={onToggleRole}
             title="Haga clic para alternar entre rol ADMIN y OPERATOR"
             id="btn-toggle-role-header"
@@ -81,7 +90,7 @@ export default function Header({
 
         {/* Cerrar Sesión */}
         <button
-          className="header-icon-btn"
+          className="bg-transparent border-none outline-none cursor-pointer text-[#64748b] p-[8px] rounded-[var(--radius-sm)] flex items-center justify-center relative transition-all duration-150 ease-in-out m-0 hover:bg-[#f1f5f9] hover:text-[var(--text-primary)]"
           onClick={onLogout}
           title="Cerrar Sesión"
           id="btn-header-logout"
@@ -90,15 +99,15 @@ export default function Header({
         </button>
 
         {/* Perfil de Usuario */}
-        <div className="header-user-profile">
-          <div className="header-user-avatar">
+        <div className="flex items-center gap-[10px] pl-[8px] border-l border-solid border-[var(--border-color)]">
+          <div className="w-[32px] h-[32px] rounded-full bg-[#1e293b] text-[#ffffff] text-[12px] font-[600] flex items-center justify-center overflow-hidden shrink-0">
             {currentUser?.initials || "EP"}
           </div>
-          <div className="header-user-info">
-            <span className="header-user-name">
+          <div className="flex flex-col">
+            <span className="text-[13px] font-[600] text-[var(--text-primary)] leading-[1.2]">
               {currentUser?.name || "Elena Pérez"}
             </span>
-            <span className="header-user-role">
+            <span className="text-[11px] leading-[1.5] text-[var(--text-secondary)]">
               {currentUser?.role || "ADMIN"}
             </span>
           </div>

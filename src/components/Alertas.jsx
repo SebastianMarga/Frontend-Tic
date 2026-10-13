@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { batchService } from "../services/batchService.js";
 
-
 export default function Alertas({ userRole, onOpenModalMovimiento }) {
   const [batches, setBatches] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,32 +69,48 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
       </div>
 
       {/* Grid de KPIs de Caducidad */}
-      <div className="alertas-kpi-grid">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-[16px] mb-[24px]">
         <div className="kpi-card" id="kpi-lotes-criticos">
-          <div className="kpi-card-header">
-            <span className="kpi-title">&lt; 30 Días (Crítico)</span>
-            <AlertTriangle className="kpi-icon" size={18} color="#dc2626" />
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em] text-[var(--text-secondary)]">
+              &lt; 30 Días (Crítico)
+            </span>
+            <AlertTriangle className="shrink-0" size={18} color="#dc2626" />
           </div>
-          <div className="kpi-value danger">12 Lotes</div>
-          <div className="kpi-subtitle">Requieren despacho prioritario</div>
+          <div className="text-[26px] font-[800] leading-[1.2] text-[#dc2626]">
+            12 Lotes
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
+            Requieren despacho prioritario
+          </div>
         </div>
 
         <div className="kpi-card" id="kpi-lotes-alerta">
-          <div className="kpi-card-header">
-            <span className="kpi-title">30 - 60 Días (Alerta)</span>
-            <Clock className="kpi-icon" size={18} color="#d97706" />
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em] text-[var(--text-secondary)]">
+              30 - 60 Días (Alerta)
+            </span>
+            <Clock className="shrink-0" size={18} color="#d97706" />
           </div>
-          <div className="kpi-value warning">28 Lotes</div>
-          <div className="kpi-subtitle">En rotación estándar supervisada</div>
+          <div className="text-[26px] font-[800] leading-[1.2] text-[#d97706]">
+            28 Lotes
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
+            En rotación estándar supervisada
+          </div>
         </div>
 
         <div className="kpi-card" id="kpi-valor-riesgo">
-          <div className="kpi-card-header">
-            <span className="kpi-title">Valor Total en Riesgo</span>
-            <DollarSign className="kpi-icon" size={18} color="#2563eb" />
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em] text-[var(--text-secondary)]">
+              Valor Total en Riesgo
+            </span>
+            <DollarSign className="shrink-0" size={18} color="#2563eb" />
           </div>
-          <div className="kpi-value info">$18,450.00</div>
-          <div className="kpi-subtitle">
+          <div className="text-[26px] font-[800] leading-[1.2] text-[#2563eb]">
+            \$18,450.00
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
             Costo de inventario perecedero activo
           </div>
         </div>
@@ -128,16 +143,13 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                 <th>FECHA DE VENCIMIENTO</th>
                 <th>DÍAS RESTANTES</th>
                 <th>ACCIÓN SUGERIDA</th>
-                <th style={{ textAlign: "right" }}>ACCIONES</th>
+                <th className="!text-right">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center !p-[32px]">
                     Calculando matrices de caducidad...
                   </td>
                 </tr>
@@ -145,11 +157,7 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                 <tr>
                   <td
                     colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
+                    className="text-center !p-[32px] !text-[#64748b]"
                   >
                     Excelente: no hay lotes próximos a vencer en el rango
                     seleccionado.
@@ -163,39 +171,27 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
 
                   return (
                     <tr key={b.id} id={`row-lote-${b.batchNumber}`}>
-                      <td className="mono" style={{ fontWeight: 600 }}>
-                        {b.batchNumber}
-                      </td>
+                      <td className="mono font-[600]">{b.batchNumber}</td>
                       <td>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <span style={{ fontWeight: 600 }}>
-                            {b.productName}
-                          </span>
-                          <span
-                            className="mono"
-                            style={{ fontSize: "11px", color: "#64748b" }}
-                          >
+                        <div className="flex flex-col">
+                          <span className="font-[600]">{b.productName}</span>
+                          <span className="mono !text-[11px] !text-[#64748b]">
                             {b.sku}
                           </span>
                         </div>
                       </td>
-                      <td
-                        className="text-right mono"
-                        style={{ fontWeight: 600 }}
-                      >
+                      <td className="text-right mono font-[600]">
                         {b.quantity.toLocaleString()} uds
                       </td>
                       <td className="mono">{b.expDate}</td>
                       <td>
                         <span
-                          className={`alerta-days-pill ${
+                          className={`inline-flex items-center gap-[4px] py-[4px] px-[8px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.03em] ${
                             isCritical
-                              ? "critical"
+                              ? "bg-[#fee2e2] text-[#b91c1c]"
                               : isWarning
-                                ? "warning"
-                                : "moderate"
+                                ? "bg-[#fef3c7] text-[#b45309]"
+                                : "bg-[#e0f2fe] text-[#0369a1]"
                           }`}
                         >
                           <Clock size={12} />
@@ -203,18 +199,17 @@ export default function Alertas({ userRole, onOpenModalMovimiento }) {
                         </span>
                       </td>
                       <td
-                        style={{
-                          fontWeight: 500,
-                          color: isCritical ? "#b91c1c" : "#475569",
-                        }}
+                        className={`font-[500] ${
+                          isCritical ? "!text-[#b91c1c]" : "!text-[#475569]"
+                        }`}
                       >
                         {isCritical
                           ? "Priorizar despacho inmediato"
                           : "Rotación FEFO prioritaria"}
                       </td>
-                      <td style={{ textAlign: "right" }}>
+                      <td className="!text-right">
                         <button
-                          className="btn btn-secondary btn-sm"
+                          className="btn btn-secondary !py-[6px] !px-[10px] !text-[12px]"
                           onClick={() => handleDispatchFefo(b)}
                           id={`btn-despachar-fefo-${b.batchNumber}`}
                         >

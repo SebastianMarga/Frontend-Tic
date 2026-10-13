@@ -130,19 +130,16 @@ export default function RPAOrdenes({
                 <th>ID ORDEN</th>
                 <th>PROVEEDOR</th>
                 <th>FECHA / HORA</th>
-                <th className="text-right">CANTIDAD</th>
-                <th className="text-right">VALOR TOTAL</th>
+                <th className="!text-right">CANTIDAD</th>
+                <th className="!text-right">VALOR TOTAL</th>
                 <th>ESTADO</th>
-                <th style={{ textAlign: "right" }}>ACCIÓN</th>
+                <th className="!text-right">ACCIÓN</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center !p-[32px]">
                     Cargando órdenes del bot RPA...
                   </td>
                 </tr>
@@ -150,11 +147,7 @@ export default function RPAOrdenes({
                 <tr>
                   <td
                     colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
+                    className="text-center !p-[32px] !text-[#64748b]"
                   >
                     No se encontraron órdenes con los criterios especificados.
                   </td>
@@ -162,45 +155,49 @@ export default function RPAOrdenes({
               ) : (
                 filteredOrders.map((order) => (
                   <tr key={order.id} id={`row-rpa-${order.orderId}`}>
-                    <td className="mono" style={{ fontWeight: 600 }}>
-                      {order.orderId}
-                    </td>
-                    <td style={{ fontWeight: 500 }}>{order.supplier}</td>
-                    <td style={{ color: "#64748b", fontSize: "12px" }}>
+                    <td className="mono font-[600]">{order.orderId}</td>
+                    <td className="font-[500]">{order.supplier}</td>
+                    <td className="!text-[#64748b] !text-[12px]">
                       {order.dateTime}
                     </td>
-                    <td className="text-right mono">
+                    <td className="!text-right mono">
                       {order.quantity?.toLocaleString()} uds
                     </td>
-                    <td className="text-right mono" style={{ fontWeight: 600 }}>
+                    <td className="!text-right mono font-[600]">
                       {order.formattedTotal ||
                         `$${order.totalValue?.toLocaleString()}`}
                     </td>
                     <td>
                       {order.status === "SENT" && (
-                        <span className="rpa-status-badge sent">SENT</span>
+                        <span className="inline-flex items-center gap-[6px] py-[4px] px-[10px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.04em] uppercase bg-[#e0f2fe] text-[#0369a1]">
+                          SENT
+                        </span>
                       )}
                       {order.status === "PROCESSING" && (
-                        <span className="rpa-status-badge processing">
+                        <span className="inline-flex items-center gap-[6px] py-[4px] px-[10px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.04em] uppercase bg-[#eff6ff] text-[#1d4ed8] animate-pulse">
                           PROCESSING
                         </span>
                       )}
                       {order.status === "FAILED" && (
-                        <span className="rpa-status-badge failed">FAILED</span>
+                        <span className="inline-flex items-center gap-[6px] py-[4px] px-[10px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.04em] uppercase bg-[#fee2e2] text-[#dc2626]">
+                          FAILED
+                        </span>
                       )}
                       {order.status === "COMPLETED" && (
-                        <span className="rpa-status-badge completed">
+                        <span className="inline-flex items-center gap-[6px] py-[4px] px-[10px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.04em] uppercase bg-[#d1fae5] text-[#047857]">
                           COMPLETED
                         </span>
                       )}
                       {order.status === "CANCELLED" && (
-                        <span className="badge badge-gray">CANCELLED</span>
+                        <span className="inline-flex items-center gap-[6px] py-[4px] px-[10px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] tracking-[0.04em] uppercase bg-slate-100 text-slate-600">
+                          CANCELLED
+                        </span>
                       )}
                     </td>
-                    <td style={{ textAlign: "right" }}>
+                    <td className="!text-right">
                       {order.status === "FAILED" ? (
                         <button
-                          className="action-btn-review-error"
+                          className="text-[#dc2626] hover:text-[#991b1b] font-[600] bg-transparent border-none cursor-pointer underline underline-offset-[2px] text-[13px] leading-[1.5] inline-flex items-center gap-[4px]"
                           onClick={() => onOpenIncidentModal(order)}
                           id={`btn-revisar-error-${order.orderId}`}
                         >
@@ -209,7 +206,7 @@ export default function RPAOrdenes({
                         </button>
                       ) : order.status === "PROCESSING" ? (
                         <button
-                          className="action-link-btn action-btn-urgent"
+                          className="bg-transparent border-none text-[#dc2626] hover:bg-[#fee2e2] hover:text-[#991b1b] font-[600] text-[13px] leading-[1.5] cursor-pointer underline underline-offset-[2px] py-[4px] px-[8px] rounded-[var(--radius-sm)] transition-colors duration-150"
                           onClick={() => handleCancelOrder(order.id)}
                           id={`btn-cancelar-orden-${order.orderId}`}
                         >
@@ -217,7 +214,7 @@ export default function RPAOrdenes({
                         </button>
                       ) : (
                         <button
-                          className="action-link-btn"
+                          className="bg-transparent border-none text-[#0b1c30] hover:bg-[#f1f5f9] hover:text-[#1d4ed8] font-[600] text-[13px] leading-[1.5] cursor-pointer underline underline-offset-[2px] py-[4px] px-[8px] rounded-[var(--radius-sm)] transition-colors duration-150"
                           onClick={() => {
                             alert(
                               `Detalle Orden ${order.orderId}\nProveedor: ${order.supplier}\nTotal: ${order.formattedTotal}\nItems: ${order.items?.length || 1} producto(s)`,

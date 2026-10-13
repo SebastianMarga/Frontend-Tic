@@ -76,7 +76,7 @@ export default function Dashboard({
   return (
     <div className="page-container" id="dashboard-view">
       {/* Botones de acción rápida superiores */}
-      <div className="dashboard-actions-bar">
+      <div className="flex justify-end items-center gap-[12px] mb-[24px]">
         <button
           className="btn btn-secondary"
           onClick={() => onOpenModalMovimiento("entrada")}
@@ -109,78 +109,98 @@ export default function Dashboard({
       <div className="kpi-grid">
         {/* KPI 1: Productos Activos */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all duration-150 ease-in-out hover:-translate-y-[2px] hover:shadow-[var(--shadow-md)] hover:border-[#cbd5e1]"
           onClick={() => onNavigate("catalogo")}
           id="kpi-card-productos"
         >
-          <div className="kpi-card-header">
-            <span className="kpi-title">Productos Activos</span>
-            <Boxes className="kpi-icon" size={18} />
+          <div className="flex items-center justify-between text-[var(--text-secondary)]">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em]">
+              Productos Activos
+            </span>
+            <Boxes className="shrink-0" size={18} />
           </div>
-          <div className="kpi-value">
+          <div className="text-[26px] font-[800] text-[var(--text-primary)] leading-[1.2]">
             {kpiData.activeProducts.toLocaleString()}
           </div>
-          <div className="kpi-subtitle">Catálogo unificado en tiempo real</div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
+            Catálogo unificado en tiempo real
+          </div>
         </div>
 
         {/* KPI 2: Alerta Stock Bajo */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all duration-150 ease-in-out hover:-translate-y-[2px] hover:shadow-[var(--shadow-md)] hover:border-[#cbd5e1]"
           onClick={() => onNavigate("catalogo")}
           id="kpi-card-stock-bajo"
         >
-          <div className="kpi-card-header">
-            <span className="kpi-title">Alerta Stock Bajo</span>
-            <AlertTriangle className="kpi-icon" size={18} />
+          <div className="flex items-center justify-between text-[var(--text-secondary)]">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em]">
+              Alerta Stock Bajo
+            </span>
+            <AlertTriangle className="shrink-0 text-[#d97706]" size={18} />
           </div>
-          <div className="kpi-value warning">{kpiData.lowStockAlerts}</div>
-          <div className="kpi-subtitle">Requieren atención inmediata</div>
+          <div className="text-[26px] font-[800] text-[#d97706] leading-[1.2]">
+            {kpiData.lowStockAlerts}
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
+            Requieren atención inmediata
+          </div>
         </div>
 
         {/* KPI 3: Lotes Próximos a Vencer */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all duration-150 ease-in-out hover:-translate-y-[2px] hover:shadow-[var(--shadow-md)] hover:border-[#cbd5e1]"
           onClick={() => onNavigate("alertas")}
           id="kpi-card-lotes-vencer"
         >
-          <div className="kpi-card-header">
-            <span className="kpi-title">Lotes Próximos a Vencer</span>
-            <Calendar className="kpi-icon" size={18} />
+          <div className="flex items-center justify-between text-[var(--text-secondary)]">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em]">
+              Lotes Próximos a Vencer
+            </span>
+            <Calendar className="shrink-0 text-[#dc2626]" size={18} />
           </div>
-          <div className="kpi-value danger">{kpiData.expiringBatches}</div>
-          <div className="kpi-subtitle">&lt; 30 días restantes (FEFO)</div>
+          <div className="text-[26px] font-[800] text-[#dc2626] leading-[1.2]">
+            {kpiData.expiringBatches}
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
+            &lt; 30 días restantes (FEFO)
+          </div>
         </div>
 
         {/* KPI 4: Órdenes RPA Activas */}
         <div
-          className="kpi-card kpi-link-card"
+          className="kpi-card cursor-pointer transition-all duration-150 ease-in-out hover:-translate-y-[2px] hover:shadow-[var(--shadow-md)] hover:border-[#cbd5e1]"
           onClick={() => onNavigate("rpa")}
           id="kpi-card-ordenes-rpa"
         >
-          <div className="kpi-card-header">
-            <span className="kpi-title">Órdenes RPA Activas</span>
-            <Bot className="kpi-icon" size={18} />
+          <div className="flex items-center justify-between text-[var(--text-secondary)]">
+            <span className="text-[12px] font-[700] uppercase tracking-[0.04em]">
+              Órdenes RPA Activas
+            </span>
+            <Bot className="shrink-0" size={18} />
           </div>
-          <div className="kpi-value">{kpiData.activeRpaOrders}</div>
-          <div className="kpi-subtitle">
+          <div className="text-[26px] font-[800] text-[var(--text-primary)] leading-[1.2]">
+            {kpiData.activeRpaOrders}
+          </div>
+          <div className="text-[12px] text-[var(--text-secondary)]">
             Automatización en cola de ejecución
           </div>
         </div>
       </div>
 
       {/* Tabla de Alertas de Reorden y Stock Bajo */}
-      <div className="dashboard-table-card">
-        <div className="dashboard-table-header">
-          <div className="dashboard-table-title-area">
-            <h2 className="dashboard-table-title">
+      <div className="bg-[var(--bg-surface)] border border-solid border-[var(--border-color)] rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] overflow-hidden">
+        <div className="py-[20px] px-[24px] border-b border-solid border-[var(--border-color)] flex justify-between items-start">
+          <div className="flex flex-col gap-[4px]">
+            <h2 className="text-[18px] leading-[1.5] font-[700] text-[var(--text-primary)]">
               Alertas de Reorden y Stock Bajo
             </h2>
-            <p className="dashboard-table-subtitle">
+            <p className="text-[13px] leading-[1.5] text-[var(--text-secondary)]">
               Priorizadas por impacto operativo predictivo.
             </p>
           </div>
           <button
-            className="dashboard-table-icon-btn"
+            className="bg-transparent border-none text-[var(--text-secondary)] cursor-pointer p-[6px] rounded-[var(--radius-sm)] flex items-center justify-center transition-all duration-150 hover:bg-[#f1f5f9] hover:text-[var(--text-primary)]"
             onClick={() => onNavigate("catalogo")}
             title="Ver catálogo completo"
             id="btn-dash-ver-catalogo"
@@ -195,8 +215,8 @@ export default function Dashboard({
               <tr>
                 <th>SKU</th>
                 <th>PRODUCTO</th>
-                <th className="text-right">STOCK ACTUAL</th>
-                <th className="text-right">PUNTO DE REORDEN</th>
+                <th className="!text-right">STOCK ACTUAL</th>
+                <th className="!text-right">PUNTO DE REORDEN</th>
                 <th>ESTADO</th>
                 <th>ACCIÓN RECOMENDADA</th>
               </tr>
@@ -206,11 +226,7 @@ export default function Dashboard({
                 <tr>
                   <td
                     colSpan="6"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
+                    className="text-center !p-[32px] !text-[#64748b]"
                   >
                     No hay alertas críticas de stock en este momento.
                   </td>
@@ -221,17 +237,17 @@ export default function Dashboard({
                     <td className="mono">{item.sku}</td>
                     <td>
                       <span
-                        style={{ fontWeight: 600, cursor: "pointer" }}
+                        className="font-[600] cursor-pointer hover:underline"
                         onClick={() => onSelectProduct(item)}
                         title="Ver detalle del producto"
                       >
                         {item.name}
                       </span>
                     </td>
-                    <td className="text-right mono" style={{ fontWeight: 600 }}>
+                    <td className="!text-right mono font-[600]">
                       {item.currentStock}
                     </td>
-                    <td className="text-right mono">
+                    <td className="!text-right mono">
                       {item.reorderPoint || item.dynamicThreshold}
                     </td>
                     <td>
@@ -252,8 +268,10 @@ export default function Dashboard({
                     </td>
                     <td>
                       <button
-                        className={`action-link-btn ${
-                          item.status === "AGOTADO" ? "action-btn-urgent" : ""
+                        className={`bg-transparent border-none font-[600] text-[13px] leading-[1.5] cursor-pointer underline underline-offset-[2px] py-[4px] px-[8px] rounded-[var(--radius-sm)] transition-colors duration-150 ${
+                          item.status === "AGOTADO"
+                            ? "text-[#dc2626] hover:bg-[#fee2e2] hover:text-[#991b1b]"
+                            : "text-[#0b1c30] hover:bg-[#f1f5f9] hover:text-[#1d4ed8]"
                         }`}
                         onClick={() => handleActionClick(item)}
                         id={`btn-accion-reorden-${item.sku}`}

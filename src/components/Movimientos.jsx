@@ -47,7 +47,7 @@ export default function Movimientos({
     try {
       const res = await stockService.exportMovementsForIa();
       alert(
-        `✓ Exportación generada con éxito:\n- Registros: ${res.exportedRecords}\n- Formato: ${res.format}\n- Timestamp: ${res.timestamp}\n\nLos datos históricos están listos para alimentar el algoritmo predictivo de IA.`,
+        `✓ Exportación generada con éxito:\nRegistros: ${res.exportedRecords}\nFormato: ${res.format}\nTimestamp: ${res.timestamp}\n\nLos datos históricos están listos para alimentar el algoritmo predictivo de IA.`,
       );
     } catch (e) {
       alert("Error en exportación: " + e.message);
@@ -146,7 +146,7 @@ export default function Movimientos({
                 <th>FECHA/HORA</th>
                 <th>TIPO</th>
                 <th>PRODUCTO / SKU</th>
-                <th className="text-right">CANTIDAD</th>
+                <th className="!text-right">CANTIDAD</th>
                 <th>LOTE</th>
                 <th>OPERADOR</th>
                 <th>MOTIVO</th>
@@ -155,10 +155,7 @@ export default function Movimientos({
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="7"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="7" className="text-center !p-[32px]">
                     Cargando movimientos...
                   </td>
                 </tr>
@@ -166,11 +163,7 @@ export default function Movimientos({
                 <tr>
                   <td
                     colSpan="7"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
+                    className="text-center !p-[32px] !text-[#64748b]"
                   >
                     No se encontraron movimientos registrados.
                   </td>
@@ -179,21 +172,20 @@ export default function Movimientos({
                 movements.map((mov) => {
                   const isEntrada = mov.type.toLowerCase() === "entrada";
                   const isSalida = mov.type.toLowerCase() === "salida";
-                  const isAjuste = mov.type.toLowerCase() === "ajuste";
 
                   return (
                     <tr key={mov.id} id={`row-mov-${mov.id}`}>
-                      <td style={{ fontSize: "12px", color: "#64748b" }}>
+                      <td className="!text-[12px] !text-[#64748b]">
                         {mov.dateTime}
                       </td>
                       <td>
                         <span
-                          className={`mov-type-badge ${
+                          className={`inline-flex items-center gap-[4px] py-[3px] px-[8px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] uppercase ${
                             isEntrada
-                              ? "entrada"
+                              ? "bg-[#d1fae5] text-[#065f46]"
                               : isSalida
-                                ? "salida"
-                                : "ajuste"
+                                ? "bg-[#eff6ff] text-[#1d4ed8]"
+                                : "bg-[#fef3c7] text-[#92400e]"
                           }`}
                         >
                           {isEntrada ? (
@@ -207,38 +199,31 @@ export default function Movimientos({
                         </span>
                       </td>
                       <td>
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <span style={{ fontWeight: 600 }}>
-                            {mov.productName}
-                          </span>
-                          <span
-                            className="mono"
-                            style={{ fontSize: "11px", color: "#64748b" }}
-                          >
+                        <div className="flex flex-col">
+                          <span className="font-[600]">{mov.productName}</span>
+                          <span className="mono !text-[11px] !text-[#64748b]">
                             {mov.sku}
                           </span>
                         </div>
                       </td>
                       <td
-                        className={`text-right mono ${
+                        className={`!text-right mono font-[700] ${
                           isEntrada
-                            ? "qty-positive"
+                            ? "!text-[#059669]"
                             : isSalida
-                              ? "qty-negative"
-                              : "qty-neutral"
+                              ? "!text-[#dc2626]"
+                              : "!text-[#475569]"
                         }`}
                       >
                         {mov.formattedQty}
                       </td>
-                      <td className="mono" style={{ fontSize: "12px" }}>
-                        {mov.batchNumber}
-                      </td>
+                      <td className="mono !text-[12px]">{mov.batchNumber}</td>
                       <td>
-                        <span className="badge badge-gray">{mov.operator}</span>
+                        <span className="inline-flex items-center py-[3px] px-[8px] rounded-[var(--radius-sm)] text-[11px] leading-[1.5] font-[700] uppercase bg-slate-100 text-slate-600">
+                          {mov.operator}
+                        </span>
                       </td>
-                      <td style={{ color: "#475569", fontSize: "13px" }}>
+                      <td className="!text-[#475569] !text-[13px]">
                         {mov.reason}
                       </td>
                     </tr>
@@ -252,8 +237,7 @@ export default function Movimientos({
         {/* Footer de Paginación */}
         <div className="table-footer">
           <span>
-            Mostrando 1-
-            {movements.length} de {movements.length} movimientos
+            Mostrando 1-{movements.length} de {movements.length} movimientos
           </span>
           <div className="pagination">
             <button className="page-btn" disabled>

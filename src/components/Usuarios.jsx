@@ -8,7 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
   UserCheck,
-  Trash2
+  Trash2,
 } from "lucide-react";
 import { userService } from "../services/userService.js";
 import toast from "react-hot-toast";
@@ -31,7 +31,7 @@ export default function Usuarios({
       setUsers(data);
     } catch (e) {
       console.error("Error cargando usuarios:", e);
-      toast.error('Error al cargar los usuarios.')
+      toast.error("Error al cargar los usuarios.");
     } finally {
       setLoading(false);
     }
@@ -42,10 +42,11 @@ export default function Usuarios({
   }, [search, roleFilter, statusFilter]);
 
   const handleDeleteUser = async (id) => {
-    if (!window.confirm("¿Estás seguro de que deseas eliminar este usuario?")) return;
-    const authUser = JSON.parse(localStorage.getItem('inventario_auth_user'));
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este usuario?"))
+      return;
+    const authUser = JSON.parse(localStorage.getItem("inventario_auth_user"));
     if (id === authUser.id) {
-      toast.error('No se puede eliminar el usuario autenticado.');
+      toast.error("No se puede eliminar el usuario autenticado.");
       return;
     }
     try {
@@ -134,16 +135,13 @@ export default function Usuarios({
                 <th>ROL ASIGNADO</th>
                 <th>ESTADO</th>
                 <th>FECHA DE CREACIÓN</th>
-                <th style={{ textAlign: "right" }}>ACCIONES</th>
+                <th className="!text-right">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
                 <tr>
-                  <td
-                    colSpan="6"
-                    style={{ textAlign: "center", padding: "32px" }}
-                  >
+                  <td colSpan="6" className="text-center !p-[32px]">
                     Cargando usuarios...
                   </td>
                 </tr>
@@ -151,11 +149,7 @@ export default function Usuarios({
                 <tr>
                   <td
                     colSpan="6"
-                    style={{
-                      textAlign: "center",
-                      padding: "32px",
-                      color: "#64748b",
-                    }}
+                    className="text-center !p-[32px] text-[#64748b]"
                   >
                     No se encontraron usuarios con los filtros seleccionados.
                   </td>
@@ -164,23 +158,30 @@ export default function Usuarios({
                 users.map((user) => (
                   <tr key={user.id} id={`row-usuario-${user.id}`}>
                     <td>
-                      <div className="user-cell">
+                      <div className="flex items-center gap-[12px]">
+                        {/* Círculo alrededor de la inicial con color bonito y anillo */}
                         <div
-                          className={`user-avatar-circle ${user.role === "OPERATOR" ? "operator-avatar" : ""
-                            }`}
+                          className={`w-[36px] h-[36px] rounded-full text-[13px] font-bold flex items-center justify-center shrink-0 ring-2 shadow-xs ${
+                            user.role === "OPERATOR"
+                              ? "bg-emerald-50 text-emerald-700 ring-emerald-200/80"
+                              : "bg-indigo-50 text-indigo-700 ring-indigo-200/80"
+                          }`}
                         >
                           {user.name.charAt(0).toUpperCase() || "US"}
                         </div>
-                        <span className="user-name-text">{user.name}</span>
+                        <span className="font-semibold text-[var(--text-primary)] text-[13.5px]">
+                          {user.name}
+                        </span>
                       </div>
                     </td>
-                    <td className="mono" style={{ color: "#475569" }}>
-                      {user.email}
-                    </td>
+                    <td className="mono !text-[#475569]">{user.email}</td>
                     <td>
                       <span
-                        className={`role-pill ${user.role === "ADMIN" ? "admin" : "operator"
-                          }`}
+                        className={`inline-flex items-center gap-[5px] py-[3px] px-[8px] rounded-[var(--radius-sm)] text-[11px] font-bold tracking-[0.04em] uppercase ${
+                          user.role === "ADMIN"
+                            ? "bg-[#0b1c30] text-white"
+                            : "bg-[#d1fae5] text-[#065f46]"
+                        }`}
                       >
                         {user.role === "ADMIN" ? (
                           <Shield size={12} />
@@ -191,25 +192,23 @@ export default function Usuarios({
                       </span>
                     </td>
                     <td>
-                      <span className="status-dot-cell">
+                      <span className="inline-flex items-center gap-[6px] text-[13px] font-medium">
                         <span
-                          className={`status-dot ${!user.isActive ? "inactive" : ""
-                            }`}
+                          className={`w-[8px] h-[8px] rounded-full ${
+                            !user.isActive ? "bg-[#94a3b8]" : "bg-[#059669]"
+                          }`}
                         ></span>
-                        <span>{user.isActive ? 'Activo' : 'Inactivo'}</span>
+                        <span>{user.isActive ? "Activo" : "Inactivo"}</span>
                       </span>
                     </td>
-                    <td
-                      className="mono"
-                      style={{ color: "#64748b", fontSize: "12px" }}
-                    >
+                    <td className="mono !text-[#64748b] !text-[12px]">
                       {user.createdAt}
                     </td>
-                    <td style={{ textAlign: "right" }}>
+                    <td className="!text-right">
                       {isAdmin && (
                         <div className="flex items-center justify-end gap-2">
                           <button
-                            className="row-action-icon-btn flex items-center justify-center p-2 rounded hover:bg-slate-100 transition-colors text-slate-500 hover:text-indigo-600"
+                            className="bg-transparent border border-solid border-slate-200 flex items-center justify-center p-2 rounded hover:bg-slate-100 hover:border-slate-300 transition-colors text-slate-500 hover:text-indigo-600 cursor-pointer"
                             onClick={() => onOpenEditUser(user)}
                             title="Editar usuario"
                             id={`btn-edit-user-${user.id}`}
@@ -217,7 +216,7 @@ export default function Usuarios({
                             <Edit2 size={15} />
                           </button>
                           <button
-                            className="flex items-center justify-center p-2 rounded hover:bg-rose-50 transition-colors text-slate-500 hover:text-rose-600"
+                            className="bg-transparent border border-solid border-slate-200 flex items-center justify-center p-2 rounded hover:bg-rose-50 hover:border-rose-200 transition-colors text-slate-500 hover:text-rose-600 cursor-pointer"
                             onClick={() => handleDeleteUser(user.id)}
                             title="Eliminar usuario"
                             id={`btn-delete-user-${user.id}`}
