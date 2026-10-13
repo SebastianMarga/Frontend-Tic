@@ -15,7 +15,6 @@ import {
 import { productService } from "../services/productService.js";
 import { rpaService } from "../services/rpaService.js";
 import { batchService } from "../services/batchService.js";
-import "./Dashboard.css";
 
 export default function Dashboard({
   onNavigate,

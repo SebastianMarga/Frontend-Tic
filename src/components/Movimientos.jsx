@@ -12,7 +12,6 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { stockService } from "../services/stockService.js";
-import "./Movimientos.css";
 
 export default function Movimientos({
   userRole,

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Boxes, Lock, Mail, ArrowRight, AlertCircle, UserPlus } from 'lucide-react';
 import { authService } from '../services/authService.js';
-import './Login.css';
 import toast from 'react-hot-toast';
 
 export default function Login({ onLoginSuccess, onSwitchToRegister }) {

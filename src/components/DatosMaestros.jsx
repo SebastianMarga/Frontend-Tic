@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { supplierService } from "../services/supplierService.js";
 import { categoryService } from "../services/categoryService.js";
-import "./DatosMaestros.css";
 
 export default function DatosMaestros({
   userRole,

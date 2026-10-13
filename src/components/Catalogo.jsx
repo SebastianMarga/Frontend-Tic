@@ -14,7 +14,7 @@ import {
 import { productService } from "../services/productService.js";
 import { categoryService } from "../services/categoryService.js";
 import { supplierService } from "../services/supplierService.js";
-import "./Catalogo.css";
+
 
 export default function Catalogo({
   userRole,

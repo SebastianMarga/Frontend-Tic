@@ -11,7 +11,6 @@ import {
   Trash2
 } from "lucide-react";
 import { userService } from "../services/userService.js";
-import "./Usuarios.css";
 import toast from "react-hot-toast";
 
 export default function Usuarios({

@@ -12,7 +12,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { rpaService } from "../services/rpaService.js";
-import "./RPAOrdenes.css";
 
 export default function RPAOrdenes({
   userRole,

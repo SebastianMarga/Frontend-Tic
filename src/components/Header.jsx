@@ -7,7 +7,6 @@ import {
   UserCheck,
   ChevronDown,
 } from "lucide-react";
-import "./Header.css";
 
 export default function Header({
   activeView,

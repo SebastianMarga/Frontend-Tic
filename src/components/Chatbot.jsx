@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Send, Bot, User, Trash2, Sparkles } from "lucide-react";
 import { chatbotService } from "../services/chatbotService.js";
-import "./Chatbot.css";
 
 const SUGGESTIONS = [
   "¿Qué productos están por vencer?",

@@ -14,7 +14,7 @@ import {
   Boxes,
   MessageCircle,
 } from "lucide-react";
-import "./Sidebar.css";
+
 
 export default function Sidebar({
   activeView,

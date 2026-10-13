@@ -11,7 +11,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { batchService } from "../services/batchService.js";
-import "./Alertas.css";
+
 
 export default function Alertas({ userRole, onOpenModalMovimiento }) {
   const [batches, setBatches] = useState([]);
