@@ -56,7 +56,7 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
           email,
           password,
           role,
-          isActive: status === "Activo"
+          isActive: status === "Activo",
         });
         toast.success("Usuario creado exitosamente.");
       }
@@ -70,17 +70,22 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content" id="modal-usuario">
-        <div className="modal-header">
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-[1px] flex items-center justify-center z-[200] p-[16px]">
+      <div
+        className="bg-white border border-solid border-[var(--border-color)] rounded-[var(--radius-lg)] shadow-[var(--shadow-md)] w-full max-w-[520px] overflow-hidden flex flex-col max-h-[90vh]"
+        id="modal-usuario"
+      >
+        {/* Cabecera del Modal */}
+        <div className="py-[18px] px-[24px] border-b border-solid border-[var(--border-color)] flex items-center justify-between">
+          <div className="flex items-center gap-[8px] text-[var(--text-primary)]">
             <Shield size={18} />
-            <h2 className="modal-title">
+            <h2 className="text-[16px] font-[700] text-[var(--text-primary)] m-0 leading-[1.4]">
               {userToEdit ? "Editar Usuario y Permisos" : "Crear Nuevo Usuario"}
             </h2>
           </div>
           <button
-            className="modal-close-btn"
+            type="button"
+            className="bg-transparent border-none text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-slate-100 p-[6px] rounded-[var(--radius-sm)] cursor-pointer flex items-center justify-center transition-colors duration-150"
             onClick={onClose}
             id="btn-cerrar-modal-usuario"
           >
@@ -88,8 +93,9 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit}>
-          <div className="modal-body">
+        {/* Formulario */}
+        <form onSubmit={handleSubmit} className="flex flex-col overflow-hidden">
+          <div className="p-[24px] overflow-y-auto">
             <div className="form-group">
               <label className="form-label" htmlFor="user-name-input">
                 Nombre Completo
@@ -131,16 +137,14 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder={
-                  userToEdit
-                    ? "••••••••"
-                    : "Ingresa una contraseña"
+                  userToEdit ? "••••••••" : "Ingresa una contraseña"
                 }
                 required={!userToEdit}
               />
             </div>
 
-            <div className="form-row">
-              <div className="form-group">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[12px]">
+              <div className="form-group !mb-0">
                 <label className="form-label" htmlFor="user-role-select">
                   Rol
                 </label>
@@ -155,7 +159,7 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group !mb-0">
                 <label className="form-label" htmlFor="user-status-select">
                   Estado de la Cuenta
                 </label>
@@ -172,7 +176,8 @@ export default function ModalUsuario({ isOpen, onClose, userToEdit, onSaved }) {
             </div>
           </div>
 
-          <div className="modal-footer">
+          {/* Footer del Modal */}
+          <div className="py-[16px] px-[24px] border-t border-solid border-[var(--border-color)] bg-[#f8fafc] flex items-center justify-end gap-[10px]">
             <button
               type="button"
               className="btn btn-secondary"
