@@ -15,6 +15,8 @@ import {
   Truck,
 } from "lucide-react";
 import { trendingService } from "../services/trendingService.js";
+import { socket } from "../services/socketService.js";
+import RestockCard from "./RestockCard.jsx";
 import toast from "react-hot-toast";
 
 const normalizeStatus = (status) => {
@@ -57,6 +59,22 @@ export default function TendenciaIA({ userRole, onNavigate }) {
 
   useEffect(() => {
     loadAllData();
+  }, []);
+
+  // Alertas del sensor en tiempo real: llega una nueva sugerencia y se refresca la bandeja
+  useEffect(() => {
+    socket.connect();
+
+    const onAlert = () => {
+      toast("Nueva alerta de reabastecimiento", { icon: "📦" });
+      loadAllData();
+    };
+    socket.on("alerta-stock", onAlert);
+
+    return () => {
+      socket.off("alerta-stock", onAlert);
+      socket.disconnect();
+    };
   }, []);
 
   const counts = useMemo(() => {
@@ -359,69 +377,11 @@ export default function TendenciaIA({ userRole, onNavigate }) {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {restocks.map((item) => (
-              <div
+              <RestockCard
                 key={item.orderItemId}
-                className="relative bg-white rounded-2xl p-6 border border-amber-200 hover:border-amber-300 hover:shadow-lg transition-all duration-200 flex flex-col"
-              >
-                {/* Cabecera con Etiqueta RESTOCK_ALERT */}
-                <div className="flex justify-between items-start mb-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-800 text-xs font-extrabold tracking-wider rounded-full uppercase">
-                    <AlertCircle size={13} />
-                    <span>RESTOCK ALERT</span>
-                  </span>
-
-                  <span className="text-xs font-mono font-bold text-slate-400">
-                    SKU: {item.sku || "S/N"}
-                  </span>
-                </div>
-
-                {/* Nombre del Producto */}
-                <h3 className="text-lg font-bold text-slate-900 leading-tight mb-6 line-clamp-2">
-                  {item.name}
-                </h3>
-
-                {/* Detalles de Stock y Proveedor */}
-                <div className="grid grid-cols-3 gap-4 py-4 border-t border-slate-100 mt-auto">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Stock Actual
-                    </span>
-                    <span className="text-sm font-black text-rose-600 font-mono">
-                      {item.currentStock} und.
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Umbral Mín.
-                    </span>
-                    <span className="text-sm font-bold text-slate-800 font-mono">
-                      {item.threshold} und.
-                    </span>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Proveedor
-                    </span>
-                    <span
-                      className="text-sm font-bold text-slate-800 truncate"
-                      title={item.supplierName}
-                    >
-                      {item.supplierName || "S/P"}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Pie informativo */}
-                <div className="mt-4 pt-3 border-t border-amber-100 flex items-center justify-between text-amber-700 font-semibold text-xs bg-amber-50/70 rounded-lg px-3 py-2">
-                  <div className="flex items-center gap-2">
-                    <Truck size={15} />
-                    <span>Orden Borrador #{item.purchaseOrderId}</span>
-                  </div>
-                  <span className="font-mono">
-                    Cant. a pedir: {item.quantity ?? "Por definir"}
-                  </span>
-                </div>
-              </div>
+                item={item}
+                onChanged={loadAllData}
+              />
             ))}
           </div>
         )

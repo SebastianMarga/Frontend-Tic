@@ -14,6 +14,16 @@ export const trendingService = {
     return response.data || response;
   },
 
+  // 2.1 El admin aprueba una alerta de reestock: fija cantidad + cotización y el RPA compra
+  async approveRestock(orderId, items) {
+    return apiFetch.post(`/purchase-orders/${orderId}/approve-restock`, { items });
+  },
+
+  // 2.2 El admin rechaza la alerta: se elimina la orden borrador
+  async rejectRestock(orderId) {
+    await apiFetch.delete(`/purchase-orders/${orderId}`);
+  },
+
   // 3. Aprobar sugerencias de tendencias
   async approveTrendProduct(ids) {
     await apiFetch.patch(`/trends/approve`, ids);
