@@ -3,14 +3,15 @@ import apiFetch from "../interceptors/api.js";
 export const trendingService = {
   // 1. Obtener productos nuevos sugeridos por el Chatbot (Tabla TrendingProduct)
   async getTrendProducts() {
-    const data = await apiFetch.get("/trends/trend-products");
-    return data;
+    const response = await apiFetch.get("/trends/trend-products");
+    return response;
   },
 
-  // 2. NUEVO: Obtener productos actuales por reabastecer (Tabla PurchaseOrder en DRAFT)
+  // 2. Obtener productos actuales por reabastecer (PurchaseOrder con DRAFT + RESTOCK_ALERT)
   async getRestockSuggestions() {
-    const data = await apiFetch.get("/inventory/restocks");
-    return data;
+    const response = await apiFetch.get("/inventory/restocks");
+    // Si el backend responde { tipo: "RESTOCK_ALERT", data: [...] }, extraemos data de forma segura
+    return response.data || response;
   },
 
   // 3. Aprobar sugerencias de tendencias
