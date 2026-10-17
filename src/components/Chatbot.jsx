@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Send, Bot, User, Trash2, Sparkles } from "lucide-react";
+import { Send, Bot, User, Trash2, Sparkles, AlertTriangle } from "lucide-react";
 import { chatbotService } from "../services/chatbotService.js";
+import { socket } from "../services/socketService.js"; // <-- Importamos el socket
 
 const SUGGESTIONS = [
   "¿Qué productos están por vencer?",
@@ -29,6 +30,7 @@ export default function Chatbot({ currentUser }) {
   const scrollRef = useRef(null);
   const inputRef = useRef(null);
 
+  // 1. Cargar historial inicial
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -47,11 +49,43 @@ export default function Chatbot({ currentUser }) {
     };
   }, []);
 
+  // 2. Auto-scroll
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isTyping]);
+
+  // 3. Conexión a Socket.io y escucha de alertas (NUEVO)
+  useEffect(() => {
+    socket.connect();
+
+    const handleStockAlert = (payload) => {
+      console.log("⚠️ Alerta IoT recibida en tiempo real:", payload);
+
+      const iotMessage = {
+        id: `iot-msg-${Date.now()}`,
+        role: "bot",
+        isIotAlert: true, // Marca especial para el frontend
+        text: payload.datos.respuesta_ia,
+        productos: payload.datos.productos || null,
+        timestamp: new Date().toISOString(),
+      };
+
+      setMessages((prevMessages) => {
+        const updated = [...prevMessages, iotMessage];
+        persist(updated); // Guardamos la alerta en el historial del navegador
+        return updated;
+      });
+    };
+
+    socket.on("alerta-stock", handleStockAlert);
+
+    return () => {
+      socket.off("alerta-stock", handleStockAlert);
+      socket.disconnect(); // Limpiamos la conexión al salir de la vista
+    };
+  }, []);
 
   const persist = (updatedMessages) => {
     chatbotService.saveHistory(updatedMessages);
@@ -158,35 +192,43 @@ export default function Chatbot({ currentUser }) {
             <>
               {messages.map((msg) => {
                 const isUser = msg.role === "user";
+                const isIot = msg.isIotAlert; // Evaluamos si es una alerta del sensor
+
                 return (
                   <div
                     key={msg.id}
-                    className={`flex items-end gap-[8px] max-w-[90%] md:max-w-[78%] ${
-                      isUser ? "self-end flex-row-reverse" : "self-start"
-                    }`}
+                    className={`flex items-end gap-[8px] max-w-[90%] md:max-w-[78%] ${isUser ? "self-end flex-row-reverse" : "self-start"
+                      }`}
                   >
                     <div
-                      className={`w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 ${
-                        isUser
-                          ? "bg-[var(--btn-primary-bg)] text-white"
+                      className={`w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 ${isUser
+                        ? "bg-[var(--btn-primary-bg)] text-white"
+                        : isIot
+                          ? "bg-amber-100 text-amber-600"
                           : "bg-[#e0f2fe] text-[#0369a1]"
-                      }`}
+                        }`}
                     >
-                      {isUser ? <User size={14} /> : <Bot size={14} />}
+                      {isUser ? <User size={14} /> : isIot ? <AlertTriangle size={14} /> : <Bot size={14} />}
                     </div>
 
                     <div
-                      className={`flex flex-col gap-[4px] ${
-                        isUser ? "items-end" : ""
-                      }`}
+                      className={`flex flex-col gap-[4px] ${isUser ? "items-end" : ""
+                        }`}
                     >
                       <div
-                        className={`py-[10px] px-[14px] rounded-[var(--radius-lg)] text-[13.5px] leading-[1.5] whitespace-pre-wrap [word-break:break-word] ${
-                          isUser
-                            ? "bg-[var(--btn-primary-bg)] text-white rounded-br-[2px]"
+                        className={`py-[10px] px-[14px] rounded-[var(--radius-lg)] text-[13.5px] leading-[1.5] whitespace-pre-wrap [word-break:break-word] ${isUser
+                          ? "bg-[var(--btn-primary-bg)] text-white rounded-br-[2px]"
+                          : isIot
+                            ? "bg-amber-50 border border-solid border-amber-200 text-amber-900 rounded-bl-[2px] shadow-sm"
                             : "bg-white border border-solid border-[var(--border-color)] text-[var(--text-primary)] rounded-bl-[2px]"
-                        }`}
+                          }`}
                       >
+                        {isIot && (
+                          <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-2 pb-2 border-b border-amber-200/60">
+                            <AlertTriangle size={13} />
+                            Alerta Autónoma del Sensor
+                          </div>
+                        )}
                         {msg.text}
                       </div>
 
