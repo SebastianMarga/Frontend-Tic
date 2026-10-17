@@ -40,7 +40,7 @@ export default function TendenciaIA({ userRole, onNavigate }) {
     try {
       setLoading(true);
       const [trendsData, restocksData] = await Promise.all([
-        trendingService.getTrendProducts(),
+        trendingService.getTrendProducts().catch(() => []),
         trendingService.getRestockSuggestions
           ? trendingService.getRestockSuggestions().catch(() => [])
           : Promise.resolve([]),
