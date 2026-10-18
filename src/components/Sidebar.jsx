@@ -13,6 +13,7 @@ import {
   Plus,
   Boxes,
   MessageCircle,
+  Globe,
 } from "lucide-react";
 
 export default function Sidebar({
@@ -27,10 +28,11 @@ export default function Sidebar({
     { id: "catalogo", label: "Catálogo", icon: Package },
     { id: "movimientos", label: "Movimientos", icon: ArrowLeftRight },
     {
-      id: "alertas",
-      label: "Alertas de Vencimiento",
-      icon: Clock,
-      badge: expiringCount > 0 ? expiringCount : null,
+      id: "proveedoresRpa",
+      label: "Proveedores RPA",
+      icon: Globe,
+      badge: "8 Activos",
+      badgeType: "success",
     },
     { id: "rpa", label: "Órdenes RPA", icon: Bot },
     { id: "tendencias", label: "Sugerencias IA", icon: Sparkles },
@@ -90,7 +92,13 @@ export default function Sidebar({
                   <span>{item.label}</span>
                 </div>
                 {item.badge && (
-                  <span className="inline-flex items-center justify-center bg-[#fee2e2] text-[#b91c1c] text-[10px] font-[700] py-[2px] px-[6px] rounded-[var(--radius-pill)] leading-none">
+                  <span
+                    className={`inline-flex items-center justify-center text-[10px] font-[700] py-[2px] px-[6px] rounded-[var(--radius-pill)] leading-none ${
+                      item.badgeType === "success"
+                        ? "bg-[#dcfce7] text-[#15803d]"
+                        : "bg-[#fee2e2] text-[#b91c1c]"
+                    }`}
+                  >
                     {item.badge}
                   </span>
                 )}

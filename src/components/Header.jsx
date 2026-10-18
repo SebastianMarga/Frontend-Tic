@@ -24,8 +24,12 @@ export default function Header({
         return { main: "Panel de Control", sub: "Catálogo de Productos" };
       case "movimientos":
         return { main: "Panel de Control", sub: "Movimientos de Inventario" };
+      case "proveedoresRpa":
       case "alertas":
-        return { main: "Panel de Control", sub: "Alertas de Vencimiento" };
+        return {
+          main: "Panel de Control",
+          sub: "Proveedores Activos para Búsqueda RPA",
+        };
       case "rpa":
         return { main: "Panel de Control", sub: "Supervisión de Órdenes RPA" };
       case "tendencias":

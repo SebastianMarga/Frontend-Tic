@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowUpRight,
+  Globe,
 } from "lucide-react";
 import { productService } from "../services/productService.js";
 import { rpaService } from "../services/rpaService.js";
@@ -147,23 +148,23 @@ export default function Dashboard({
           </div>
         </div>
 
-        {/* KPI 3: Lotes Próximos a Vencer */}
+        {/* KPI 3: Proveedores Búsqueda RPA */}
         <div
           className="kpi-card cursor-pointer transition-all duration-150 ease-in-out hover:-translate-y-[2px] hover:shadow-[var(--shadow-md)] hover:border-[#cbd5e1]"
-          onClick={() => onNavigate("alertas")}
-          id="kpi-card-lotes-vencer"
+          onClick={() => onNavigate("proveedoresRpa")}
+          id="kpi-card-proveedores-rpa"
         >
           <div className="flex items-center justify-between text-[var(--text-secondary)]">
             <span className="text-[12px] font-[700] uppercase tracking-[0.04em]">
-              Lotes Próximos a Vencer
+              Proveedores Búsqueda RPA
             </span>
-            <Calendar className="shrink-0 text-[#dc2626]" size={18} />
+            <Globe className="shrink-0 text-[#2563eb]" size={18} />
           </div>
-          <div className="text-[26px] font-[800] text-[#dc2626] leading-[1.2]">
-            {kpiData.expiringBatches}
+          <div className="text-[26px] font-[800] text-[#2563eb] leading-[1.2]">
+            8 Activos
           </div>
           <div className="text-[12px] text-[var(--text-secondary)]">
-            &lt; 30 días restantes (FEFO)
+            Rastreo y cotización en tiempo real
           </div>
         </div>
 

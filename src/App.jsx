@@ -8,7 +8,7 @@ import DatosMaestros from './components/DatosMaestros.jsx';
 import TendenciaIA from './components/TendenciaIA.jsx';
 import RPAOrdenes from './components/RPAOrdenes.jsx';
 import Movimientos from './components/Movimientos.jsx';
-import Alertas from './components/Alertas.jsx';
+import ProveedoresRPA from './components/ProveedoresRPA.jsx';
 import Usuarios from './components/Usuarios.jsx';
 import Chatbot from "./components/Chatbot.jsx";
 import Login from './components/Login.jsx';
@@ -176,14 +176,9 @@ export default function App() {
             />
           )}
 
-          {activeView === 'alertas' && (
-            <Alertas
+          {(activeView === 'proveedoresRpa' || activeView === 'alertas') && (
+            <ProveedoresRPA
               userRole={currentUser.role}
-              onOpenModalMovimiento={(type, prod) => {
-                setMovimientoType(type);
-                setMovimientoProduct(prod || null);
-                setModalMovimientoOpen(true);
-              }}
             />
           )}
 
